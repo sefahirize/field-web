@@ -12,7 +12,8 @@ Read `HANDOFF.md` first: it has the full plan, the source projects, the decision
 - **Newest *stable and secure* versions** for every package. Verify with `npm view` / `pnpm view` on the day; never pin from memory. Check peer-dependency compatibility before adding a package. Optimise the code to fit the new versions when needed.
 - **The landing will change again later.** The dashboard must not break when it does (isolation rules below). Design every step with that in mind.
 - **No design loss.** Port first, compare visually against the source projects, upgrade second. Do a risky upgrade (e.g. Tailwind 3 → 4) as its own reversible step.
-- **Git is the user's job.** Do not commit, push or create branches unless the user asks in that message. When asked, no `Co-Authored-By`/Claude line in the commit message, never push. Otherwise finish each turn with a `git status` summary.
+- **Git.** The user made the first commit; from then on Claude makes the commits (in English, one per finished step or logical change) with **no** `Co-Authored-By`/Claude/AI line, ever. Never push and never create branches unless the user asks in that message. Finish each turn with a `git status` summary.
+- **Dev server.** The user runs it on `http://localhost:3003`. Do not start another one; do browser checks against that port.
 - **Do not touch the source repos** (`joinfield-landing`, `joinfield-dashboard`). They are read-only references.
 - Reply to the user in Turkish, short and concrete; code, comments and commit messages in English.
 
