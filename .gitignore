@@ -1,0 +1,39 @@
+# dependencies
+/node_modules
+/.pnpm-store/
+
+# next.js (next-env.d.ts is generated; Next's docs say not to commit it)
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# production
+/build
+
+# tests
+/coverage
+
+# env files: only the example is committed
+.env*
+!.env.example
+
+# logs and caches
+*.log
+.eslintcache
+
+# secrets and keys
+*.pem
+*.key
+
+# deployment
+.vercel
+
+# editors and OS (team-wide editor settings can be opted back in)
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# Claude Code: personal settings only; .claude/settings.json is shared
+.claude/settings.local.json

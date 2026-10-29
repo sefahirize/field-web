@@ -1,0 +1,5 @@
+/* Landing-only global styles. Tailwind 3 arrives here in step 2. */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
