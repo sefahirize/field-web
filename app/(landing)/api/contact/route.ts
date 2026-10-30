@@ -1,27 +1,26 @@
+import { z } from 'zod';
 import {
   API_URL_PROD,
 } from '@landing/constants/Global';
+import { contactFormSchema } from '@landing/lib/contact-schema';
+import { allowWithoutCaptcha, clientIp, isRateLimited, readJsonBody, verifyRecaptcha } from '@landing/lib/form-guard';
 import { MAILCHIMP_AUDIENCE_ID, MAILCHIMP_JOURNEYS, setListMember, triggerJourney } from '@landing/lib/mailchimp';
 import { NextRequest, NextResponse } from 'next/server';
 
+// The form's own rules, plus length caps and the reCAPTCHA token. Unknown
+// fields are dropped, so only these reach the backend and Mailchimp.
+const { shape } = contactFormSchema;
+const contactRequestSchema = contactFormSchema.extend({
+  information: shape.information.max(100),
+  topic: shape.topic.max(100),
+  email: shape.email.max(254),
+  name: shape.name.max(200),
+  phone: shape.phone.max(40),
+  message: shape.message.max(5000),
+  recaptchaToken: z.string().min(1).max(4096),
+});
 
-// Type definitions
-interface ContactFormData {
-  name: string;
-  email: string;
-  message: string;
-  information: string;
-  phone: string;
-  recaptchaToken?: string;
-}
-
-interface ReCaptchaVerificationResponse {
-  success: boolean;
-  score?: number;
-  challenge_ts?: string;
-  hostname?: string;
-  'error-codes'?: string[];
-}
+type ContactFields = Omit<z.infer<typeof contactRequestSchema>, 'recaptchaToken'>;
 
 interface MailchimpData {
   email_address: string;
@@ -32,68 +31,33 @@ interface MailchimpData {
   phone?: string;
 }
 
-// interface MailchimpMergeFields {
-//   FNAME: string;
-//   LNAME: string;
-//   PHONE?: string;
-// }
-
-async function verifyRecaptcha(token: string): Promise<boolean> {
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-
-  if (!secretKey) {
-    console.error('RECAPTCHA_SECRET_KEY is not set');
-    return false;
-  }
-
-  try {
-    const verificationUrl = 'https://www.google.com/recaptcha/api/siteverify';
-    const response = await fetch(verificationUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `secret=${secretKey}&response=${token}`,
-    });
-
-    const data: ReCaptchaVerificationResponse = await response.json();
-
-    // For reCAPTCHA v3, we check success and optionally score (0.0 to 1.0)
-    // A score of 0.5 or higher is typically considered legitimate
-    if (data.success) {
-      const score = data.score || 0;
-      // You can adjust the threshold (0.5 is a common value)
-      return score >= 0.5;
-    }
-
-    return false;
-  } catch (error) {
-    console.error('reCAPTCHA verification error:', error);
-    return false;
-  }
-}
+const fail = (error: string, status: number) => NextResponse.json({ error }, { status });
 
 export async function POST(request: NextRequest) {
   try {
-    const body: ContactFormData = await request.json();
-
-    // Verify reCAPTCHA token
-    if (body.recaptchaToken) {
-      const isValid = await verifyRecaptcha(body.recaptchaToken);
-      if (!isValid) {
-        return NextResponse.json(
-          { error: 'reCAPTCHA verification failed. Please try again.' },
-          { status: 400 }
-        );
-      }
-    } else {
-      // In production, you might want to require reCAPTCHA
-      // For now, we'll allow requests without token but log a warning
-      console.warn('Contact form submission without reCAPTCHA token');
+    if (isRateLimited(`contact:${clientIp(request)}`)) {
+      return fail('Too many messages. Please try again in a few minutes.', 429);
     }
 
-    // Remove recaptchaToken from body before sending to other services
-    const { recaptchaToken, ...formData } = body;
+    const parsed = contactRequestSchema.safeParse(await readJsonBody(request));
+    if (!parsed.success) {
+      return fail('Please check the form and try again.', 400);
+    }
+
+    // reCAPTCHA is required: a request without a valid token never reaches
+    // the backend or Mailchimp.
+    const { recaptchaToken, ...formData } = parsed.data;
+    const captcha = await verifyRecaptcha(recaptchaToken, 'contact_form');
+    if (captcha === 'failed') {
+      return fail('reCAPTCHA verification failed. Please try again.', 400);
+    }
+    if (captcha === 'unconfigured') {
+      if (!allowWithoutCaptcha()) {
+        console.error('RECAPTCHA_SECRET_KEY is not set; refusing contact form submissions');
+        return fail('The contact form is temporarily unavailable. Please try again later.', 503);
+      }
+      console.warn('RECAPTCHA_SECRET_KEY is not set; accepting the contact form in development only');
+    }
 
     // Send data to Mailchimp
     try {
@@ -115,7 +79,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function sendContactForm(body: ContactFormData) {
+async function sendContactForm(body: ContactFields) {
   const response = await fetch(`${API_URL_PROD}/api/contact/`, {
     method: 'POST',
     headers: {
@@ -131,7 +95,7 @@ async function sendContactForm(body: ContactFormData) {
   return response.json();
 }
 
-async function SendFormDataMailchimp(formData: ContactFormData) {
+async function SendFormDataMailchimp(formData: ContactFields) {
   try {
     // Split name into first and last name
     const [firstName = '', lastName = ''] = formData.name.split(' ');

@@ -1,22 +1,47 @@
+import { z } from 'zod';
+import { allowWithoutCaptcha, clientIp, isRateLimited, readJsonBody, verifyRecaptcha } from '@landing/lib/form-guard';
 import { MAILCHIMP_AUDIENCE_ID, MAILCHIMP_JOURNEYS, setListMember, triggerJourney } from '@landing/lib/mailchimp';
 import { NextRequest, NextResponse } from 'next/server';
 
-interface ParserLeadData {
-  email: string;
-  name: string;
-  lastName: string;
-}
+// Same protection as /api/contact. Unknown fields are dropped.
+const parserLeadSchema = z.object({
+  email: z.string().email().max(254),
+  name: z.string().min(1).max(100),
+  lastName: z.string().max(100),
+  recaptchaToken: z.string().min(1).max(4096),
+});
+
+type ParserLeadData = Omit<z.infer<typeof parserLeadSchema>, 'recaptchaToken'>;
+
+const fail = (error: string, status: number) => NextResponse.json({ error }, { status });
 
 export async function POST(request: NextRequest) {
   try {
-    const body: ParserLeadData = await request.json();
-    
+    if (isRateLimited(`parser-lead:${clientIp(request)}`)) {
+      return fail('Too many requests. Please try again in a few minutes.', 429);
+    }
+
+    const parsed = parserLeadSchema.safeParse(await readJsonBody(request));
+    if (!parsed.success) {
+      return fail('Please check the form and try again.', 400);
+    }
+
+    const { recaptchaToken, ...body } = parsed.data;
+    const captcha = await verifyRecaptcha(recaptchaToken, 'parser_lead');
+    if (captcha === 'failed') {
+      return fail('reCAPTCHA verification failed. Please try again.', 400);
+    }
+    if (captcha === 'unconfigured' && !allowWithoutCaptcha()) {
+      console.error('RECAPTCHA_SECRET_KEY is not set; refusing parser lead submissions');
+      return fail('This form is temporarily unavailable. Please try again later.', 503);
+    }
+
     // Send data to Mailchimp
     await SendFormDataMailchimp(body);
-    
+
     // Send data to parser lead API
     const response = await sendParserLeadForm(body);
-    
+
     return NextResponse.json(response);
   } catch (error) {
     console.error('Parser lead submission error:', error);

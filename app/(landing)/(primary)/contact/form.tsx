@@ -5,7 +5,7 @@ import { type CountryCode as Country, getCountries, getCountryCallingCode } from
 import * as Flags from 'country-flag-icons/react/1x1';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { contactFormSchema, type ContactFormData } from '@landing/lib/contact-schema';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 // import type { Country } from 'react-phone-number-input';
 // import PhoneInput from 'react-phone-number-input'
@@ -62,17 +62,6 @@ const Flag = ({ countryCode, title }: { countryCode: string, title: string }) =>
     ) : null;
 };
 
-// Form validation schema
-const contactFormSchema = z.object({
-    information: z.string().min(1, 'Please select a subject'),
-    topic: z.string().min(1, 'Please select a topic'),
-    email: z.string().email('Please enter a valid email'),
-    name: z.string().min(2, 'Name is required'),
-    phone: z.string().min(6, 'Please enter a valid phone number'),
-    message: z.string().min(10, 'Message must be at least 10 characters'),
-});
-
-type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const CustomPhoneInput = ({ inputClass, value, onPhonePrefixChange, onChange, error }: {
     inputClass: string;
