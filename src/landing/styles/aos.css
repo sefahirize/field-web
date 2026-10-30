@@ -1,0 +1,71 @@
+/*
+ * Scroll-reveal animations for [data-aos], driven by components/Aos.
+ * Starting states and transitions follow AOS 2.3.4
+ * (MIT License, Copyright (c) 2015 Michał Sajnóg); "revealed" is the
+ * [data-aos-animate] attribute instead of the .aos-animate class, so a
+ * React re-render that rewrites className cannot hide an element again.
+ */
+
+/* Fade: fade, fade-in, fade-up, fade-down, fade-left, fade-right, … */
+[data-aos^="fade"][data-aos^="fade"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+[data-aos^="fade"][data-aos^="fade"][data-aos-animate] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+[data-aos="fade-up"] { transform: translate3d(0, 100px, 0); }
+[data-aos="fade-down"] { transform: translate3d(0, -100px, 0); }
+[data-aos="fade-right"] { transform: translate3d(-100px, 0, 0); }
+[data-aos="fade-left"] { transform: translate3d(100px, 0, 0); }
+[data-aos="fade-up-right"] { transform: translate3d(-100px, 100px, 0); }
+[data-aos="fade-up-left"] { transform: translate3d(100px, 100px, 0); }
+[data-aos="fade-down-right"] { transform: translate3d(-100px, -100px, 0); }
+[data-aos="fade-down-left"] { transform: translate3d(100px, -100px, 0); }
+
+/* Zoom: zoom-in, zoom-in-down, zoom-out-left, … */
+[data-aos^="zoom"][data-aos^="zoom"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+[data-aos^="zoom"][data-aos^="zoom"][data-aos-animate] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+[data-aos="zoom-in"] { transform: scale(0.6); }
+[data-aos="zoom-in-up"] { transform: translate3d(0, 100px, 0) scale(0.6); }
+[data-aos="zoom-in-down"] { transform: translate3d(0, -100px, 0) scale(0.6); }
+[data-aos="zoom-in-right"] { transform: translate3d(-100px, 0, 0) scale(0.6); }
+[data-aos="zoom-in-left"] { transform: translate3d(100px, 0, 0) scale(0.6); }
+[data-aos="zoom-out"] { transform: scale(1.2); }
+[data-aos="zoom-out-up"] { transform: translate3d(0, 100px, 0) scale(1.2); }
+[data-aos="zoom-out-down"] { transform: translate3d(0, -100px, 0) scale(1.2); }
+[data-aos="zoom-out-right"] { transform: translate3d(-100px, 0, 0) scale(1.2); }
+[data-aos="zoom-out-left"] { transform: translate3d(100px, 0, 0) scale(1.2); }
+
+/* Slide */
+[data-aos^="slide"][data-aos^="slide"] { transition-property: transform; }
+[data-aos^="slide"][data-aos^="slide"][data-aos-animate] { transform: translate3d(0, 0, 0); }
+[data-aos="slide-up"] { transform: translate3d(0, 100%, 0); }
+[data-aos="slide-down"] { transform: translate3d(0, -100%, 0); }
+[data-aos="slide-right"] { transform: translate3d(-100%, 0, 0); }
+[data-aos="slide-left"] { transform: translate3d(100%, 0, 0); }
+
+/* Flip */
+[data-aos^="flip"][data-aos^="flip"] {
+  backface-visibility: hidden;
+  transition-property: transform;
+}
+[data-aos="flip-left"] { transform: perspective(2500px) rotateY(-100deg); }
+[data-aos="flip-right"] { transform: perspective(2500px) rotateY(100deg); }
+[data-aos="flip-up"] { transform: perspective(2500px) rotateX(-100deg); }
+[data-aos="flip-down"] { transform: perspective(2500px) rotateX(100deg); }
+[data-aos="flip-left"][data-aos-animate],
+[data-aos="flip-right"][data-aos-animate] { transform: perspective(2500px) rotateY(0); }
+[data-aos="flip-up"][data-aos-animate],
+[data-aos="flip-down"][data-aos-animate] { transform: perspective(2500px) rotateX(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-aos][data-aos] { transition: none !important; }
+}

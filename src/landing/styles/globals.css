@@ -1,5 +1,48 @@
-/* Landing-only global styles. Tailwind 3 arrives here in step 2. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+}
+
 body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter);
+}
+
+.app-input {
+  @apply w-full px-4 py-2 rounded-full text-[#818898] text-base font-normal outline-none !ring-0 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-[0px_0px_0px_1px_rgba(9,25,72,0.13),0px_1px_2px_0px_rgba(18,55,105,0.08)]
+}
+
+
+@layer components {
+  .card-price {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-image: linear-gradient(#fff, #fff),
+      linear-gradient(0deg, rgba(230, 230, 230, 0.39), rgba(230, 230, 230, 0.39)),
+      linear-gradient(0deg, #3A5AFF, #3A5AFF);
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+    box-shadow: 0px 0px 0px 1px rgba(19, 28, 43, 0.08),
+      0px 1px 2px 0px rgba(164, 172, 185, 0.24);
+  }
+}
+
+/* Hide Google reCAPTCHA badge */
+.grecaptcha-badge {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
 }

@@ -17,7 +17,8 @@
     "paths": {
       "@landing/*": ["./src/landing/*"],
       "@dashboard/*": ["./src/dashboard/*"],
-      "@shared/*": ["./src/shared/*"]
+      "@shared/*": ["./src/shared/*"],
+      "@public/*": ["./public/*"]
     }
   },
   "include": [

@@ -1,20 +1,21 @@
-import type { Metadata } from "next";
-import { BRAND, ROUTES } from "@shared/contract";
+import { Inter } from "next/font/google";
+import "@landing/styles/globals.css";
+import NotFound, { notFoundMetadata } from "@landing/components/NotFound";
 
-export const metadata: Metadata = {
-  title: `Page not found | ${BRAND.name}`,
-  robots: { index: false, follow: true },
-};
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
-// Rendered for URLs that match no route, outside both root layouts.
-// Gets its real design when the landing is ported (step 2).
+export const metadata = notFoundMetadata;
+
+// Rendered for URLs that match no route, outside both root layouts, so it
+// brings its own fonts and styles. Uses the landing's 404 design.
 export default function GlobalNotFound() {
   return (
     <html lang="en">
-      <body>
-        <h1>404</h1>
-        <p>This page does not exist.</p>
-        <a href={ROUTES.home}>Back to {BRAND.name}</a>
+      <body className={inter.variable}>
+        <NotFound />
       </body>
     </html>
   );

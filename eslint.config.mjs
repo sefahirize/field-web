@@ -31,6 +31,8 @@ export default defineConfig([
   ...nextTs,
   {
     rules: {
+      // `const { secret, ...rest } = body` is the usual way to drop a field.
+      "@typescript-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
       // Resolves every import (alias or relative) before checking it.
       "import/no-restricted-paths": [
         "error",
@@ -61,6 +63,11 @@ export default defineConfig([
     files: LANDING.files,
     rules: {
       "no-restricted-imports": ["error", { patterns: [preferShared(DASHBOARD.alias), MUI, SCSS] }],
+      // Off in joinfield-landing too; the copy is full of apostrophes.
+      "react/no-unescaped-entities": "off",
+      // The landing was ported 1:1. Moving its <img> tags to next/image can
+      // change the layout, so it waits for the upgrade/redesign step.
+      "@next/next/no-img-element": "off",
     },
   },
   {
@@ -86,4 +93,6 @@ export default defineConfig([
     },
   },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+  // Dead code ported as-is; removed (with this entry) once the user approves.
+  globalIgnores(["app/(landing)/(primary)/pricing/plan-content-old.tsx"]),
 ]);

@@ -1,0 +1,38 @@
+{
+  "@context": "http://schema.org",
+  "@type": "Place",
+  "name": "Field HR",
+  "hasMap": " ",
+  "telephone": " ",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://www.joinfield.ai/assets/images/logo/dark.svg",
+    "height": "223",
+    "width": "640"
+  },
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.joinfield.ai/assets/images/logo/dark.svg",
+    "height": "223",
+    "width": "640"
+  },
+  "url": "https://www.joinfield.ai/",
+  "sameAs": [
+    "https://twitter.com/FieldAi",
+    "https://www.facebook.com/Field.hr/",
+    "https://www.linkedin.com/company/hirize/"
+  ],
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "39.731760",
+    "longitude": "-75.578500"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3 GERMAY DR, UNIT 4 1430",
+    "addressLocality": "WILMINGTON",
+    "addressRegion": "DE",
+    "postalCode": "19804",
+    "addressCountry": "US"
+  }
+}
