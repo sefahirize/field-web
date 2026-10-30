@@ -11,13 +11,21 @@ export const BRAND = {
   domain: "joinfield.ai",
 } as const;
 
+/**
+ * URL prefix of the whole dashboard; the landing owns everything else.
+ *
+ * Must match the folder app/(dashboard)/app/. To move the dashboard
+ * (e.g. to "/dashboard"), rename that folder and change this value.
+ */
+export const APP_BASE = "/app";
+
 /** Dashboard routes the landing links to. */
 export const ROUTES = {
   home: "/",
-  login: "/login",
-  register: "/register",
-  dashboard: "/dashboard",
-  checkout: "/checkout",
+  dashboard: APP_BASE,
+  login: `${APP_BASE}/login`,
+  register: `${APP_BASE}/register`,
+  checkout: `${APP_BASE}/checkout`,
 } as const;
 
 function readUrl(name: string, value: string | undefined, fallback: string): string {

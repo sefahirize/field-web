@@ -41,7 +41,7 @@ One repo, **`field-web`**, one Next.js app containing the **landing** (landing) 
 1. **Skeleton**: pnpm, Next.js (latest stable), TypeScript, ESLint with the isolation rule, `(landing)` / `(dashboard)` groups, `src/landing|dashboard|shared`, env handling, a trivial page in each group. Run lint/build.
 2. **Port the landing** (only pages in `seo-active-pages-table.txt` unless told otherwise) using Tailwind **3** first so the look is identical; port fonts, images, SEO, route handlers. Compare visually against `joinfield-landing`. Remove dead code (`plan-content-old`, orphan JSON-LD) only after asking.
 3. **Upgrade step** (separate, reversible): Tailwind 3 → latest, other upgrades deferred from step 2, with a visual diff.
-4. **Port the dashboard** from `mono-view-switch`: first as `.jsx` client components, MUI + SCSS loaded only in `(dashboard)`; one page first (login), then the rest; move the 94 tests; recreate the `RootEntry` / token / `session_id` logic at root level (middleware); recreate `/api` and `/uploads` rewrites; replace `vercel.json` logic. The old repos stay untouched.
+4. **Port the dashboard** from `mono-view-switch`: first as `.jsx` client components, MUI + SCSS loaded only in `(dashboard)`; all routes under `APP_BASE` (`/app`, `/app/login`, `/app/documents`, …, replacing the old top-level paths in `data/paths.js`); one page first (login), then the rest; move the 94 tests; recreate the `RootEntry` / token / `session_id` logic at root level (`proxy.ts`, Next 16's name for middleware) forwarding into `/app/...`; a plain `/` stays the landing; recreate `/api` and `/uploads` rewrites; replace `vercel.json` logic. The old repos stay untouched.
 5. **Wire the contract**: `shared` route constants and the landing → dashboard entry points; set `APP_URL` correctly.
 6. Later: TypeScript migration of the dashboard, landing redesign (the landing WILL change again — keep the isolation rules), Documents create flow, etc.
 
@@ -52,7 +52,7 @@ One repo, **`field-web`**, one Next.js app containing the **landing** (landing) 
 3. **Demo pages** (`public/demo*` in the dashboard repo): rename to "Field" too, or drop them from the new repo?
 4. **Landing colours**: keep the landing blue, or bring it to the Mono palette? Affects shared tokens.
 5. **Landing leftovers** (`QUESTIONS.md` Q1–Q6): legal entity name, address/founder/phone, support and privacy emails, social accounts, JSON-LD files, Hirize press link.
-6. **Domains**: how will it be served (`www.joinfield.ai` for landing, dashboard on the same host or `app.`)? With one Next app this can be one domain; the backend's verification-email and Stripe return URLs must point to the right host.
+6. ~~Domains~~ **Decided 2026-10-30**: one host. The landing owns the root of the domain; the whole dashboard lives under `/app` (`APP_BASE` in `src/shared/contract.ts`, folder `app/(dashboard)/app/`), e.g. `/app`, `/app/login`, `/app/documents`. The backend's verification email and Stripe still return to the root (`/?token=`, `/?session_id=`); the root proxy forwards them into `/app/...`.
 7. Which landing pages to port (all, or only the active ones in the SEO table)?
 8. Pages still to restyle in the dashboard: document detail, Analytics. Rail layout still needs a real-page walk-through on the cream background and in dark theme.
 9. Which design is the main one: Classic (current default, the one the user prefers) vs Rail (optional).
