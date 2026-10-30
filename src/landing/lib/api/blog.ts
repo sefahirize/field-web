@@ -1,5 +1,6 @@
 import { WORDPRESS_REST_API_BASE } from '@landing/constants/Global'
 import type { Category, Post } from '@landing/types/blog'
+import { sanitizeBlogHtml } from '@landing/lib/sanitize-blog-html'
 
 const getWpBase = () => {
   const fromEnv = process.env.NEXT_PUBLIC_WORDPRESS_REST_API_BASE
@@ -170,7 +171,7 @@ const normalizeWpPostToPost = (wp: WpPost, categoryIdToTitle: Map<number, string
     attributes: {
       title: plainTextFromHtml(wp.title.rendered),
       slug: wp.slug,
-      body: wp.content.rendered,
+      body: sanitizeBlogHtml(wp.content.rendered),
       description: plainTextFromHtml(wp.excerpt.rendered),
       createdAt: wp.date,
       updatedAt: wp.modified ?? wp.date,

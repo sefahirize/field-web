@@ -147,7 +147,8 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleJsonLd),
+          // Escape "<" so a WordPress title cannot close the script tag.
+          __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c'),
         }}
       />
     <div className="min-h-screen py-24 bg-natural-gray-bg">
