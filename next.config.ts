@@ -17,7 +17,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   experimental: {
-    // Needed because (landing) and (app) each have their own root layout,
+    // Needed because the landing and dashboard groups each have their own root layout,
     // so there is no single layout to render an app-wide 404 in.
     globalNotFound: true,
   },

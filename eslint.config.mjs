@@ -5,8 +5,18 @@ import nextTs from "eslint-config-next/typescript";
 // Layer isolation (see CLAUDE.md, "Isolation rules"): landing and dashboard
 // never import each other, only src/shared. A violation is an error, and
 // `pnpm build` runs lint first, so it fails the build.
-const LANDING = ["./src/landing", "./app/(landing)"];
-const DASHBOARD = ["./src/dashboard", "./app/(app)"];
+//
+// Each layer is a route group in app/ plus a folder in src/ with the same name.
+// To rename a layer: rename both folders, change `name` here and the alias in
+// tsconfig.json. Route groups never appear in URLs, so no link changes.
+const layer = (name, alias) => ({
+  alias: `${alias}/*`,
+  paths: [`./src/${name}`, `./app/(${name})`],
+  files: [`src/${name}/**`, `app/(${name})/**`],
+});
+
+const LANDING = layer("landing", "@landing");
+const DASHBOARD = layer("dashboard", "@dashboard");
 
 const MUI = { group: ["@mui/*", "@emotion/*"], message: "MUI and emotion load only in the dashboard." };
 const SCSS = { group: ["*.scss", "*.sass"], message: "SCSS loads only in the dashboard." };
@@ -14,6 +24,7 @@ const TAILWIND = {
   group: ["tailwindcss", "tailwindcss/*", "@tailwindcss/*"],
   message: "Tailwind loads only in the landing.",
 };
+const preferShared = alias => ({ group: [alias], message: "Use @shared/* instead." });
 
 export default defineConfig([
   ...nextVitals,
@@ -26,18 +37,19 @@ export default defineConfig([
         {
           zones: [
             {
-              target: LANDING,
-              from: DASHBOARD,
+              target: LANDING.paths,
+              from: DASHBOARD.paths,
               message: "The landing must not import dashboard code. Use src/shared.",
             },
             {
-              target: DASHBOARD,
-              from: LANDING,
+              target: DASHBOARD.paths,
+              from: LANDING.paths,
               message: "The dashboard must not import landing code. Use src/shared.",
             },
             {
               target: "./src/shared",
-              from: ["./src/landing", "./src/dashboard", "./app"],
+              from: ["./src", "./app"],
+              except: ["./shared"],
               message: "src/shared is the contract; it imports nothing from the layers.",
             },
           ],
@@ -46,21 +58,15 @@ export default defineConfig([
     },
   },
   {
-    files: ["src/landing/**", "app/(landing)/**"],
+    files: LANDING.files,
     rules: {
-      "no-restricted-imports": [
-        "error",
-        { patterns: [{ group: ["@dashboard/*"], message: "Use @shared/* instead." }, MUI, SCSS] },
-      ],
+      "no-restricted-imports": ["error", { patterns: [preferShared(DASHBOARD.alias), MUI, SCSS] }],
     },
   },
   {
-    files: ["src/dashboard/**", "app/(app)/**"],
+    files: DASHBOARD.files,
     rules: {
-      "no-restricted-imports": [
-        "error",
-        { patterns: [{ group: ["@landing/*"], message: "Use @shared/* instead." }, TAILWIND] },
-      ],
+      "no-restricted-imports": ["error", { patterns: [preferShared(LANDING.alias), TAILWIND] }],
     },
   },
   {
@@ -70,7 +76,7 @@ export default defineConfig([
         "error",
         {
           patterns: [
-            { group: ["@landing/*", "@dashboard/*"], message: "src/shared imports nothing from the layers." },
+            { group: [LANDING.alias, DASHBOARD.alias], message: "src/shared imports nothing from the layers." },
             MUI,
             SCSS,
             TAILWIND,

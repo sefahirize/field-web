@@ -38,10 +38,10 @@ One repo, **`field-web`**, one Next.js app containing the **landing** (landing) 
 ## Plan (one step at a time, wait for approval between steps)
 
 0. **Analyse** both source projects (structure, dependencies, risky libraries, pages in use vs unused) and report. Verify current stable versions of Next, React, TypeScript, Tailwind, MUI, Sass, ESLint, etc. with the package manager and report them with their peer-dependency implications. Propose the folder layout. No code yet.
-1. **Skeleton**: pnpm, Next.js (latest stable), TypeScript, ESLint with the isolation rule, `(landing)` / `(app)` groups, `src/landing|dashboard|shared`, env handling, a trivial page in each group. Run lint/build.
+1. **Skeleton**: pnpm, Next.js (latest stable), TypeScript, ESLint with the isolation rule, `(landing)` / `(dashboard)` groups, `src/landing|dashboard|shared`, env handling, a trivial page in each group. Run lint/build.
 2. **Port the landing** (only pages in `seo-active-pages-table.txt` unless told otherwise) using Tailwind **3** first so the look is identical; port fonts, images, SEO, route handlers. Compare visually against `joinfield-landing`. Remove dead code (`plan-content-old`, orphan JSON-LD) only after asking.
 3. **Upgrade step** (separate, reversible): Tailwind 3 → latest, other upgrades deferred from step 2, with a visual diff.
-4. **Port the dashboard** from `mono-view-switch`: first as `.jsx` client components, MUI + SCSS loaded only in `(app)`; one page first (login), then the rest; move the 94 tests; recreate the `RootEntry` / token / `session_id` logic at root level (middleware); recreate `/api` and `/uploads` rewrites; replace `vercel.json` logic. The old repos stay untouched.
+4. **Port the dashboard** from `mono-view-switch`: first as `.jsx` client components, MUI + SCSS loaded only in `(dashboard)`; one page first (login), then the rest; move the 94 tests; recreate the `RootEntry` / token / `session_id` logic at root level (middleware); recreate `/api` and `/uploads` rewrites; replace `vercel.json` logic. The old repos stay untouched.
 5. **Wire the contract**: `shared` route constants and the landing → dashboard entry points; set `APP_URL` correctly.
 6. Later: TypeScript migration of the dashboard, landing redesign (the landing WILL change again — keep the isolation rules), Documents create flow, etc.
 

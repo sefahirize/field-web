@@ -19,9 +19,9 @@ Read `HANDOFF.md` first: it has the full plan, the source projects, the decision
 
 ## Isolation rules (so the landing can change without breaking the dashboard)
 
-1. Layout groups: `app/(landing)/…` and `app/(app)/…` (dashboard), each with its own layout and its own CSS.
+1. Route groups (named after their `src` layer): `app/(landing)/…` and `app/(dashboard)/…`, each with its own layout and its own CSS.
 2. Layers: `src/landing/`, `src/dashboard/`, `src/shared/`. `landing` and `dashboard` never import each other, only `shared`. Enforce with an ESLint `no-restricted-imports` rule so a violation fails the build.
-3. Tailwind and its preflight load only in the landing layout. MUI + SCSS load only in the app layout. Neither stylesheet may leak into the other.
+3. Tailwind and its preflight load only in the landing layout. MUI + SCSS load only in the dashboard layout. Neither stylesheet may leak into the other.
 4. `shared` holds only the contract: route constants, app URL / env, brand name and logo, colour tokens if wanted, and the landing → dashboard entry points (login, sign-up, `/checkout?...` with the pricing parameters). Keep that contract in one file.
 5. Root-path redirects (`/?token=…` from the verification email, `/?session_id=…` from Stripe) are handled at root level (middleware), not inside a landing page, so they keep working whatever the landing looks like.
 6. Tests live per layer. The dashboard's tests must run without the landing present.

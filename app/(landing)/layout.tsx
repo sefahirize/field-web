@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 // Root layout of the landing. Its stylesheet (Tailwind from step 2)
-// never reaches the dashboard: (app) has its own root layout, and moving
+// never reaches the dashboard: it has its own root layout, and moving
 // between the two is a full page load.
 export default function LandingLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
