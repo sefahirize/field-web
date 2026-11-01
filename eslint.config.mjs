@@ -93,6 +93,4 @@ export default defineConfig([
     },
   },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
-  // Dead code ported as-is; removed (with this entry) once the user approves.
-  globalIgnores(["app/(landing)/(primary)/pricing/plan-content-old.tsx"]),
 ]);
