@@ -18,7 +18,7 @@ const TutorialsPage = () => {
 
     return (
         <div>
-            <Section className="!pb-0">
+            <Section className="pb-0!">
                 <div className="py-16 max-w-lg mx-auto">
                     <div className="rounded-lg bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url(/assets/images/tutorials/hero.png)" }}>
                         <div className="pt-10 pb-[60px]">
@@ -34,7 +34,7 @@ const TutorialsPage = () => {
                                     <img src="/assets/icons/search.svg" alt="search" className="absolute left-4 top-1/2 -translate-y-1/2" />
                                     <input
                                         type="text"
-                                        className="w-full rounded-lg border border-natural-gray-border px-4 py-2 pl-12 max-w-[332px] mx-auto placeholder:text-natural-gray-default placeholder:text-sm right-0 outline-none"
+                                        className="w-full rounded-lg border border-natural-gray-border px-4 py-2 pl-12 max-w-[332px] mx-auto placeholder:text-natural-gray-default placeholder:text-sm right-0 outline-hidden"
                                         placeholder="Search.."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -46,7 +46,7 @@ const TutorialsPage = () => {
                 </div>
             </Section>
 
-            <Section className="!pt-0 !pb-14">
+            <Section className="pt-0! pb-14!">
                 <div className="max-w-lg mx-auto">
                     {filteredItems.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-3 lg:px-0">

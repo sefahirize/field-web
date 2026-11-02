@@ -16,7 +16,7 @@ const PricingPage = () => {
         <div>
             <Section className="pb-0">
 
-                <div className="py-[78px] max-w-screen-lg mx-auto text-center">
+                <div className="py-[78px] max-w-(--breakpoint-lg) mx-auto text-center">
                     <h1 className="text-6xl font-semibold text-natural-green">Choose your plan</h1>
                     <p className="mt-6 text-lg font-medium text-natural-gray-default">
                         Take your business to the next level with a subscription <br className="hidden md:block" />

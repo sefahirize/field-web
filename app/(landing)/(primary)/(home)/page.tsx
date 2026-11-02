@@ -59,7 +59,7 @@ const featureData: FeatureCardProps[] = [
     ],
     buttons: [
       {
-        className: "bg-natural-navy text-white !text-xs !font-medium",
+        className: "bg-natural-navy text-white text-xs! font-medium!",
         type: "link",
         text: "Learn More",
         link: true,
@@ -103,7 +103,7 @@ const featureData: FeatureCardProps[] = [
     ],
     buttons: [
       {
-        className: "bg-natural-navy text-white !text-xs !font-medium",
+        className: "bg-natural-navy text-white text-xs! font-medium!",
         type: "link",
         text: "Start free trial",
         link: true,
@@ -116,13 +116,13 @@ const featureData: FeatureCardProps[] = [
     title: "Enterprise search AI by Field",
     endCustomHtml: <>
       <div className="flex justify-center mt-16">
-        <Button inline link href={PAGE_SETTINGS.contact.href} iconClass="!text-white" className="!bg-[#3A5AFF] !text-white !text-xs !font-light !px-6 !py-2 !rounded-full shadow-[0px_1px_2px_0px_rgba(0,0,0,0.5)]">Get early access</Button>
+        <Button inline link href={PAGE_SETTINGS.contact.href} iconClass="text-white!" className="bg-[#3A5AFF]! text-white! text-xs! font-light! px-6! py-2! rounded-full! shadow-[0px_1px_2px_0px_rgba(0,0,0,0.5)]">Get early access</Button>
       </div>
     </>,
     image: {
       // html: <>
       //     <div className="md:absolute text-center top-20 left-1/2 transform md:-translate-x-1/2 md:-translate-y-1/2 h-auto">
-      //         <Button link href={PAGE_SETTINGS.contact.href} iconClass="!text-white" className="!bg-[#3A5AFF] !text-white !text-xs !font-light !px-6 !py-2 !rounded-full shadow-[0px_1px_2px_0px_rgba(0,0,0,0.5)]">Get early access</Button>
+      //         <Button link href={PAGE_SETTINGS.contact.href} iconClass="text-white!" className="bg-[#3A5AFF]! text-white! text-xs! font-light! px-6! py-2! rounded-full! shadow-[0px_1px_2px_0px_rgba(0,0,0,0.5)]">Get early access</Button>
       //     </div>
       // </>,
       bg: {
@@ -146,21 +146,21 @@ const featureData: FeatureCardProps[] = [
         head: "AI Search",
         content: "Synthesize volumes of information into clear, actionable insight",
         headClassName: "text-xs sm:text-xl",
-        contentClassName: "text-sm sm:text-base"
+        contentClassName: "text-sm sm:text-base sm:leading-6"
       },
       {
         borderTop: true,
         head: "Knowledge Base",
         content: "Field’s accurate data extraction makes sure all data is high quality and accurate",
         headClassName: "text-xs sm:text-xl",
-        contentClassName: "text-sm sm:text-base"
+        contentClassName: "text-sm sm:text-base sm:leading-6"
       },
       {
         borderTop: true,
         head: "AI Agents",
         content: "Execute your most complex multi-step workflows.",
         headClassName: "text-xs sm:text-xl",
-        contentClassName: "text-sm sm:text-base"
+        contentClassName: "text-sm sm:text-base sm:leading-6"
       }
     ]
   },
@@ -206,7 +206,7 @@ export default function Home() {
     return (
       <div className={`flex flex-col sm:flex-row gap-4 sm:gap-x-9 justify-center mt-[77px] mb-8 lg:mb-[95px]`}
       >
-        <Button className="!bg-black hover:!bg-white font-semibold" link href={"https://calendly.com/hirize/hirize-trial-demo"} target="_blank" inline>
+        <Button className="bg-black! hover:bg-white! font-semibold" link href={"https://calendly.com/hirize/hirize-trial-demo"} target="_blank" inline>
           Schedule a 15 min demo
         </Button>
         <Button className="font-semibold" link href={APP_URL} variant="transparent-white" inline hideIcon>
@@ -221,9 +221,9 @@ export default function Home() {
     <div>
       <Hero
         title={<>AI-powered document processing <br className="hidden lg:block" /> with a one-stop API solution</>}
-        titleClassName="text-center max-w-none lg:text-[56px] xl:text-[75px] font-semibold xl:!leading-[81px] md:mt-[73px]"
+        titleClassName="text-center max-w-none lg:text-[56px] xl:text-[75px] font-semibold xl:leading-[81px]! md:mt-[73px]"
         description="Unmatched document intelligence for seamless data extraction and processing solutions"
-        descClassName="text-center border-t-0 !max-w-none 2xl:!max-w-none !pt-0 lg:!text-[20px] !font-normal"
+        descClassName="text-center border-t-0 max-w-none! 2xl:max-w-none! pt-0! lg:text-[20px]! font-normal!"
         bgImage="/assets/images/hero/home.png"
         showLogos={true}
         hideButtons={true}

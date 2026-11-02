@@ -7,7 +7,7 @@ export const solutionsFeatures: ISolutionsFeature[] = [
         title: "HR Vendors",
         content: "Offer your customers with state-of-the-art parsing and matching technology that sets the standard for speed, accuracy, and reliability.",
         className: "bg-white",
-        pClassName: "!text-natural-gray-default ml-8 text-base !font-normal",
+        pClassName: "text-natural-gray-default! ml-8 text-base font-normal!",
         icon: {
             bg: "bg-[#DDFCFE]",
         }
@@ -16,7 +16,7 @@ export const solutionsFeatures: ISolutionsFeature[] = [
         title: "Enterprise",
         content: "The Field API is simple to integrate with major corporate ATS’s, allowing you to enhance your current hiring tech stack while saving time.",
         className: "bg-white",
-        pClassName: "!text-natural-gray-default ml-8 text-base !font-normal",
+        pClassName: "text-natural-gray-default! ml-8 text-base font-normal!",
         icon: {
             bg: "bg-[#F1FFE8]",
         }
@@ -25,10 +25,10 @@ export const solutionsFeatures: ISolutionsFeature[] = [
         title: "Staffing Agencies",
         content: "Field solutions will maximize your resume database by finding 30% more qualified candidates from the same resume pool.",
         className: "bg-white",
-        pClassName: "!text-natural-gray-default ml-8 text-base !font-normal",
+        pClassName: "text-natural-gray-default! ml-8 text-base font-normal!",
         // pParentClassName: "lg:mt-6",
         icon: {
-            bg: "bg-gradient-to-b from-[rgba(36,36,133,0.2)] from-[44.82%] to-[rgba(129,136,152,0.2)] to-[99.75%]",
+            bg: "bg-linear-to-b/srgb from-[rgba(36,36,133,0.2)] from-[44.82%] to-[rgba(129,136,152,0.2)] to-[99.75%]",
         }
     },
 ]
@@ -106,7 +106,7 @@ export const featureData: FeatureCardProps[] = [
                 spaceX: true,
                 borderTop: true,
                 head: "Field IQ",
-                headClassName: "!font-semibold xl:!text-[64px] xl:!leading-normal",
+                headClassName: "font-semibold! xl:text-[64px]! xl:leading-normal!",
                 html: true,
                 content: "Utilize the power of Generative AI to create highly relevant interview questions tailored precisely for your desired candidates. Field IQ harnesses data-driven insights to generate custom questions that hone in on exactly what you need. <br> <br> Unlock a full range of hiring potential with our cutting edge solution.",
             }

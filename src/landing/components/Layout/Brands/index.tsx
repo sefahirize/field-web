@@ -5,7 +5,7 @@ const Brands = ({ title, cardType = 'normal' }: { title?: string, cardType?: str
     return (
         <div className="py-24 bg-white px-3 lg:px-0">
             <h2 className="text-natural-navy text-2xl xl:text-[40px] font-semibold text-center">
-                {title ? title : <>Some brands that work <span className="bg-gradient-to-b from-[#242485] via-[#242485] to-[#818898] text-transparent bg-clip-text">with us</span></>}
+                {title ? title : <>Some brands that work <span className="bg-linear-to-b/srgb from-[#242485] via-[#242485] to-[#818898] text-transparent bg-clip-text">with us</span></>}
             </h2>
             <div className={`grid ${cardType === 'bordered' ? 'mt-14 grid-cols-1 sm:grid-cols-2 gap-x-3 xl:gap-x-6' : 'mt-10 grid-cols-2 gap-x-10 xl:gap-x-20'} lg:flex flex-wrap justify-center items-center`}>
                 {companyLogos.map((logo, index) => (

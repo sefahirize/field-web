@@ -24,7 +24,7 @@ const NotFound = () => {
                         unoptimized
                         src="/assets/images/hero/integration-hero-tp.png"
                         alt="integration"
-                        className="absolute bottom-7 sm:bottom-0 lg:-bottom-[100px] left-1/2 -translate-x-1/2 w-auto object-cover"
+                        className="absolute bottom-7 sm:bottom-0 lg:bottom-[-100px] left-1/2 -translate-x-1/2 w-auto object-cover"
                         width={1380}
                         height={556}
                     />

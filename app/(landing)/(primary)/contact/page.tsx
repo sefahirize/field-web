@@ -17,7 +17,7 @@ const Contact = () => {
         <ReCaptchaProvider>
             <div>
             <Section className="pb-0">
-                <div className="pt-[78px] max-w-screen-lg mx-auto text-center">
+                <div className="pt-[78px] max-w-(--breakpoint-lg) mx-auto text-center">
                     <h1 className="text-5xl font-medium text-natural-green">
                         Get in Touch with Our <br className="hidden md:block" />
                         product experts

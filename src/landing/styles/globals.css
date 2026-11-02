@@ -1,41 +1,168 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss' source(none);
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Landing files only, so no dashboard class ends up in the landing CSS. */
+@source "../";
+@source "../../../app/(landing)";
+@source "../../../app/global-not-found.tsx";
+
+/*
+  Tailwind 4 applies hover styles only on devices with a mouse. The desktop
+  nav (lg and up) opens its menus on hover, so a touch tablet in landscape
+  needs the Tailwind 3 behaviour, where a tap triggers hover.
+*/
+@custom-variant hover (&:hover);
+
+@theme {
+  /* rem like the default breakpoints, so Tailwind can sort it between lg and xl. */
+  --breakpoint-lgx: 71.875rem; /* 1150px */
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-dark-secondary: #121212;
+  --color-card-border: #e1e1e2;
+  --color-tag-border: #041527;
+  --color-natural-gray-bg: #f5f5f6;
+  --color-natural-gray-text: #223140;
+  --color-natural-gray-border: #e1e1e2;
+  --color-natural-navy: #242729;
+  --color-natural-gray-default: #6c7a8e;
+  --color-nature-black: #0f0f13;
+  --color-natural-gray-tint: #bac1cc;
+  --color-natural-navy-dark: #040f4b;
+  --color-natural-black: #01092f;
+  --color-natural-green: #0a1c20;
+  --color-auxiliary-blue-tint: #e1ddfe;
+  --color-gray-tint: #a4acb9;
+  --color-gray-border-dark: #e9eaeb;
+  --color-app-blue: #3a5aff;
+  --color-gray-default: #818898;
+
+  --font-sans: var(--font-inter), sans-serif;
+  --font-eudoxus: var(--font-eudoxus-sans), sans-serif;
+
+  --font-weight-extralight: 100;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --container-1304: 1304px;
+  --container-lg: 1080px;
+  --container-8xl: 1440px;
+
+  --spacing-3_5: 14px;
+  --spacing-4_5: 40px;
+
+  --text-4_5: 40px;
+
+  /*
+    Tailwind 3 line heights. Tailwind 4 uses ratios (text-2xl = 1.333), which
+    grow when an arbitrary size like text-[40px] overrides a text-* class;
+    Tailwind 3 kept the fixed value.
+  */
+  --text-xs--line-height: 1rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+
+  /* Tailwind 3 values of the default colours the landing uses (Tailwind 4 retuned them). */
+  --color-slate-50: #f8fafc;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-green-50: #f0fdf4;
+  --color-green-200: #bbf7d0;
+  --color-green-500: #22c55e;
+  --color-green-700: #15803d;
+  --color-red-50: #fef2f2;
+  --color-red-200: #fecaca;
+  --color-red-500: #ef4444;
+  --color-red-700: #b91c1c;
 }
 
-@media (prefers-color-scheme: dark) {
+/*
+  Tailwind 3 preflight defaults that Tailwind 4 changed, kept so the landing
+  looks and feels the same: gray-200 borders, gray-400 placeholders, the
+  browser's own background on form fields and a pointer cursor on buttons.
+  Drop a rule only together with explicit utilities on the elements that
+  rely on it.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  input:where(:not([type='button'], [type='reset'], [type='submit'])),
+  select,
+  textarea {
+    background-color: revert;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility card-price {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(0deg, rgba(230, 230, 230, 0.39), rgba(230, 230, 230, 0.39)),
+    linear-gradient(0deg, #3a5aff, #3a5aff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box, border-box;
+  box-shadow:
+    0px 0px 0px 1px rgba(19, 28, 43, 0.08),
+    0px 1px 2px 0px rgba(164, 172, 185, 0.24);
+}
+
+@layer utilities {
   :root {
     --background: #ffffff;
     --foreground: #171717;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-inter);
-}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #ffffff;
+      --foreground: #171717;
+    }
+  }
 
-.app-input {
-  @apply w-full px-4 py-2 rounded-full text-[#818898] text-base font-normal outline-none !ring-0 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-[0px_0px_0px_1px_rgba(9,25,72,0.13),0px_1px_2px_0px_rgba(18,55,105,0.08)]
-}
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-inter);
+  }
 
-
-@layer components {
-  .card-price {
-    border: 1px solid transparent;
-    border-radius: 8px;
-    background-image: linear-gradient(#fff, #fff),
-      linear-gradient(0deg, rgba(230, 230, 230, 0.39), rgba(230, 230, 230, 0.39)),
-      linear-gradient(0deg, #3A5AFF, #3A5AFF);
-    background-origin: border-box;
-    background-clip: padding-box, border-box, border-box;
-    box-shadow: 0px 0px 0px 1px rgba(19, 28, 43, 0.08),
-      0px 1px 2px 0px rgba(164, 172, 185, 0.24);
+  .app-input {
+    @apply w-full px-4 py-2 rounded-full text-[#818898] text-base font-normal outline-hidden ring-0! placeholder:text-gray-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-[0px_0px_0px_1px_rgba(9,25,72,0.13),0px_1px_2px_0px_rgba(18,55,105,0.08)];
   }
 }
 

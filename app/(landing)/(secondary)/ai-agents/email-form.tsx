@@ -61,7 +61,7 @@ const EmailForm: React.FC<{ className: string }> = ({ className = "" }) => {
                         placeholder="Enter your email"
                         required
                         disabled={isLoading}
-                        className="bg-transparent text-[#BFBFBF] text-sm font-normal outline-none flex-1 px-3"
+                        className="bg-transparent text-[#BFBFBF] text-sm font-normal outline-hidden flex-1 px-3"
                     />
                     <button
                         type="submit"

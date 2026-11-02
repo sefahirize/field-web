@@ -38,7 +38,7 @@ const Input = ({
             placeholder:text-gray-400
             shadow-[0px_0px_0px_1px_rgba(9,25,72,0.13),0px_1px_2px_0px_rgba(18,55,105,0.08)]
             hover:bg-gray-50
-            focus:outline-none focus:ring-2 focus:ring-blue-500
+            focus:outline-hidden focus:ring-2 focus:ring-blue-500
             disabled:bg-gray-100 disabled:cursor-not-allowed
             ${error ? 'border-red-500' : 'border-transparent'}
           `}

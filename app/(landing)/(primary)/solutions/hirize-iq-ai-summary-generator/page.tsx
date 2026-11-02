@@ -16,7 +16,7 @@ const HirizeIqAiSummaryGenerator: React.FC = () => {
             <Hero
                 subHero
                 title="Generative AI Enabled  Hiring"
-                titleClassName="!max-w-[600px]"
+                titleClassName="max-w-[600px]!"
                 description="Generated automated candidate summaries and interview questions"
                 bgImage="/assets/images/hero/hirizeIq.png" />
 

@@ -4,7 +4,7 @@ const TestimonialsShort: React.FC = () => {
     return (
         <div className="max-w-lg mx-auto px-6 xl:px-0">
             <div className="flex flex-col md:flex-row items-stretch gap-6">
-                <div className="w-full md:w-[325px] flex-shrink-0 relative">
+                <div className="w-full md:w-[325px] shrink-0 relative">
                     <p className="absolute bottom-3.5 left-4 text-white font-semibold text-2xl">
                         IVY EXEC
                     </p>
@@ -17,7 +17,7 @@ const TestimonialsShort: React.FC = () => {
                         unoptimized
                     />
                 </div>
-                <div className="bg-[#D8DEFF] py-[30px] px-[35px] text-left flex flex-col justify-between flex-grow overflow-hidden">
+                <div className="bg-[#D8DEFF] py-[30px] px-[35px] text-left flex flex-col justify-between grow overflow-hidden">
                     <div>
                         <p className="text-natural-gray-text text-xl font-light mt-3"
                             disable-data-aos="fade-up"

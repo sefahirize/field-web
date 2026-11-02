@@ -1,7 +1,7 @@
 // const BlogPage = () => {
 
 //     return (
-//         <div className="min-h-80 bg-gradient-to-br from-slate-50 to-blue-50">
+//         <div className="min-h-80 bg-linear-to-br/srgb from-slate-50 to-blue-50">
 //             {/* Hero Section */}
 //             <div className="container mx-auto px-4 py-20 text-center mt-20">
 //                 <div className="max-w-4xl mx-auto">

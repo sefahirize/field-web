@@ -19,7 +19,7 @@ const AiMatchingApi: React.FC = () => {
             <Hero
                 subHero
                 title="Revolutionizing Recruitment with AI-Powered Matching"
-                titleClassName="!max-w-[900px]"
+                titleClassName="max-w-[900px]!"
                 description="Easily reduce candidate search to seconds while maintaining accuracy. Discover a new way of reaching top talent, faster than ever before."
                 bgImage="/assets/images/hero/aiMatching.png"
                 overlay
@@ -32,7 +32,7 @@ const AiMatchingApi: React.FC = () => {
 
             <Section>
                 <SectionHeader
-                    className="!mb-14 lg:!mb-0"
+                    className="mb-14! lg:mb-0!"
                     title={"Industry’s most advanced matching engine designed with self learning AI"}
                     titleClassName="max-w-[870px] mx-auto"
                     text="Empowering seamless, intelligent connections through adaptive AI technology"

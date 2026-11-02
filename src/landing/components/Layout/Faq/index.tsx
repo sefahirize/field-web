@@ -27,7 +27,7 @@ const faqData = [
 
 const Faq = () => {
     return (
-        <Section className="!pb-0">
+        <Section className="pb-0!">
             <SectionHeader
                 title="Frequently Asked Questions"
                 text="Everything you need to know about Field APIs, integrations and pricing."

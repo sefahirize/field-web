@@ -41,7 +41,7 @@ const ResumeParserPage: React.FC = () => {
             <Hero
                 subHero
                 title="Leading Accuracy in Document Data Extraction"
-                titleClassName="!max-w-[900px]"
+                titleClassName="max-w-[900px]!"
                 description="Effortlessly Parse Any File Format and 24+ Languages with unmatched accuracy"
                 bgImage="/assets/images/hero/parser.png"
                 overlay
@@ -100,7 +100,7 @@ const ResumeParserPage: React.FC = () => {
 
             <Section>
                 <SectionHeader
-                    className="!mb-14 lg:!mb-0"
+                    className="mb-14! lg:mb-0!"
                     title={"Seamless API integration with RESTFul API"}
                     titleClassName="max-w-[600px] mx-auto"
                     text="Start integrating your product with Field right away!"

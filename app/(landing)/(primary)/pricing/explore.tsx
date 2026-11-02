@@ -17,7 +17,7 @@ const ExploreCard = ({ item }: { item: ExploreSection }) => {
                             <div className="space-y-3.5">
                                 {product.list.map((item, index) => (
                                     <div key={index} className="flex items-center gap-x-2.5">
-                                        <CheckBlackCircle className="!w-[15px] !h-[15px]" />
+                                        <CheckBlackCircle className="w-[15px]! h-[15px]!" />
                                         <p className="text-sm font-normal text-black flex-1">{item}</p>
                                     </div>
                                 ))}

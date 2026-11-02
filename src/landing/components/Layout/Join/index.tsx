@@ -32,7 +32,7 @@ const Join = () => {
                         >Book a Demo call</Button>
                     </div>
                 </div>
-                <div className="mt-8 md:mt-16 flex-grow">
+                <div className="mt-8 md:mt-16 grow">
                     <ul className="grid grid-cols-2 md:grid-cols-3 gap-x-4 md:gap-x-6 gap-y-6 md:gap-y-9">
                         {companyLogos.map((icon, index) => (
                             <li key={index} className="min-h-[72px] rounded-2xl bg-white overflow-hidden shadow-[2px_2px_12px_0px_#00000005] flex item-center justify-center">

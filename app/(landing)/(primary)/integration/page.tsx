@@ -151,7 +151,7 @@ const IntegrationPage = () => {
                         unoptimized
                         src="/assets/images/hero/integration-hero-tp.png"
                         alt="integration"
-                        className="absolute bottom-7 sm:bottom-0 lg:-bottom-[100px] left-1/2 -translate-x-1/2 w-auto object-cover"
+                        className="absolute bottom-7 sm:bottom-0 lg:bottom-[-100px] left-1/2 -translate-x-1/2 w-auto object-cover"
                         width={1380}
                         height={556}
                     />
@@ -191,7 +191,7 @@ const IntegrationPage = () => {
                 <SectionHeader
                     title="Getting started with Field is easy"
                     text="Extract data from Word, PDF, and image-based documents using OCR technology, advanced pattern recognition, and the help of anchor keywords."
-                    textClassName="max-w-[730px] mx-auto text-[#696A72] lg:text-xl !font-light"
+                    textClassName="max-w-[730px] mx-auto text-[#696A72]! lg:text-xl font-light!"
                     bottomSpace
                 />
                 <div className="max-w-lg mx-auto relative p-3 md:p-11 rounded-lg overflow-hidden">
@@ -236,7 +236,7 @@ const IntegrationPage = () => {
                 <SectionHeader
                     title="One platform that has it all"
                     text="Work on all your potential leads from a single list. Leverage product usage and marketing data to qualify leads."
-                    textClassName="max-w-[730px] mx-auto text-[#696A72] lg:text-xl !font-light"
+                    textClassName="max-w-[730px] mx-auto text-[#696A72]! lg:text-xl font-light!"
                     bottomSpace
                 />
                 <div className="max-w-[1304px] mx-auto relative px-5 md:px-24 rounded-lg overflow-hidden bg-white py-12">

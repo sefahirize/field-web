@@ -15,7 +15,7 @@ const FeatureTitle = ({ title, className }: { title: string, className?: string 
 
 const FeatureContentTitle = ({ title, className }: { title: string, className?: string }) => {
     return (
-        <h3 className={`font-semibold text-base sm:text-lg leading-6 text-natural-navy ${className || ''}`}>{title}</h3>
+        <h3 className={`font-semibold text-base sm:text-lg leading-6 sm:leading-7 text-natural-navy ${className || ''}`}>{title}</h3>
     )
 }
 

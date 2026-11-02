@@ -60,7 +60,7 @@ const solutionsFeatures: ISolutionsFeature[] = [
         className: "bg-white",
         pClassName: "text-natural-gray-default",
         icon: {
-            bg: "bg-[linear-gradient(179.71deg,_rgba(36,_36,_133,_0.2)_44.82%,_rgba(129,_136,_152,_0.2)_99.75%)]",
+            bg: "bg-[linear-gradient(179.71deg,rgba(36,36,133,0.2)_44.82%,rgba(129,136,152,0.2)_99.75%)]",
         }
     },
 ]
@@ -134,14 +134,14 @@ const DescItem: React.FC<DescItemProps> = ({ className = "", title, desc, link =
                     {link && <div className="flex gap-x-6 mt-10">
                         <Button inline
                             variant="black"
-                            className="!text-sm !px-4"
+                            className="text-sm! px-4!"
                             link
                             href={PAGE_SETTINGS.contact.href}>
                             Schedule demo call
                         </Button>
                         <Button inline
                             variant="transparent-black"
-                            className="!text-sm !px-4"
+                            className="text-sm! px-4!"
                             hideIcon
                             link
                             href={APP_URL}>
@@ -159,7 +159,7 @@ const StartupGrowth = () => {
         <div>
             <Hero
                 title="Building your startup works best with Field"
-                titleClassName="max-w-[595px]"
+                titleClassName="max-w-[595px]!"
                 description="We know how hard it is to start, grow and manage your startup all at the same time. Startups get 60% discount at the Field startup program."
                 bgImage="/assets/images/hero/startups.png"
                 subHero
@@ -212,7 +212,7 @@ const StartupGrowth = () => {
                 <SectionHeader
                     title="We help you grow"
                     text="Special startup package, we are with you along the way at a special discount."
-                    textClassName="max-w-[400px] mx-auto !mt-7"
+                    textClassName="max-w-[400px] mx-auto mt-7!"
                     bottomSpace
                 />
 

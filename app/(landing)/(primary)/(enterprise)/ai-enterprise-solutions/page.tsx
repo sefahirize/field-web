@@ -54,7 +54,7 @@ const featureData: FeatureCardProps[] = [
                 icon: <JobText className="text-[#A7A9A9] w-6 h-6" />,
                 content: "You AI strategy is as good as your data, Field Leads in data retrieval/parsing accuracy.",
                 headClassName: "sm:text-xl",
-                contentClassName: "text-sm sm:text-base",
+                contentClassName: "text-sm sm:text-base sm:leading-6",
                 link: PAGE_SETTINGS.resume_parser.href
             },
             {
@@ -63,7 +63,7 @@ const featureData: FeatureCardProps[] = [
                 icon: <Dashboard className="text-[#A7A9A9] w-6 h-6" />,
                 content: "Field IQ and Field AI matching helps your HR team to hire faster, we provide you generative AI that helps you hire without specialist knowledge",
                 headClassName: "sm:text-xl",
-                contentClassName: "text-sm sm:text-base",
+                contentClassName: "text-sm sm:text-base sm:leading-6",
                 link: PAGE_SETTINGS.ai_matching.href
             },
             {
@@ -73,7 +73,7 @@ const featureData: FeatureCardProps[] = [
                 content: <>{luminaContent()}</>,
                 html: true,
                 headClassName: "sm:text-xl",
-                contentClassName: "text-sm sm:text-base",
+                contentClassName: "text-sm sm:text-base sm:leading-6",
                 link: PAGE_SETTINGS.ai_agents.href
             }
         ]
@@ -106,7 +106,7 @@ const solutionsFeatures: ISolutionsFeature[] = [
         className: "bg-white",
         pClassName: "text-natural-gray-default",
         icon: {
-            bg: "bg-[linear-gradient(179.71deg,_rgba(36,_36,_133,_0.2)_44.82%,_rgba(129,_136,_152,_0.2)_99.75%)]",
+            bg: "bg-[linear-gradient(179.71deg,rgba(36,36,133,0.2)_44.82%,rgba(129,136,152,0.2)_99.75%)]",
         }
     },
 ]
@@ -123,7 +123,7 @@ const AiEnterpriseSolutions: React.FC = () => {
                 overlay
             />
 
-            <Section className="!pb-0">
+            <Section className="pb-0!">
                 <AiSolutions
                     title="AI designed with your needs in mind"
                     features={solutionsFeatures}

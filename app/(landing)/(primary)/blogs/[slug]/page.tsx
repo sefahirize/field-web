@@ -207,7 +207,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 [&_h1]:mt-10 [&_h1]:mb-4 [&_h1]:text-2xl [&_h1]:font-bold
                 [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-8 [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-1
                 [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-8 [&_ol]:flex [&_ol]:flex-col [&_ol]:gap-1
-                [&_li]:whitespace-normal [&_li]:break-words
+                [&_li]:whitespace-normal [&_li]:wrap-break-word
                 [&_a]:text-app-blue [&_a]:underline
                 [&_figure]:my-8 [&_figure>img]:rounded-lg
                 [&_img]:max-w-full [&_img]:h-auto

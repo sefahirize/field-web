@@ -178,7 +178,7 @@ export default function BlogContent({
         <div>
             {!isFilteredView ? (
             <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-white to-[#D8DEFF] h-5/6 max-h-[612px]"></div>
+                <div className="absolute inset-0 bg-linear-to-b/srgb from-white to-[#D8DEFF] h-5/6 max-h-[612px]"></div>
                 <div className="max-w-1304 mx-auto pt-14 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10">
                         {/* First/Featured Article */}
@@ -256,7 +256,7 @@ export default function BlogContent({
                                         onClick={() => handleCategoryChange(category.id.toString())}
                                         className={`${categoryButton} ${categoryButtonHover} 
                                         ${activeCategory === category.id.toString() ? 'text-black' : 'text-natural-gray-default'} 
-                                        ${index === categories.length - 1 ? '!pb-0 !border-b-0' : ''}`}
+                                        ${index === categories.length - 1 ? 'pb-0! border-b-0!' : ''}`}
                                     >
                                         <span className="text-current font-normal text-lg">{category.attributes.title}</span>
                                         <span className="text-natural-navy font-medium text-lg"></span>
@@ -296,7 +296,7 @@ export default function BlogContent({
                         {/* Posts Grid */}
 
                         <div className="lg:flex justify-between items-center space-y-4 lg:space-y-0">
-                            <span className="text-natural-navy font-medium text-lg">
+                            <span className="block text-natural-navy font-medium text-lg">
                                 Results <span className="font-semibold">1-{total_blog_post > postLimit ? postLimit : total_blog_post}</span> out of <span className="font-semibold">{total_blog_post}</span> items
                             </span>
                             <Select
@@ -377,24 +377,24 @@ const BlogCard = ({ article, orientation, size = "normal", isflex = false }: { a
                             alt={title}
                             width={imgWidth}
                             height={imgHeight}
-                            className="object-cover w-full h-full rounded"
+                            className="object-cover w-full h-full rounded-sm"
                         />
                     </div>
                     <div className={`${orientation === "vertical" ? 'mt-8' : 'mt-0 flex-1 pl-8'}  ${isflex ? 'flex flex-col flex-1 justify-between' : ''}`}>
                         <h3
                             id={`article-${slug}`}
                             className={`${titleSize} text-natural-navy font-semibold leading-normal hover:text-primary-600
-                            ${orientation === "horizontal" && '!text-[16px] !leading-[normal]'}
+                            ${orientation === "horizontal" && 'text-[16px]! leading-[normal]!'}
                             `}
                         >
                             {title}
                         </h3>
                         <p className={`${descSize} text-natural-gray-default font-normal mt-6 leading-normal
-                            ${orientation === "horizontal" && '!text-[14px] !leading-[normal] !mt-2'}
+                            ${orientation === "horizontal" && 'text-[14px]! leading-[normal]! mt-2!'}
                         `}>
                             {description}
                         </p>
-                        <div className={`flex items-center gap-x-2 mt-8 ${orientation === "horizontal" && '!mt-3'}`}>
+                        <div className={`flex items-center gap-x-2 mt-8 ${orientation === "horizontal" && 'mt-3!'}`}>
                             <span className={articleInfo} aria-label="Category">
                                 {categories?.data?.[0]?.attributes.title}
                             </span>

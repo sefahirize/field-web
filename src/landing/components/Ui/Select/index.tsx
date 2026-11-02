@@ -142,7 +142,7 @@ const Select = <T extends SelectOption>({
             {/* Select trigger button */}
             <div
                 className={`flex items-center justify-between w-full px-4 py-2 text-left bg-white ${rounded ? 'rounded-full' : 'rounded-md'
-                    } cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-[0px_0px_0px_1px_rgba(9,25,72,0.13),0px_1px_2px_0px_rgba(18,55,105,0.08)] 
+                    } cursor-pointer hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-[0px_0px_0px_1px_rgba(9,25,72,0.13),0px_1px_2px_0px_rgba(18,55,105,0.08)] 
                 ${selectedClassName}`}
                 onClick={handleToggleOpen}
             >
@@ -194,7 +194,7 @@ const Select = <T extends SelectOption>({
                             onClick={(e) => e.stopPropagation()}
                             placeholder={searchPlaceholder}
                             aria-label={searchPlaceholder}
-                            className="w-full rounded-lg border border-natural-gray-border px-3 py-2 text-sm placeholder:text-natural-gray-default focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full rounded-lg border border-natural-gray-border px-3 py-2 text-sm placeholder:text-natural-gray-default focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                             autoComplete="off"
                         />
                     </div>

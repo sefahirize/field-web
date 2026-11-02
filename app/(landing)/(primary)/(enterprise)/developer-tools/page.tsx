@@ -159,7 +159,7 @@ const DeveloperTools: React.FC = () => {
         <div>
             <Hero
                 title="Create big solutions with Field"
-                titleClassName="max-w-[595px]"
+                titleClassName="max-w-[595px]!"
                 description="For companies with extensive AI needs, advanced solutions are crucial. Field is tailored to provide the most accurate insights right when you need it."
                 bgImage="/assets/images/hero/developer-tools.png"
                 subHero

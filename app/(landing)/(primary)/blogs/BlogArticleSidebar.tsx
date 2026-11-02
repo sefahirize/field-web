@@ -9,7 +9,7 @@ interface BlogArticleSidebarProps {
 export const BlogArticleSidebar = ({ recentPosts }: BlogArticleSidebarProps) => {
   return (
     <aside className="space-y-8 lg:sticky lg:top-28">
-      <div className="rounded-lg bg-white p-6 border border-natural-gray-border shadow-sm">
+      <div className="rounded-lg bg-white p-6 border border-natural-gray-border shadow-xs">
         <h2 className="text-natural-navy font-semibold text-lg">Search</h2>
         <search className="mt-4" aria-label="Search blog articles">
           <form action="/blogs" method="get" role="search" className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
@@ -23,13 +23,13 @@ export const BlogArticleSidebar = ({ recentPosts }: BlogArticleSidebarProps) => 
                 name="search"
                 type="search"
                 autoComplete="off"
-                className="w-full border border-natural-gray-border text-natural-navy font-medium text-sm placeholder:text-natural-gray-default py-3 pr-3 pl-10 rounded-xl ring-natural-navy focus:outline-none focus:ring-2 focus:ring-natural-navy"
+                className="w-full border border-natural-gray-border text-natural-navy font-medium text-sm placeholder:text-natural-gray-default py-3 pr-3 pl-10 rounded-xl ring-natural-navy focus:outline-hidden focus:ring-2 focus:ring-natural-navy"
                 placeholder="Search…"
               />
             </div>
             <button
               type="submit"
-              className="shrink-0 rounded-xl bg-natural-navy px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-natural-navy-dark focus:outline-none focus:ring-2 focus:ring-natural-navy focus:ring-offset-2"
+              className="shrink-0 rounded-xl bg-natural-navy px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-natural-navy-dark focus:outline-hidden focus:ring-2 focus:ring-natural-navy focus:ring-offset-2"
             >
               Search
             </button>
@@ -37,7 +37,7 @@ export const BlogArticleSidebar = ({ recentPosts }: BlogArticleSidebarProps) => 
         </search>
       </div>
 
-      <div className="rounded-lg bg-white p-6 border border-natural-gray-border shadow-sm">
+      <div className="rounded-lg bg-white p-6 border border-natural-gray-border shadow-xs">
         <h2 className="text-natural-navy font-semibold text-lg">Recent posts</h2>
         {recentPosts.length === 0 ? (
           <p className="mt-4 text-sm text-natural-gray-default">No other posts yet.</p>
@@ -47,7 +47,7 @@ export const BlogArticleSidebar = ({ recentPosts }: BlogArticleSidebarProps) => 
               <li key={post.id}>
                 <Link
                   href={`/blogs/${post.attributes.slug}`}
-                  className="group block rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-natural-navy focus-visible:ring-offset-2"
+                  className="group block rounded-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-natural-navy focus-visible:ring-offset-2"
                 >
                   <span className="font-semibold text-natural-navy text-base leading-snug group-hover:text-app-blue transition-colors">
                     {post.attributes.title}

@@ -62,7 +62,7 @@ const AiAgents = () => {
                             link
                             href={APP_URL}
                             variant="white"
-                            className="!rounded-full mx-auto !py-1">
+                            className="rounded-full! mx-auto py-1!">
                             Sign up for early access
                         </Button>
                     </div>

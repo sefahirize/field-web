@@ -352,7 +352,7 @@ const PlanContent = () => {
                                                 pattern="\d*"
                                                 disabled={!row.product}
                                                 placeholder={`Min ${MIN_DOCUMENT_COUNT.toLocaleString()} files/API calls`}
-                                                className={`w-full lg:w-auto app-input mr-7 placeholder:text-sm ${index === 0 ? '!mr-0 !lg:mr-7' : ''
+                                                className={`w-full lg:w-auto app-input mr-7 placeholder:text-sm ${index === 0 ? 'mr-0! !lg:mr-7' : ''
                                                     } ${callsBelowMin ? 'border-red-500 focus:border-red-500' : ''
                                                     }`}
                                                 change={(e) => handleCallsChange(row.id, e.target.value)}
@@ -366,7 +366,7 @@ const PlanContent = () => {
                                                 <div className="mt-1 text-red-500 text-xs">{row.error}</div>
                                             )}
                                         </div>
-                                        <div className={`w-12 h-8 ${index === 0 ? '!hidden !lg:block' : ''}`}>
+                                        <div className={`w-12 h-8 ${index === 0 ? 'hidden! !lg:block' : ''}`}>
                                             {index > 0 && (
                                                 <button
                                                     className="w-8 h-8 hover:opacity-80 transition-opacity"
@@ -405,11 +405,11 @@ const PlanContent = () => {
                         <div className="hidden xl:flex items-center justify-between w-full">
                             <span className={subtitleClass}>Total</span>
                             <div className="flex items-center">
-                                <span className={`${subtitleClass} !text-gray-default`}>Pay-as-you-go</span>
+                                <span className={`${subtitleClass} text-gray-default!`}>Pay-as-you-go</span>
                                 <div className="ml-3">
                                     <Switch checked={isChecked} onCheckedChange={setIsChecked} className="mt-[3px]" />
                                 </div>
-                                <span className={`${subtitleClass} !text-gray-default ml-3`}>Subscription</span>
+                                <span className={`${subtitleClass} text-gray-default! ml-3`}>Subscription</span>
                                 <div className="inline-flex items-center rounded-full bg-white ml-2 py-1.5 px-3">
                                     <AiStarIcon />
                                     <span className="text-sm font-medium ml-2">30% off</span>
@@ -431,12 +431,12 @@ const PlanContent = () => {
                                 </div>
                             </div>
                             <div className="flex justify-end items-center text-right">
-                                <span className={`${subtitleClass} !text-gray-default`}>Pay-as-you-go</span>
+                                <span className={`${subtitleClass} text-gray-default!`}>Pay-as-you-go</span>
                                 <div>
                                     <div className="ml-3 inline-block">
                                         <Switch checked={isChecked} onCheckedChange={setIsChecked} className="mt-[3px]" />
                                     </div>
-                                    <span className={`${subtitleClass} !text-gray-default ml-3`}>Subscription</span>
+                                    <span className={`${subtitleClass} text-gray-default! ml-3`}>Subscription</span>
                                 </div>
                             </div>
                         </div>
@@ -492,10 +492,10 @@ const PlanContent = () => {
                             </div>
                         </div>
                         <div className="mt-11 md:flex lg:block lgx:flex items-center justify-between gap-x-9">
-                            <Button link href={checkoutHref} className="!rounded-full !bg-app-blue !text-white">
+                            <Button link href={checkoutHref} className="rounded-full! bg-app-blue! text-white!">
                                 <span className="text-sm font-medium">Check out</span>
                             </Button>
-                            <Button link href={PAGE_SETTINGS.contact.href + `?information=sales`} variant="transparent-black" className="!rounded-full mt-5 md:mt-0 lg:mt-5 lgx:mt-0">
+                            <Button link href={PAGE_SETTINGS.contact.href + `?information=sales`} variant="transparent-black" className="rounded-full! mt-5 md:mt-0 lg:mt-5 lgx:mt-0">
                                 <span className="text-sm font-medium">Contact Sales</span>
                             </Button>
                         </div>

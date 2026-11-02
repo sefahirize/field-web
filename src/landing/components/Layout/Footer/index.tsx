@@ -55,7 +55,7 @@ const Footer = () => {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-8 justify-between mt-8">
                     <div>
-                        <p className="text-white text-base md:text-lg font-semibold leading-6">
+                        <p className="text-white text-base md:text-lg font-semibold leading-6 md:leading-7">
                             Build by a team of AI experts <br />
                             <span className="text-[#CFE1FE]">Headquartered in Miami</span>
                         </p>
@@ -110,7 +110,7 @@ const Footer = () => {
                             className="mt-1 max-w-[158px]" />
                     </div>
                     <div>
-                        <a href="https://hirize.statuspage.io" target="_blank" className="inline-block py-1 px-2 rounded-full bg-white bg-gradient-to-b from-white/0 to-[#A4ACB9]/[0.02] shadow-[0_1px_2px_rgba(164,172,185,0.24),0_0_0_1px_rgba(19,28,43,0.08)]">
+                        <a href="https://hirize.statuspage.io" target="_blank" className="inline-block py-1 px-2 rounded-full bg-white bg-linear-to-b/srgb from-white/0 to-[#A4ACB9]/2 shadow-[0_1px_2px_rgba(164,172,185,0.24),0_0_0_1px_rgba(19,28,43,0.08)]">
                             <div className="flex items-center gap-x-1">
                                 <span className="mr-2 w-4 h-4 rounded-full bg-[#00C744]/30 flex justify-center items-center">
                                     <span className="w-1.5 h-1.5 rounded-full bg-[#1A9544]"></span>

@@ -32,7 +32,7 @@ const Integration = () => {
 
 
     return (
-        <Section className="!py-0 md:!py-24 mt-10 md:mt-[77px]">
+        <Section className="py-0! md:py-24! mt-10 md:mt-[77px]">
             <div className="md:hidden text-center mb-10">
                 <h2 className="text-3xl md:text-5xl font-semibold">Hundreds of ways to integrate, and counting</h2>
                 <p className="text-base md:text-lg font-medium">Add Field to your favorite tools or bring your favorite tools along</p>
@@ -64,7 +64,7 @@ const Integration = () => {
                             className={`${transition} absolute top-0 left-full transform -translate-x-7 -translate-y-5 group-hover:-translate-y-4 hidden md:block`}
                         />
                     </div>
-                    <div className="block md:inline-block mx-auto lg:-mt-[77px] relative group">
+                    <div className="block md:inline-block mx-auto lg:mt-[-77px] relative group">
                         <IntegrationCard
                             type="large"
                             title="1 Hour"

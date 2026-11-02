@@ -114,15 +114,15 @@ const AboutUs: React.FC = () => {
             <Hero
                 subHero
                 overlay
-                className="!min-h-[527px]"
+                className="min-h-[527px]!"
                 title={
                     <>
-                        <span className="lg:!text-[70px] xl:text-[71px] font-semibold xl:!leading-[72px] md:mt-[73px] block">Taking Document <br className="hidden lg:block" /> Intelligence to the next level</span>
+                        <span className="lg:text-[70px]! xl:text-[71px] font-semibold xl:leading-[72px]! md:mt-[73px] block">Taking Document <br className="hidden lg:block" /> Intelligence to the next level</span>
                     </>
                 }
                 titleClassName=" mx-auto text-center"
                 description="We know how hard it is to start, grow and manage your startup all at the same time. Startups get 60% discount at the Field startup program."
-                descClassName="mx-auto text-center md:px-11 !mt-0 !w-full !max-w-[800px] !border-0"
+                descClassName="mx-auto text-center md:px-11 mt-0! w-full! max-w-[800px]! border-0!"
                 hideButtons
                 bgImage="/assets/images/hero/about-us.png" >
                 <div className="flex justify-center items-center mt-2.5">
@@ -188,7 +188,7 @@ const AboutUs: React.FC = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10">
                         {leadershipData.map((item, index) => (
                             <div className="relative w-full mb-3 lg:my-0" key={index}>
-                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-transparent to-white/80 h-[206px]"
+                                <div className="absolute bottom-0 left-0 right-0 bg-linear-to-b/srgb from-transparent via-transparent to-white/80 h-[206px]"
                                     disable-data-aos="fade-up"
                                     disable-data-aos-delay={`${50}`}
                                 />
@@ -257,7 +257,7 @@ const AboutUs: React.FC = () => {
                             unoptimized
                         />
                         <div>
-                            <p className="text-base md:text-2xl !leading-10 font-normal text-natural-navy">
+                            <p className="text-base md:text-2xl leading-10! font-normal text-natural-navy">
                                 AI is more than just coding and algorithms; it's a powerful tool that can transform the way we work and live. At Field, our devoted team leverages AI's potential to transform the enterprise AI landscape. We're not here to maintain the status quo; we're committed to taking bold risks and making a meaningful impact.
                             </p>
                             <h3 className="text-lg md:text-lg font-semibold text-[#0D68FC] mt-8">

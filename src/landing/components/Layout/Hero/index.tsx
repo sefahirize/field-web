@@ -54,7 +54,7 @@ const Hero: React.FC<Props> = ({ className = "", showLogos = false, bgImage = "/
                                 {title}
                             </h1>
                             <div>
-                                <p className={`pt-6 md:pt-9 mt-6 md:mt-9 !max-w-[500px] border-t border-white text-white text-sm md:text-base xl:text-lg 2xl:text-2xl font-light 2xl:!max-w-[800px] ${descClassName}`}
+                                <p className={`pt-6 md:pt-9 mt-6 md:mt-9 max-w-[500px]! border-t border-white text-white text-sm md:text-base xl:text-lg 2xl:text-2xl font-light 2xl:max-w-[800px]! ${descClassName}`}
                                     disable-data-aos="fade-up"
                                     disable-data-aos-delay="200"
                                 >

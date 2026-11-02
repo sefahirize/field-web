@@ -7,7 +7,7 @@ export const solutionsFeatures: ISolutionsFeature[] = [
         title: "+ 50 Million Resumes",
         content: "AI model trained with over 6 million datasets.",
         className: "bg-white",
-        pClassName: "!text-natural-gray-default ml-8 text-base !font-normal",
+        pClassName: "text-natural-gray-default! ml-8 text-base font-normal!",
         icon: {
             bg: "bg-[#DDFCFE]",
         }
@@ -16,7 +16,7 @@ export const solutionsFeatures: ISolutionsFeature[] = [
         title: "< 1 sec",
         content: "Screen and match resumes under a second.",
         className: "bg-white",
-        pClassName: "!text-natural-gray-default ml-8 text-base !font-normal",
+        pClassName: "text-natural-gray-default! ml-8 text-base font-normal!",
         icon: {
             bg: "bg-[#F1FFE8]",
         }
@@ -25,10 +25,10 @@ export const solutionsFeatures: ISolutionsFeature[] = [
         title: "1000+ integrations",
         content: "Easily integrate with most of HR software.",
         className: "bg-white",
-        pClassName: "!text-natural-gray-default ml-8 text-base !font-normal",
+        pClassName: "text-natural-gray-default! ml-8 text-base font-normal!",
         pParentClassName: "lg:mt-6",
         icon: {
-            bg: "bg-gradient-to-b from-[rgba(36,36,133,0.2)] from-[44.82%] to-[rgba(129,136,152,0.2)] to-[99.75%]",
+            bg: "bg-linear-to-b/srgb from-[rgba(36,36,133,0.2)] from-[44.82%] to-[rgba(129,136,152,0.2)] to-[99.75%]",
         }
     },
 ]
@@ -119,7 +119,7 @@ export const worldMostAccurateParserFeatures: ISolutionsFeature[] = [
     {
         title: "Industry Agnostic",
         content: "A single technology that understands both blue-collar and white-collar jobs, junior and senior positions, in all industries.",
-        pClassName: "!text-natural-gray-default text-base !font-normal",
+        pClassName: "text-natural-gray-default! text-base font-normal!",
         className: "bg-white",
         icon: {
             bg: "bg-[#E1DDFE]",
@@ -128,7 +128,7 @@ export const worldMostAccurateParserFeatures: ISolutionsFeature[] = [
     {
         title: "Multiple Languages",
         content: "Parse resumes and job descriptions in 24 + Languages including Arabic, Hebrew, and Hindi",
-        pClassName: "!text-natural-gray-default text-base !font-normal",
+        pClassName: "text-natural-gray-default! text-base font-normal!",
         className: "bg-white",
         icon: {
             bg: "bg-[#CFE1FE]",
@@ -137,7 +137,7 @@ export const worldMostAccurateParserFeatures: ISolutionsFeature[] = [
     {
         title: "Custom AI Algorithms",
         content: "Your culture and company are unique, so should your matching engine.",
-        pClassName: "!text-natural-gray-default text-base !font-normal",
+        pClassName: "text-natural-gray-default! text-base font-normal!",
         className: "bg-white",
         icon: {
             bg: "bg-[#FEE3DD]",
@@ -146,7 +146,7 @@ export const worldMostAccurateParserFeatures: ISolutionsFeature[] = [
     {
         title: "Data Debasing",
         content: "Long-standing prejudices bias training data. A biased training set will cause an algorithm to codify and magnify bias. We designed auditing algorithms to identify and remove data biases.",
-        pClassName: "!text-natural-gray-default text-base !font-normal",
+        pClassName: "text-natural-gray-default! text-base font-normal!",
         className: "bg-white",
         icon: {
             bg: "bg-[#DDFCFE]",
@@ -155,7 +155,7 @@ export const worldMostAccurateParserFeatures: ISolutionsFeature[] = [
     {
         title: "Algorithmic Auditing",
         content: "Machine learning algorithms are not fair by default. We designed inclusive models to assure fairness and reduce biases (allocation, representation, gender, ethnicity, stereotypes, and more.)",
-        pClassName: "!text-natural-gray-default text-base !font-normal",
+        pClassName: "text-natural-gray-default! text-base font-normal!",
         className: "bg-white",
         icon: {
             bg: "bg-[#F1FFE8]",
@@ -164,10 +164,10 @@ export const worldMostAccurateParserFeatures: ISolutionsFeature[] = [
     {
         title: "Continuous Retraining",
         content: "Our algorithms learn with every data point, interaction, and feedback using online learning.",
-        pClassName: "!text-natural-gray-default text-base !font-normal",
+        pClassName: "text-natural-gray-default! text-base font-normal!",
         className: "bg-white",
         icon: {
-            bg: "bg-[linear-gradient(179.71deg,_rgba(36,36,133,0.2)_44.82%,_rgba(129,136,152,0.2)_99.75%)]",
+            bg: "bg-[linear-gradient(179.71deg,rgba(36,36,133,0.2)_44.82%,rgba(129,136,152,0.2)_99.75%)]",
         }
     },
 ]

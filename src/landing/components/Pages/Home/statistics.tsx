@@ -20,21 +20,21 @@ const featureData: FeatureCardProps = {
             head: "Market leading 95% accuracy",
             content: "You AI strategy is as good as your data, Field Leads in data retrieval/parsing accuracy.",
             headClassName: "text-xs sm:text-xl min-h-[56px]",
-            contentClassName: "text-sm sm:text-base"
+            contentClassName: "text-sm sm:text-base sm:leading-6"
         },
         {
             borderTop: true,
             head: "Real-Time, Context-Aware Responses",
             content: "RAG enables Field to provide real-time, context-rich outputs, essential for clients in rapidly changing fields like HR, finance, and legal.",
             headClassName: "text-xs sm:text-xl",
-            contentClassName: "text-sm sm:text-base"
+            contentClassName: "text-sm sm:text-base sm:leading-6"
         },
         {
             borderTop: true,
             head: "Efficient Processing of Large, Unstructured Data",
             content: "Quickly parse vast amounts of unstructured text data by efficiently locating relevant information",
             headClassName: "text-xs sm:text-xl",
-            contentClassName: "text-sm sm:text-base"
+            contentClassName: "text-sm sm:text-base sm:leading-6"
         }
     ]
 }
@@ -44,7 +44,7 @@ const featureData: FeatureCardProps = {
 const statsData = [
     {
         title: "Field",
-        titleClass: "bg-clip-text text-transparent bg-[radial-gradient(202.5%_158.2%_at_50%_83.95%,#BB53F8_0%,#F1DDFE_100%)] leading-normal text-3xl md:text-5xl font-normal relative z-10 transform translate-x-3 translate-y-2 md:translate-y-5",
+        titleClass: "bg-clip-text text-transparent bg-[radial-gradient(202.5%_158.2%_at_50%_83.95%,#BB53F8_0%,#F1DDFE_100%)] leading-normal md:leading-none text-3xl md:text-5xl font-normal relative z-10 transform translate-x-3 translate-y-2 md:translate-y-5",
         percentage: 95,
         percentageClass: "h-[197px]",
     },
@@ -83,7 +83,7 @@ const statisticsContent = () => {
                                     {statsData.map((item, index) => (
                                         <div key={index} className="flex flex-col items-center">
                                             <span className={`mt-2  ${joan.className} ${item.titleClass}`}>{item.percentage}%</span>
-                                            <div className={`w-[30px] mr-auto rounded-[1px] ${item.percentageClass} shadow-[0px_4px_4px_0px_#00000040] bg-gradient-to-b from-white to-[#E1E1E2] to-[159.82%]`}></div>
+                                            <div className={`w-[30px] mr-auto rounded-[1px] ${item.percentageClass} shadow-[0px_4px_4px_0px_#00000040] bg-linear-to-b/srgb from-white to-[#E1E1E2] to-[159.82%]`}></div>
                                             <p className="text-white text-base font-medium leading-7 mt-4 mr-auto">{item.title}</p>
                                         </div>
                                     ))}

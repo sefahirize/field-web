@@ -673,7 +673,7 @@ export const companyLogos = [
     alt: "Microsoft",
     width: 115,
     height: 48,
-    className: "!min-w-[115px]"
+    className: "min-w-[115px]!"
   },
   {
     src: "/assets/images/hero/logo2.png",
