@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAccessToken, getRefreshToken, isSessionExpired, clearSession } from '@dashboard/libs/tokenStorage';
+import { getAccessToken, getRefreshToken, isSessionExpired, clearSession, markSignedIn } from '@dashboard/libs/tokenStorage';
 import {
   fetchSession,
   login,
@@ -26,6 +26,7 @@ const bootstrapToken = () => {
     clearSession();
     return null;
   }
+  markSignedIn();
   return token;
 };
 

@@ -42,6 +42,9 @@ export const setSession = ({ access_token, refresh_token, expires_in } = {}) => 
   safeSet(SIGNED_IN_HINT_KEY, access_token ? '1' : null);
 };
 
+/** A session stored before the hint existed gets it once the app keeps that session. */
+export const markSignedIn = () => safeSet(SIGNED_IN_HINT_KEY, '1');
+
 export const clearSession = () => {
   safeSet(ACCESS_TOKEN, null);
   safeSet(REFRESH_TOKEN, null);
