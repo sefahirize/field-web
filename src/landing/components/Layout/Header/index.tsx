@@ -4,7 +4,8 @@ import Link from 'next/link';
 
 import { Button } from '@landing/components/Ui';
 import { DATA_MENU_SOLUTIONS, DATA_HEADER_MENU_PRODUCTS, DATA_MENU_LEARN_CONNECT, DATA_MENU_HELP_SUPPORT, DATA_MENU_COMPANY } from '@landing/constants/Global';
-import { PAGE_SETTINGS, APP_URL } from '@landing/constants/Global';
+import { PAGE_SETTINGS } from '@landing/constants/Global';
+import { ROUTES } from '@shared/contract';
 
 import Image from 'next/image';
 
@@ -159,7 +160,7 @@ const ButtonCTA = ({ isDark = false }: { isDark?: boolean }) => {
                 link
                 variant={isDark ? 'transparent-white' : 'transparent-black'}
                 className='px-4! py-2! xl:py-2.5! xl:px-5! flex! lg:inline-flex!'
-                href={APP_URL}
+                href={ROUTES.login}
             >
                 Sign in
             </Button>
