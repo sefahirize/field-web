@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from '@dashboard/libs/navigation';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '@dashboard/features/auth/authSlice';
@@ -27,7 +27,11 @@ export const PublicLayout = ({ children, redirectWhenAuthenticated = true }) => 
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const shouldRedirect = isAuthenticated && redirectWhenAuthenticated;
-  const redirectTo = shouldRedirect ? peekAuthRedirect() || ROUTE_PATHS.DASHBOARD : null;
+  // Read once: Next's router.replace is not instant, so this page can render
+  // again after the effect below cleared the saved path, and a second read
+  // would send the user to the dashboard home instead.
+  const [savedRedirect] = useState(peekAuthRedirect);
+  const redirectTo = shouldRedirect ? savedRedirect || ROUTE_PATHS.DASHBOARD : null;
 
   useEffect(() => {
     if (isAuthenticated) clearAuthRedirect();
