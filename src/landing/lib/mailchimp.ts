@@ -8,8 +8,6 @@ export const MAILCHIMP_AUDIENCE_ID = "e3b8a668e1";
 
 export const MAILCHIMP_JOURNEYS = {
   contactForm: { journeyId: "3176", stepId: "26118" },
-  triedParser: { journeyId: "3177", stepId: "26100" },
-  fourteenDayTrial: { journeyId: "3175", stepId: "26116" },
 } as const;
 
 function config() {
