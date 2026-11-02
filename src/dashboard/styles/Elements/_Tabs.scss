@@ -10,7 +10,7 @@
 }
 
 .Tabs-Standart {
-  .MuiTabs-flexContainer {
+  .MuiTabs-list {
     gap: 40px;
     .MuiTab-root {
       font-weight: 500;
@@ -59,7 +59,7 @@
       display: flex;
       justify-content: center;
 
-      .MuiTabs-flexContainer {
+      .MuiTabs-list {
         background: $Color-GrayBackground;
         border-radius: 8px;
         padding-left: 3px;

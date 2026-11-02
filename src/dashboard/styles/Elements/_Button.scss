@@ -62,9 +62,13 @@
     }
   }
 
+  // MUI 7+ no longer emits compound classes such as MuiButton-containedRed:
+  // variant and colour are separate classes, so the rules below pair them.
+  // :where() keeps each selector's old specificity.
+
   // Primary action: solid ink.
-  &.MuiButton-containedPrimary,
-  &.MuiButton-contained:not([class*='MuiButton-containedRed']):not([class*='MuiButton-containedWhite']):not(.MuiButton-containedSecondary),
+  &.MuiButton-colorPrimary:where(.MuiButton-contained),
+  &.MuiButton-contained:not(.MuiButton-colorRed):not(.MuiButton-colorWhite):not(.MuiButton-colorSecondary),
   &.MuiIconButton-colorPrimary {
     color: $Color-Inverse;
     background: $Color-Primary;
@@ -83,9 +87,9 @@
   }
 
   // Secondary action: the soft grey chip.
-  &.MuiButton-containedSecondary,
+  &.MuiButton-colorSecondary:where(.MuiButton-contained),
   &.MuiIconButton-colorSecondary,
-  &.MuiButton-outlinedTransparent,
+  &.MuiButton-colorTransparent:where(.MuiButton-outlined),
   &.MuiIconButton-colorTransparent {
     color: $Color-Black;
     background: $Color-Primary--90;
@@ -99,7 +103,7 @@
   }
 
   // Outlined: white surface, hairline border that goes to ink on hover.
-  &.MuiButton-outlinedWhite,
+  &.MuiButton-colorWhite:where(.MuiButton-outlined),
   &.MuiButton-outlined,
   &.MuiIconButton-colorWhite {
     color: $Color-Black;
@@ -115,7 +119,7 @@
   }
 
   // Destructive: red text, red fill only when contained.
-  &.MuiButton-outlinedRed,
+  &.MuiButton-colorRed:where(.MuiButton-outlined),
   &.MuiIconButton-colorRed-outlined {
     color: $Color-Error;
     background: $Color-White;
@@ -129,7 +133,7 @@
     }
   }
 
-  &.MuiButton-containedRed,
+  &.MuiButton-colorRed:where(.MuiButton-contained),
   &.MuiIconButton-colorRed {
     color: $Color-Inverse;
     background: $Color-Error;
@@ -144,7 +148,7 @@
   }
 
   // For dark surfaces (login aside, banners).
-  &.MuiButton-containedWhite {
+  &.MuiButton-colorWhite:where(.MuiButton-contained) {
     color: $Color-Fixed-White;
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.08);

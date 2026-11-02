@@ -12,8 +12,9 @@
   .MuiLinearProgress-bar {
     border-radius: 50px;
     background: $Color-Primary;
-    &.MuiLinearProgress-barColorSecondary {
-      background-color: $Color-Success;
-    }
+  }
+  // MUI 7+ dropped the bar's own colour class; the root carries it.
+  &.MuiLinearProgress-colorSecondary .MuiLinearProgress-bar {
+    background-color: $Color-Success;
   }
 }
