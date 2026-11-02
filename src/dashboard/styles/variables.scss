@@ -1,0 +1,78 @@
+// G — Mono palette (see public/demo-accent). Names are kept from the previous
+// theme so every partial that reads them follows the new palette without edits:
+// Primary is the ink, its tints are the neutral greys, and Secondary is the one
+// accent (teal), used only for small marks — dots, links, focus, badges.
+// The palette. Every colour that has to follow the theme is a CSS variable from
+// _tokens.scss; the hues below `$Color-Violet` (chips) are fixed.
+//
+// Surfaces and text: `$Color-White` is a surface (cards, inputs); `$Color-Page`
+// the page behind them; `$Color-Inverse` the text that sits on an ink fill;
+// `$Color-Fixed-White` is white in both themes, for what is always on dark.
+$Color-Primary: var(--jf-ink);
+$Color-Primary-20: var(--jf-ink-hover);
+$Color-Primary--80: var(--jf-line);
+$Color-Primary--85: var(--jf-chip-hover);
+$Color-Primary--90: var(--jf-chip);
+
+$Color-Secondary: var(--jf-accent);
+$Color-Secondary-5: var(--jf-accent-hover);
+$Color-Secondary--80: var(--jf-accent-line);
+$Color-Secondary--85: var(--jf-accent-soft);
+$Color-Secondary--90: var(--jf-accent-bg);
+$Color-Accent: var(--jf-accent);
+$Color-AccentTint: var(--jf-accent-bg);
+
+// Neutral
+$Black: var(--jf-ink);
+$Color-Black: var(--jf-ink);
+$Color-White: var(--jf-surface);
+$Color-Page: var(--jf-page);
+$Color-Canvas: var(--jf-canvas);
+$Color-Rail: var(--jf-rail);
+$Color-Rail-Accent: var(--jf-rail-accent);
+$Color-Inverse: var(--jf-inverse);
+$Color-Fixed-White: #ffffff;
+$Color-Navy: var(--jf-ink);
+$Color-Body: var(--jf-body);
+$Color-Gray: var(--jf-muted);
+$Color-GrayTint: var(--jf-faint);
+$Color-GrayBackground: var(--jf-soft);
+$Color-GrayBorder: var(--jf-hair);
+$Color-GrayBorderDark: var(--jf-line);
+
+$Color-Error: var(--jf-danger);
+$Color-Error-10: var(--jf-danger-strong);
+$Color-ErrorTint: var(--jf-danger-bg);
+$Color-Success: var(--jf-accent);
+$Color-Success-40: var(--jf-accent-strong);
+$Color-SuccessTint: var(--jf-accent-bg);
+$Color-Warning: var(--jf-warn-fill);
+$Color-Warning-40: var(--jf-warn);
+$Color-WarningTint: var(--jf-warn-bg);
+$Color-Violet: #df1ca8;
+$Color-Violet-40: #861165;
+$Color-VioletTint: #f9d2ee;
+$Color-Purple: #5f57ff;
+$Color-Purple-40: #393499;
+$Color-PurpleTint: #dfddff;
+$Color-Yellow: #ffbe4c;
+$Color-Yellow-40: #99722e;
+$Color-YellowTint: #fff2db;
+$Color-Red: #df1c28;
+$Color-Red-40: #861118;
+$Color-RedTint: #f9d2d4;
+$Color-Blue: #33cfff;
+$Color-Blue-40: #1f7c99;
+$Color-BlueTint: #d6f5ff;
+$Color-Ocean: #33e7ff;
+$Color-Ocean-40: #1f8b99;
+$Color-OceanTint: #d6faff;
+
+// FONTS
+$Font-Primary: 'Inter', system-ui, -apple-system, sans-serif;
+$Font-Secondary: 'Inter', sans-serif;
+
+// LAYOUT SHELL
+$Sidebar-Width: 236px;
+$Sidebar-Width-Collapsed: 84px;
+$Header-Height: 64px;

@@ -1,0 +1,448 @@
+// API keys: a list of keys, with creating, editing and the one-time secret in
+// modals (components/apiKeys).
+.Page-ApiCredentials {
+  .PageHeading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .PageHeading-Actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  // --- the list -------------------------------------------------------------
+  .KeyList {
+    container: keys / inline-size;
+    overflow: hidden;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 16px;
+  }
+
+  .KeyList-Head,
+  .KeyRow {
+    display: grid;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 20px;
+  }
+
+  .KeyList-Head {
+    padding-block: 12px;
+    background: $Color-GrayBackground;
+    border-bottom: 1px solid $Color-GrayBorder;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $Color-Gray;
+  }
+
+  .KeyRow {
+    border-bottom: 1px solid $Color-GrayBorder;
+    font-size: 14px;
+    font-weight: 500;
+    color: $Color-Body;
+    transition: background-color 140ms ease;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:hover:not(.KeyRow--skeleton) {
+      background: $Color-GrayBackground;
+    }
+  }
+
+  .KeyRow-Name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    min-width: 0;
+  }
+
+  .KeyRow-NameText {
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 600;
+    color: $Color-Black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .KeyRow-Key {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: $Color-Gray;
+    letter-spacing: 0.01em;
+  }
+
+  .KeyRow-Cell {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .KeyRow-Expiry {
+    // "Expired 09/01/2026" is longer than the column; let it wrap, not clip.
+    white-space: normal;
+
+    &--expired {
+      color: $Color-Error;
+      font-weight: 600;
+    }
+
+    &--soon {
+      color: $Color-Warning-40;
+      font-weight: 600;
+    }
+
+    &--none {
+      color: $Color-Gray;
+    }
+  }
+
+  .KeyRow-Menu {
+    display: flex;
+    justify-content: flex-end;
+
+    .IconButton {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+  }
+
+  .EnvBadge {
+    display: inline-flex;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: $Color-Primary--90;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: $Color-Gray;
+
+    &--production {
+      background: $Color-Black;
+      color: $Color-Inverse;
+    }
+  }
+
+  .KeyRow--skeleton .Skeleton {
+    height: 18px;
+    border-radius: 6px;
+  }
+
+  // Narrow list: each key becomes a small card, with the name and menu on top
+  // and the details underneath as label / value lines.
+  @container keys (max-width: 720px) {
+    .KeyList-Head {
+      display: none;
+    }
+
+    .KeyRow {
+      grid-template-columns: minmax(0, 1fr) 40px !important;
+      gap: 6px 12px;
+      padding: 16px 18px;
+    }
+
+    .KeyRow-Name {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .KeyRow-Menu {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .KeyRow-Cell {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 13px;
+
+      &::before {
+        content: attr(data-label);
+        color: $Color-GrayTint;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .KeyNote {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 2px 0;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: $Color-Gray;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  // --- nothing yet ----------------------------------------------------------
+  .EmptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 24px 60px;
+    background: $Color-White;
+    border: 1px dashed $Color-GrayBorderDark;
+    border-radius: 20px;
+    text-align: center;
+
+    &-Icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+      background: $Color-Primary--90;
+      border-radius: 50%;
+      color: $Color-Black;
+    }
+
+    &-Title {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: $Color-Black;
+    }
+
+    &-Text {
+      max-width: 42ch;
+      margin: 0 0 22px;
+      font-size: 14px;
+      line-height: 22px;
+      color: $Color-Gray;
+    }
+  }
+}
+
+// The row menu's destructive item (the menu renders in a portal, so unscoped).
+.MenuItem--danger.MuiMenuItem-root {
+  color: $Color-Error;
+}
+
+// --- modals' contents -------------------------------------------------------
+.KeyForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &-Group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    legend {
+      padding: 0;
+      margin-bottom: 8px;
+    }
+  }
+
+  &-Custom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .FormField-Input {
+      width: 160px;
+    }
+  }
+
+  .FormField-Input.is-invalid {
+    border-color: $Color-Error;
+    box-shadow: 0 0 0 3px $Color-ErrorTint;
+  }
+
+  .auth-error {
+    margin: 0;
+  }
+}
+
+.OptionCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  @include for-small-phone-only {
+    grid-template-columns: 1fr;
+  }
+}
+
+.OptionCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 13px 15px;
+  border: 1px solid $Color-GrayBorderDark;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover {
+    border-color: $Color-GrayTint;
+  }
+
+  &.is-selected {
+    border-color: $Color-Black;
+    box-shadow: 0 0 0 3px $Color-Primary--90;
+  }
+
+  &:focus-within {
+    outline: 2px solid $Color-Accent;
+    outline-offset: 2px;
+  }
+
+  &-Label {
+    font-size: 14px;
+    font-weight: 700;
+    color: $Color-Black;
+  }
+
+  &-Text {
+    font-size: 12px;
+    line-height: 17px;
+    color: $Color-Gray;
+  }
+}
+
+.Segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  &-Option {
+    height: 36px;
+    padding: 0 15px;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 999px;
+    color: $Color-Gray;
+    font-family: $Font-Primary;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+
+    &:hover {
+      border-color: $Color-Black;
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &.is-selected {
+      background: $Color-Black;
+      border-color: $Color-Black;
+      color: $Color-Inverse;
+    }
+  }
+}
+
+.SecretBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 16px;
+  background: $Color-GrayBackground;
+  border: 1px solid $Color-GrayBorderDark;
+  border-radius: 12px;
+
+  &-Value {
+    flex-grow: 1;
+    min-width: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 20px;
+    color: $Color-Black;
+    word-break: break-all;
+    user-select: all;
+  }
+}
+
+.SecretNote {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: $Color-GrayBackground;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 20px;
+  color: $Color-Gray;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  &.is-warned {
+    background: $Color-WarningTint;
+    color: $Color-Warning-40;
+  }
+}
+
+.TestResult {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &-Status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    padding: 10px 14px;
+    background: $Color-AccentTint;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: $Color-Accent;
+
+    &.is-fail {
+      background: $Color-ErrorTint;
+      color: $Color-Error-10;
+    }
+  }
+
+  &-Code {
+    font-weight: 700;
+  }
+
+  .CodeBlock {
+    max-height: 260px;
+  }
+}

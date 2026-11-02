@@ -74,6 +74,9 @@ export default defineConfig([
     files: DASHBOARD.files,
     rules: {
       "no-restricted-imports": ["error", { patterns: [preferShared(LANDING.alias), TAILWIND] }],
+      // The dashboard was ported as-is from a CRA app written before this
+      // React Compiler rule; revisit it with the TypeScript migration.
+      "react-hooks/set-state-in-effect": "off",
     },
   },
   {

@@ -1,0 +1,24 @@
+// Inline feedback on the auth screens: `.auth-notice` is informational
+// (mock-mode hint, "reset link sent"), `.auth-error` is a failed submission.
+.auth-notice,
+.auth-error {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  @include Radius-S;
+  @include Text-Body-14;
+}
+
+.auth-notice {
+  background-color: $Color-Primary--90;
+  color: $Color-Primary-20;
+}
+
+.auth-error {
+  background-color: $Color-ErrorTint;
+  color: $Color-Error-10;
+
+  a {
+    color: inherit;
+    font-weight: 600;
+  }
+}

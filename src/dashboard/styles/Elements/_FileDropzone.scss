@@ -1,0 +1,202 @@
+// Drop target + chosen files (components/elements/FileDropzone.jsx).
+.FileDropzone {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &-Zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 30px 20px;
+    background: $Color-GrayBackground;
+    border: 1.5px dashed $Color-GrayBorderDark;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+
+    &:hover:not(.is-disabled) {
+      border-color: $Color-GrayTint;
+      background: $Color-Primary--90;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &.is-dragging {
+      border-color: $Color-Black;
+      border-style: solid;
+      background: $Color-White;
+      box-shadow: 0 0 0 4px $Color-Primary--90;
+    }
+
+    &.is-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &-Icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 6px;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 50%;
+    color: $Color-Black;
+    transition: transform 160ms ease;
+
+    .is-dragging & {
+      transform: translateY(-3px);
+    }
+  }
+
+  &-Title {
+    font-size: 14px;
+    font-weight: 600;
+    color: $Color-Black;
+  }
+
+  &-Browse {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &-Hint {
+    font-size: 12px;
+    font-weight: 500;
+    color: $Color-Gray;
+  }
+
+  // Visually hidden: the zone is the control.
+  &-Input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  &-List {
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 14px;
+
+    ul {
+      margin: 0;
+      padding: 0 14px;
+    }
+  }
+
+  &-ListHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid $Color-GrayBorder;
+    font-size: 12px;
+    font-weight: 600;
+    color: $Color-Gray;
+  }
+
+  &-Clear {
+    padding: 2px;
+    background: none;
+    border: 0;
+    border-radius: 6px;
+    color: $Color-Gray;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      color: $Color-Black;
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+  }
+
+  &-File {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid $Color-GrayBorder;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  &-Type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 32px;
+    background: $Color-Primary--90;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: $Color-Black;
+  }
+
+  &-FileName {
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 600;
+    color: $Color-Black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-FileSize {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: $Color-Gray;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &-Remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 8px;
+    color: $Color-GrayTint;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: $Color-GrayBackground;
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 1px;
+    }
+  }
+}

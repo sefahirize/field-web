@@ -1,0 +1,96 @@
+.Tabs-SettingsNav {
+  margin-bottom: 24px;
+  border-bottom: 1px solid $Color-GrayBorder;
+}
+
+.Tabs-InviteTeamMember {
+}
+
+.Tabs-Parser {
+}
+
+.Tabs-Standart {
+  .MuiTabs-flexContainer {
+    gap: 40px;
+    .MuiTab-root {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: $Color-Gray;
+      padding: 16px 4px;
+      text-transform: none;
+      padding-top: 4px;
+      min-width: unset;
+      .tab-label {
+        .MuiChip-root {
+          cursor: pointer;
+        }
+      }
+      &.Mui-selected {
+        color: $Color-Primary;
+        font-weight: 700;
+      }
+      &.Mui-disabled {
+        opacity: 0.6;
+      }
+      .MuiChip-root {
+        margin-left: 8px;
+      }
+      .MuiTouchRipple-root {
+        display: none;
+      }
+    }
+  }
+  .MuiTabs-indicator {
+    height: 2px;
+    background: $Color-Primary;
+  }
+}
+
+.MuiTabs-root {
+  &.Tabs-PricingPlan {
+    height: 40px;
+    margin-bottom: 0;
+    @include for-tablet-down {
+      height: 40px;
+    }
+    .MuiTabs-fixed {
+      height: 40px;
+      display: flex;
+      justify-content: center;
+
+      .MuiTabs-flexContainer {
+        background: $Color-GrayBackground;
+        border-radius: 8px;
+        padding-left: 3px;
+        padding-right: 3px;
+        width: 100%;
+        .MuiTab-root {
+          width: 50%;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 20px;
+
+          color: $Color-Gray;
+
+          padding: 8px 24px;
+          text-transform: none;
+          min-height: inherit;
+          z-index: 2;
+          height: 36px;
+
+          &.Mui-selected {
+            color: $Color-Black;
+          }
+        }
+      }
+      .MuiTabs-indicator {
+        height: 34px;
+        z-index: 1;
+        top: 3px;
+        background: white;
+        border-radius: 8px;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.MuiFormHelperText-root {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: $Color-Gray;
+  margin-left: 0;
+  margin-top: 12px;
+
+  &.Mui-error {
+    margin: 0;
+    margin-top: 8px;
+    color: $Color-Error;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

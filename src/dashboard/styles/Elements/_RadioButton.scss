@@ -1,0 +1,39 @@
+.RadioButtonGroup-Chip {
+  flex-direction: row;
+  gap: 8px 12px;
+  .RadioButton-Chip {
+    width: calc(33.333% - 12px);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBackground;
+    border-radius: 4px;
+    padding: 4px 0;
+
+    .MuiFormControlLabel-label {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      color: $Color-Gray;
+    }
+    &.Mui-disabled {
+      border: 1px solid $Color-Primary--90;
+      .MuiFormControlLabel-label {
+        color: rgba(var(--jf-muted-rgb), 0.3);
+      }
+    }
+    &.selected {
+      background-color: $Color-Primary;
+      border-color: $Color-Primary;
+      .MuiFormControlLabel-label {
+        font-weight: 700;
+        color: $Color-Inverse;
+      }
+    }
+
+    .MuiRadio-root {
+      display: none;
+    }
+  }
+}

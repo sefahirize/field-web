@@ -1,0 +1,244 @@
+// Product / option icon: the artwork is circular already; the fallback is the
+// Field mark on a neutral disc.
+.ProductIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+
+  &--fallback {
+    align-items: center;
+    justify-content: center;
+    background: $Color-Primary--90;
+    color: $Color-Black;
+  }
+}
+
+// Icon + name, wherever a product is only referred to (tables, headings).
+.ProductLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  vertical-align: middle;
+
+  &-Name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// Searchable select (components/elements/SearchSelect.jsx).
+.SearchSelect {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &-Icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    display: inline-flex;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  &-Input {
+    width: 100%;
+    height: 44px;
+    padding: 0 40px 0 14px;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 12px;
+    background: $Color-White;
+    color: $Color-Black;
+    font-family: $Font-Primary;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+
+    &.has-icon {
+      padding-left: 44px;
+    }
+
+    &::placeholder {
+      color: $Color-GrayTint;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: $Color-GrayTint;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $Color-Black;
+      box-shadow: 0 0 0 3px $Color-Primary--90;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background: $Color-GrayBackground;
+      cursor: not-allowed;
+    }
+  }
+
+  &.is-open &-Input {
+    cursor: text;
+  }
+
+  &.is-invalid &-Input {
+    border-color: $Color-Error;
+    box-shadow: 0 0 0 3px $Color-ErrorTint;
+  }
+
+  &-Toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 100%;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0 12px 12px 0;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &-Chevron {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid $Color-Gray;
+    border-bottom: 2px solid $Color-Gray;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 160ms ease;
+
+    .is-open & {
+      transform: translateY(1px) rotate(-135deg);
+    }
+  }
+
+  &-List {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 40;
+    // As wide as the longest option needs, but never wider than the screen.
+    width: max-content;
+    min-width: 100%;
+    max-width: min(440px, calc(100vw - 24px));
+    max-height: 320px;
+    margin: 0;
+    padding: 6px;
+    overflow-y: auto;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px shadow(0.12);
+    animation: search-select-in 120ms ease-out;
+
+    // Near the right edge: grow leftwards from the field's right side.
+    &.is-right {
+      right: 0;
+      left: auto;
+    }
+
+    // Near the bottom: open above the field.
+    &.is-up {
+      top: auto;
+      bottom: calc(100% + 6px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &-Option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &.is-active {
+      background: $Color-GrayBackground;
+    }
+
+    &.is-selected &Label {
+      font-weight: 700;
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  &-OptionText {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  &-OptionLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: $Color-Black;
+  }
+
+  &-OptionHint {
+    overflow: hidden;
+    font-size: 12px;
+    color: $Color-Gray;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-OptionNote {
+    flex-shrink: 0;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: $Color-Primary--90;
+    font-size: 11px;
+    font-weight: 600;
+    color: $Color-Gray;
+  }
+
+  &-Check {
+    flex-shrink: 0;
+    color: $Color-Accent;
+  }
+
+  &-Empty {
+    padding: 14px 10px;
+    font-size: 13px;
+    color: $Color-Gray;
+    text-align: center;
+  }
+}
+
+@keyframes search-select-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

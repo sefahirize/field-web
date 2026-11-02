@@ -1,0 +1,60 @@
+.MuiDialog-root {
+  .MuiBackdrop-root {
+    background: rgba(var(--jf-scrim-rgb), 0.4);
+  }
+  .MuiDialog-container {
+    .MuiDialog-paper {
+      background: $Color-White;
+      box-shadow: 0 24px 60px shadow(0.22);
+      border-radius: 20px;
+      margin: 0;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+  &.Modal-Container {
+    .Modal-Box {
+      .Modal-Header {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        .icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 56px;
+          height: 56px;
+          background: $Color-Primary--85;
+          border: 8px solid $Color-Primary--90;
+          border-radius: 28px;
+          margin-bottom: 20px;
+          &.icon-img {
+            border: none;
+            width: 56px;
+          }
+        }
+        .title {
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 28px;
+          color: $Color-Black;
+        }
+        .desc {
+          line-break: anywhere;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 20px;
+          color: $Color-Gray;
+          margin-top: 8px;
+        }
+      }
+      .Modal-Footer {
+        display: flex;
+        gap: 16px;
+        margin-top: 32px;
+      }
+    }
+  }
+}

@@ -1,0 +1,139 @@
+.rdrDateRangePickerWrapper {
+  .rdrDefinedRangesWrapper {
+    width: 160px;
+    .rdrStaticRanges {
+      gap: 4px;
+      .rdrStaticRange {
+        border-bottom: none;
+        margin-right: 52px;
+        border-radius: 8px;
+
+        padding: 4px 8px;
+        &:hover,
+        &.rdrStaticRangeSelected {
+          background: $Color-Primary--85;
+        }
+        .rdrStaticRangeLabel {
+          padding: 0;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          color: $Color-Black;
+        }
+      }
+    }
+    .rdrInputRanges {
+      display: none;
+    }
+  }
+  .rdrCalendarWrapper.rdrDateRangeWrapper {
+    .rdrDateDisplayWrapper {
+    }
+    .rdrMonthAndYearWrapper {
+      .rdrMonthAndYearPickers {
+        .rdrMonthPicker {
+          select {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+            color: $Color-Black;
+          }
+        }
+      }
+      .rdrNextPrevButton {
+        margin: 0;
+        transform: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        &:hover {
+          background: $Color-GrayBackground;
+          @include transition-default;
+        }
+        i {
+          border: none;
+          width: 16px;
+          height: 16px;
+          margin: 0;
+        }
+        &.rdrPprevButton {
+          i {
+            background-image: url('../../assets/icons/caret-left.svg');
+          }
+        }
+        &.rdrNextButton {
+          i {
+            background-image: url('../../assets/icons/caret-right.svg');
+          }
+        }
+      }
+    }
+    .rdrMonths.rdrMonthsHorizontal {
+      .rdrMonth {
+        .rdrMonthName {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          color: $Color-Gray;
+        }
+        .rdrWeekDays {
+          .rdrWeekDay {
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 16px;
+            color: $Color-Gray;
+          }
+        }
+        .rdrDays {
+          .rdrDay {
+            width: 44px;
+            height: 44px;
+            &.rdrDayWeekend {
+            }
+            &.rdrDayDisabled {
+            }
+            &.rdrDayToday {
+            }
+            &.rdrDayHovered {
+            }
+
+            .rdrInRange {
+              color: $Color-Primary !important;
+            }
+
+            .rdrDayStartPreview,
+            .rdrDayEndPreview {
+            }
+
+            .rdrStartEdge,
+            .rdrEndEdge {
+              color: $Color-Primary !important;
+              + .rdrDayNumber {
+                span {
+                  color: $Color-Inverse;
+                }
+              }
+            }
+            .rdrStartEdge {
+              border-radius: 50% 0 0 50%;
+            }
+            .rdrEndEdge {
+              border-radius: 0 50% 50% 0;
+            }
+            .rdrStartEdge.rdrEndEdge {
+              border-radius: 50%;
+            }
+            .rdrDayNumber {
+              span {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

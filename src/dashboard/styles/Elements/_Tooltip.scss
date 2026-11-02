@@ -1,0 +1,33 @@
+.Tooltip-Standart {
+  .MuiTooltip-tooltip {
+    background: $Color-Black;
+    border-radius: 8px;
+    padding: 12px;
+    max-width: 320px;
+    .MuiTooltip-arrow {
+      transform: translateX(298px) !important;
+      &:before {
+        background-color: $Color-Black;
+      }
+    }
+    .Tooltip-Standart-Box {
+      .title {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 16px;
+        color: $Color-Inverse;
+        margin-bottom: 4px;
+      }
+      .content {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        color: $Color-Inverse;
+        a {
+          font-weight: 700;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

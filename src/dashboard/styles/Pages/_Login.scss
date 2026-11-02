@@ -1,0 +1,85 @@
+.Page-Login {
+  width: 392px;
+  margin: 0 auto;
+  .Login-Header {
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 90px;
+  }
+  .Login-Form-Social {
+    .Heading {
+      margin-bottom: 28px;
+      .title {
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 32px;
+        letter-spacing: -0.6px;
+        color: $Color-Black;
+        margin-bottom: 12px;
+      }
+      .desc {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $Color-Gray;
+      }
+    }
+    .Social-Login {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .divider {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  .Login-Form {
+    .Heading {
+      margin-bottom: 28px;
+      .title {
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 32px;
+        letter-spacing: -0.6px;
+        color: $Color-Black;
+        margin-bottom: 12px;
+      }
+      .desc {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $Color-Gray;
+      }
+    }
+    .form-action-forgotPassword {
+      display: flex;
+      flex-direction: row-reverse;
+      margin-top: 12px;
+      button {
+        padding: 0;
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+    .form-action-send {
+      margin-top: 44px;
+    }
+  }
+  .Login-Footer {
+    margin-top: 20px;
+
+    .redirect-login {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+      color: $Color-Black;
+      a {
+        color: $Color-Accent;
+        font-weight: 700;
+      }
+    }
+  }
+}

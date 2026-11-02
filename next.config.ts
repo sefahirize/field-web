@@ -41,8 +41,24 @@ const securityHeaders = [
   },
 ];
 
+// The dashboard's backend. The browser never calls it directly: it has no CORS
+// headers and no working HTTPS yet, so /api/v1 and /uploads are proxied through
+// this app (the CRA dev proxy and vercel.json did the same before). Only these
+// two prefixes are forwarded; the landing's own /api routes stay local.
+const DASHBOARD_API_ORIGIN = process.env.DASHBOARD_API_ORIGIN || "http://api.joinfield.ai";
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  sassOptions: {
+    // The dashboard SCSS still uses @import; moving it to @use is its own job.
+    silenceDeprecations: ["import"],
+  },
+  async rewrites() {
+    return [
+      { source: "/api/v1/:path*", destination: `${DASHBOARD_API_ORIGIN}/api/v1/:path*` },
+      { source: "/uploads/:path*", destination: `${DASHBOARD_API_ORIGIN}/uploads/:path*` },
+    ];
+  },
   experimental: {
     // Needed because the landing and dashboard groups each have their own root layout,
     // so there is no single layout to render an app-wide 404 in.

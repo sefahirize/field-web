@@ -1,0 +1,443 @@
+// Buy credits — a plan built row by row (product select + quantity input), with
+// the server's price beside each row and a summary that stays in view.
+.Page-Products {
+
+
+  // Two columns only where there is room for both: the fixed sidebar and the
+  // page padding take about 316px, so the plan needs ~630px beside a 360px
+  // summary. Below that the summary drops under the plan.
+  .BuyCredits {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+
+    @media (min-width: 1330px) {
+      grid-template-columns: minmax(0, 1fr) 360px;
+    }
+  }
+
+  // --- plan ---------------------------------------------------------------
+  .Plan {
+    // The rows adapt to the width of the plan itself, not to the window.
+    container: plan / inline-size;
+    padding: 24px;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 16px;
+
+    @include for-phone-only {
+      padding: 18px 16px;
+    }
+
+    &-Head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    &-Title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: $Color-Black;
+    }
+
+    &-Sub {
+      margin: 3px 0 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: $Color-Gray;
+    }
+
+    &-Empty {
+      margin: 0;
+      padding: 28px 0;
+      text-align: center;
+      font-size: 13px;
+      color: $Color-Gray;
+    }
+
+    &-Rows {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+
+
+  // --- a plan row ---------------------------------------------------------
+  .PlanRow {
+    padding: 16px 0;
+    border-top: 1px solid $Color-GrayBorder;
+
+    &:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    &-Fields {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(88px, 0.7fr) 36px;
+      gap: 14px;
+      align-items: end;
+
+      // Narrow plan: the product takes a full line; quantity, price and the
+      // remove button share the one below.
+      @container plan (max-width: 520px) {
+        grid-template-columns: minmax(0, 1fr) minmax(84px, auto) 36px;
+        row-gap: 12px;
+
+        .PlanRow-Field--product {
+          grid-column: 1 / -1;
+        }
+      }
+    }
+
+    &-Field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    &-Label {
+      font-size: 12px;
+      font-weight: 600;
+      color: $Color-Gray;
+    }
+
+    &-Price {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2px;
+      height: 44px;
+      text-align: right;
+    }
+
+    &-Total {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: $Color-Black;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Unit {
+      font-size: 12px;
+      font-weight: 500;
+      color: $Color-Gray;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Meta {
+      min-height: 0;
+      margin-top: 8px;
+      empty-cells: hide;
+
+      &:empty {
+        display: none;
+      }
+    }
+
+    &-Hint {
+      font-size: 12px;
+      font-weight: 500;
+      color: $Color-Gray;
+    }
+
+    &-Error {
+      font-size: 12px;
+      font-weight: 600;
+      color: $Color-Error;
+    }
+
+    &--skeleton {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 14px;
+      padding-top: 0;
+    }
+  }
+
+  .QuickAmounts {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  // --- controls -----------------------------------------------------------
+  .Input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 12px;
+    background: $Color-White;
+    color: $Color-Black;
+    font-family: $Font-Primary;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+
+    &::placeholder {
+      color: $Color-GrayTint;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: $Color-GrayTint;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $Color-Black;
+      box-shadow: 0 0 0 3px $Color-Primary--90;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background: $Color-GrayBackground;
+      cursor: not-allowed;
+    }
+
+    &.is-invalid,
+    &[aria-invalid='true'] {
+      border-color: $Color-Error;
+      box-shadow: 0 0 0 3px $Color-ErrorTint;
+    }
+  }
+
+
+
+  .Chip {
+    height: 28px;
+    padding: 0 12px;
+    text-transform: none;
+    font-variant-numeric: tabular-nums;
+
+    &:hover:not(:disabled) {
+      border-color: $Color-Black;
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+  }
+
+  .AddRow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    margin-top: 6px;
+    padding: 0 16px;
+    background: none;
+    border: 1px dashed $Color-GrayBorderDark;
+    border-radius: 999px;
+    color: $Color-Black;
+    font-family: $Font-Primary;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 140ms ease, background-color 140ms ease;
+
+    &:hover:not(:disabled) {
+      border-color: $Color-Black;
+      background: $Color-GrayBackground;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      color: $Color-GrayTint;
+      cursor: not-allowed;
+    }
+  }
+
+  // --- summary ------------------------------------------------------------
+  .Summary {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 16px;
+
+    // Beside the plan (>=1330px) the summary follows the page; under it, with
+    // room to spare, it spreads into two columns: the lines, then the total and
+    // the checkout.
+    @media (min-width: 1330px) {
+      position: sticky;
+      top: calc(#{$Header-Height} + 24px); // below the header
+    }
+
+    @media (min-width: 700px) and (max-width: 1329px) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      column-gap: 40px;
+      row-gap: 16px;
+
+      .Summary-Title {
+        grid-column: 1 / -1;
+      }
+    }
+
+    &-Items,
+    &-Checkout {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    &-Title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: $Color-Black;
+    }
+
+    &-Empty {
+      margin: 0;
+      padding: 8px 0 4px;
+      font-size: 13px;
+      line-height: 20px;
+      color: $Color-Gray;
+    }
+
+    &-Lines {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+
+    &-Line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid $Color-GrayBorder;
+
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+
+    &-LineName {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    &-LineProduct {
+      font-size: 14px;
+      font-weight: 600;
+      color: $Color-Black;
+    }
+
+    &-LineCount {
+      font-size: 12px;
+      color: $Color-Gray;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-LineTotal {
+      font-size: 14px;
+      font-weight: 600;
+      color: $Color-Black;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Total {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: $Color-Gray;
+    }
+
+    &-TotalValue {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      color: $Color-Black;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Note {
+      margin: 0;
+      font-size: 12px;
+      line-height: 18px;
+      color: $Color-Gray;
+
+      &--danger {
+        color: $Color-Error;
+        font-weight: 600;
+      }
+    }
+
+    .Notice {
+      margin: 0;
+    }
+  }
+
+  .PrimaryButton {
+    height: 46px;
+    width: 100%;
+    background: $Color-Black;
+    border: 1px solid $Color-Black;
+    border-radius: 999px;
+    color: $Color-Inverse;
+    font-family: $Font-Primary;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 140ms ease, opacity 140ms ease;
+
+    &:hover:not(:disabled) {
+      background: $Color-Primary-20;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+  }
+
+  // --- loading ------------------------------------------------------------
+
+}
+
+@keyframes skeleton-sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

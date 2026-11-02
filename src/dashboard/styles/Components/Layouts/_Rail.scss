@@ -1,0 +1,248 @@
+// The "rail" layout (Settings → Layout): a near-black navigation rail that can
+// collapse to icons, a cream ground behind white cards, and a header that is
+// that same cream with only its controls drawn as white pills.
+//
+// Everything is scoped to `:root[data-layout='rail']`, so the standard layout is
+// untouched when it is not chosen. The cream itself is the `canvas` token.
+:root[data-layout='rail'] {
+  // --- navigation rail ------------------------------------------------------
+  .Layout-Sidebar {
+    background-color: $Color-Rail;
+    border-right: 0;
+    color: $Color-Fixed-White;
+
+    @media (min-width: 1025px) {
+      transition: width 200ms cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .Layout-Sidebar-Brand {
+      gap: 12px;
+      padding: 0 4px;
+      color: $Color-Fixed-White;
+      white-space: nowrap;
+
+      svg {
+        flex-shrink: 0;
+        color: $Color-Fixed-White;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $Color-Rail-Accent;
+        outline-offset: 3px;
+        border-radius: 12px;
+      }
+    }
+
+    // Sits on the rail's right edge, half outside it.
+    .Layout-Sidebar-Collapse {
+      position: absolute;
+      top: 30px;
+      right: -13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      background: $Color-Rail;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      transition: color 140ms ease, border-color 140ms ease, transform 200ms ease;
+
+      &:hover {
+        border-color: $Color-Rail-Accent;
+        color: $Color-Rail-Accent;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $Color-Rail-Accent;
+        outline-offset: 2px;
+      }
+
+      @include for-tablet-down {
+        display: none;
+      }
+    }
+
+    .Layout-Sidebar-Nav {
+      gap: 6px;
+      overflow-x: hidden;
+    }
+
+    .nav-item {
+      height: 48px;
+      padding: 0 14px;
+      border-radius: 14px;
+      color: rgba(255, 255, 255, 0.78);
+
+      .nav-icon {
+        color: $Color-Rail-Accent;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        color: $Color-Fixed-White;
+      }
+
+      &:focus-visible {
+        outline-color: $Color-Rail-Accent;
+      }
+
+      &.active {
+        background-color: $Color-Rail-Accent;
+        color: $Color-Rail;
+        font-weight: 600;
+
+        .nav-icon {
+          color: $Color-Rail;
+        }
+      }
+    }
+
+    .user-menu-trigger {
+      color: inherit;
+      border-top-color: rgba(255, 255, 255, 0.12);
+
+      .MuiAvatar-root {
+        width: 32px;
+        height: 32px;
+        background: $Color-Rail-Accent;
+        color: $Color-Rail;
+      }
+
+      .user-menu-name {
+        color: $Color-Fixed-White;
+      }
+
+      .user-menu-sub {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      &:focus-visible {
+        outline-color: $Color-Rail-Accent;
+      }
+    }
+  }
+
+  // Collapsed: icons only, centred. Desktop only — the drawer is always the full one.
+  @media (min-width: 1025px) {
+    .sidebar-collapsed .Layout-Sidebar {
+      align-items: center;
+      padding-left: 0;
+      padding-right: 0;
+
+      .Layout-Sidebar-BrandName,
+      .nav-label,
+      .user-menu-text {
+        display: none;
+      }
+
+      .Layout-Sidebar-Brand {
+        padding: 0;
+      }
+
+      .Layout-Sidebar-Collapse {
+        transform: rotate(180deg);
+      }
+
+      .Layout-Sidebar-Nav {
+        align-items: center;
+        width: 100%;
+        padding: 0 18px;
+      }
+
+      .nav-item {
+        justify-content: center;
+        width: 48px;
+        padding: 0;
+      }
+
+      .user-menu-trigger {
+        justify-content: center;
+        width: calc(100% - 36px);
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    .Layout-Header {
+      margin-left: var(--sidebar-w);
+      transition: margin-left 200ms cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .Layout-Page {
+      transition: margin-left 200ms cubic-bezier(0.32, 0.72, 0, 1);
+    }
+  }
+
+  // --- header ---------------------------------------------------------------
+  // The header is the cream itself; only the controls on it are white, so what
+  // scrolls under it is hidden but nothing looks like a bar.
+  .Layout-Header {
+    background: $Color-Canvas;
+    border-bottom: 0;
+    backdrop-filter: none;
+
+    .Layout-Header-Actions {
+      gap: 8px;
+    }
+
+    .ThemeToggle,
+    .UsageToggle {
+      background: $Color-White;
+
+      &:hover {
+        background: $Color-Primary--90;
+      }
+    }
+
+    .UsageToggle {
+      border-color: transparent;
+
+      &:hover {
+        background: $Color-White;
+        border-color: $Color-Black;
+      }
+
+      &.is-open,
+      &[aria-expanded='true'] {
+        background: $Color-Primary--90;
+        border-color: $Color-Black;
+      }
+
+      &-Dot {
+        border-color: $Color-Canvas;
+      }
+    }
+
+    .HeaderLink {
+      background: $Color-White;
+
+      &:hover {
+        background: $Color-Primary--90;
+      }
+    }
+  }
+
+  .GlobalSearch {
+    &-Icon {
+      left: 16px;
+    }
+
+    &-Input {
+      padding-left: 44px;
+      background: $Color-White;
+      border-radius: 999px;
+
+      &:focus {
+        background: $Color-White;
+      }
+    }
+
+    &-Shortcut {
+      background: $Color-GrayBackground;
+    }
+  }
+}

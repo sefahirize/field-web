@@ -1,0 +1,18 @@
+@mixin Radius-S {
+  border-radius: 12px;
+}
+@mixin Radius-M {
+  border-radius: 16px;
+}
+@mixin Radius-L {
+  border-radius: 24px;
+}
+@mixin Radius-XL {
+  border-radius: 32px;
+}
+@mixin Radius-Rounded {
+  border-radius: 999px;
+}
+@mixin Radius-Circle {
+  border-radius: 100%;
+}

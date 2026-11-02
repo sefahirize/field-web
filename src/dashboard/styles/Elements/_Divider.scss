@@ -1,0 +1,15 @@
+.MuiDivider-root {
+  padding: 8px 0;
+  &:before,
+  &:after {
+    border-top-color: $Color-GrayBorder;
+  }
+  .MuiDivider-wrapper {
+    padding-left: 12px;
+    padding-right: 12px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: $Color-Gray;
+  }
+}

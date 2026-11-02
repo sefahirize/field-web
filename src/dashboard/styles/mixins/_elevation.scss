@@ -1,0 +1,56 @@
+@mixin Elevation-S {
+  box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.02);
+}
+
+@mixin Elevation-M {
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.08);
+}
+
+@mixin Elevation-L {
+  box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.1);
+}
+
+@mixin Elevation-Primary-Button {
+  box-shadow: 0px 0px 0px 1px #465bcc, 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+@mixin Elevation-Primary-Button-Focus {
+  box-shadow: 0px 0px 0px 3px rgba(70, 91, 204, 0.5), 0px 0px 0px 2px #fff, 0px 0px 0px 1px #465bcc,
+    0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+@mixin Elevation-Secondary-Button {
+  box-shadow: 0px 0px 0px 1px #82ff57, 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+@mixin Elevation-Secondary-Button-Focus {
+  box-shadow: 0px 0px 0px 3px rgba(130, 204, 82, 0.5), 0px 0px 0px 2px #fff, 0px 0px 0px 1px #82cc52,
+    0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+@mixin Elevation-White-Button {
+  box-shadow: 0px 0px 0px 1px rgba(19, 28, 43, 0.08), 0px 1px 2px 0px rgba(164, 172, 185, 0.24);
+}
+
+@mixin Elevation-White-Button-Focus {
+  box-shadow: 0px 0px 0px 3px rgba(87, 114, 255, 0.5), 0px 0px 0px 2px #fff, 0px 0px 0px 1px rgba(19, 28, 43, 0.08),
+    0px 1px 2px 0px rgba(164, 172, 185, 0.4);
+}
+
+@mixin Elevation-White-Button-Outline {
+  box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.08);
+}
+
+@mixin Elevation-Error-Button {
+  box-shadow: 0px 0px 0px 1px #df1c3f, 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+@mixin Elevation-Error-Button-Focus {
+  box-shadow: 0px 0px 0px 3px rgba(223, 28, 40, 0.5), 0px 0px 0px 2px #fff, 0px 0px 0px 1px rgba(19, 28, 43, 0.08),
+    0px 1px 2px 0px rgba(164, 172, 185, 0.4);
+}
+
+@mixin Elevation-Error-Background-Focus {
+  box-shadow: 0px 0px 0px 3px rgba(223, 28, 63, 0.5), 0px 0px 0px 2px #fff, 0px 0px 0px 1px #df1c3f,
+    0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+}

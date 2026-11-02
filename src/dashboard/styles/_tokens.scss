@@ -1,0 +1,84 @@
+@use 'sass:color';
+@use 'sass:list';
+
+// Theme tokens: one CSS custom property per colour role, with a light and a dark
+// value. The SCSS variables in variables.scss point at these (`$Color-White` is
+// `var(--jf-surface)` and so on), so the partials keep their names and the page
+// follows `:root[data-theme='dark']`.
+//
+// LIGHT VALUES ARE THE ORIGINAL THEME: each one equals the hex the SCSS variable
+// had before dark mode existed, and must stay that way. Dark values are the G —
+// Mono dark palette from the design (public/demo-accent/demo.css).
+//
+//   name           (light,    dark)
+$jf-tokens: (
+  'page': (#ffffff, #0b0b0a),
+  // The ground the main content sits on. The same as the page; the "rail" layout makes it cream in light mode (below).
+  'canvas': (#ffffff, #0b0b0a),
+  // The navigation rail: near-black in both themes, with the accent lit for its icons.
+  'rail': (#0e1311, #0e1311),
+  'rail-accent': (#3dd6c0, #3dd6c0),
+  'surface': (#ffffff, #151614),
+  'inverse': (#ffffff, #0b0b0a),
+  // Plain black text where nothing more specific is set (the document default).
+  'text': (#000000, #ffffff),
+  'ink': (#0e0e0c, #ffffff),
+  'ink-hover': (#2b2d2b, #e4e4e2),
+  'body': (#3e4140, #c9cac7),
+  'muted': (#5b5e5c, #9a9b98),
+  'faint': (#9a9b98, #6e706d),
+  'soft': (#f7f7f7, #1d1f1c),
+  'chip': (#f1f1f1, #242622),
+  'chip-hover': (#e8e8e8, #2c2e2b),
+  'hair': (#e8e8e8, #232522),
+  'line': (#d2d3d2, #2c2e2b),
+  'danger': (#c2183c, #ff8fa6),
+  'danger-strong': (#a8132f, #ff8fa6),
+  'danger-bg': (#fbe9ee, #2a1519),
+  'warn-fill': (#b26a00, #e8b15e),
+  'warn': (#8a5300, #e8b15e),
+  'warn-bg': (#fef3e2, #2a2015),
+  'accent': (#0f7a6e, #3dd6c0),
+  'accent-strong': (#0b5e55, #3dd6c0),
+  'accent-hover': (#0b6258, #6fe6d5),
+  'accent-line': (#bfe3dd, #1d4a45),
+  'accent-soft': (#d2ece8, #163a37),
+  'accent-bg': (#e3f3f0, #10292a),
+  // Backdrops and overlays darken the page in either theme; only the base differs.
+  'scrim': (#0e0e0c, #000000),
+  // The dark panel beside the sign-in form: it is dark in light mode too, a step lighter than the page in dark mode.
+  'aside': (#0b0b0a, #1d1f1c),
+  // The balance card on Credit history: ink in light mode, a step above the page in dark mode.
+  'hero': (#0e0e0c, #1d1f1c),
+);
+
+@mixin jf-theme($index) {
+  @each $name, $pair in $jf-tokens {
+    $color: list.nth($pair, $index);
+    --jf-#{$name}: #{$color};
+    $rgb: (color.channel($color, 'red', $space: rgb), color.channel($color, 'green', $space: rgb), color.channel($color, 'blue', $space: rgb));
+    --jf-#{$name}-rgb: #{list.nth($rgb, 1)}, #{list.nth($rgb, 2)}, #{list.nth($rgb, 3)};
+  }
+}
+
+:root {
+  @include jf-theme(1);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  @include jf-theme(2);
+  color-scheme: dark;
+}
+
+// The rail layout (Settings → Layout): cream ground behind white cards. Dark mode keeps the page black.
+:root[data-layout='rail']:not([data-theme='dark']) {
+  $cream: #eff0ea;
+  --jf-canvas: #{$cream};
+  --jf-canvas-rgb: #{color.channel($cream, 'red', $space: rgb)}, #{color.channel($cream, 'green', $space: rgb)}, #{color.channel($cream, 'blue', $space: rgb)};
+}
+
+// A shadow is the page's darkness, not a colour of its own: the same black in both themes.
+@function shadow($alpha) {
+  @return rgba(14, 14, 12, $alpha);
+}

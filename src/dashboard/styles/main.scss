@@ -1,0 +1,10 @@
+@import 'tokens';
+@import 'variables';
+@import 'animations';
+@import 'vendors';
+@import 'globals';
+@import 'mixins/mixins';
+@import 'fonts/fonts.scss';
+@import './Elements/Elements.scss';
+@import './Components/Components.scss';
+@import './Pages/Pages.scss';

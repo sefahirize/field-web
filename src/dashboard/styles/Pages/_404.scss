@@ -1,0 +1,114 @@
+.Page-UnAuthorized,
+.Page-NotFound404 {
+  .UnAuthorized,
+  .NotFound404 {
+    background-color: $Color-GrayBackground;
+    min-height: calc(100vh - 96px);
+    height: calc(100vh - 96px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: top;
+    @include for-tablet-down {
+      height: calc(100vh - 64px);
+      min-height: calc(100vh - 64px);
+    }
+    &-Content {
+      height: calc(100vh - 96px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding-top: 130px;
+      @include for-tablet-down {
+        height: calc(100vh - 64px);
+      }
+      .heading {
+        margin-bottom: 36px;
+        h1 {
+          font-weight: 700;
+          font-size: 94px;
+          line-height: 120%;
+          text-align: center;
+          color: $Color-Black;
+          @include for-tablet-down {
+            font-size: 44px;
+          }
+        }
+      }
+      .desc {
+        margin-bottom: 64px;
+        width: 65%;
+        @include for-tablet-down {
+          width: 100%;
+          margin-bottom: 32px;
+        }
+        p {
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 30px;
+          text-align: center;
+          letter-spacing: 0.03em;
+          color: $Color-Gray;
+        }
+      }
+      .actions {
+        display: flex;
+        gap: 24px;
+      }
+      .social-media {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        margin-top: auto;
+        margin-bottom: 80px;
+        @include for-tablet-down {
+          flex-direction: column;
+          margin-bottom: 24px;
+        }
+        &-title {
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 18px;
+          color: $Color-Black;
+        }
+        &-list {
+          gap: 16px;
+          margin-left: auto;
+          display: flex;
+          @include for-tablet-down {
+            margin-left: 0;
+            order: 2;
+            margin-top: 16px;
+            margin-bottom: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.PageNotFound404 {
+  .NotFound404 {
+    &-Content {
+      .heading {
+        h1 {
+          font-size: 120px;
+          line-height: 120%;
+          @include for-tablet-down {
+            font-size: 64px;
+          }
+        }
+      }
+      .desc {
+        p {
+          font-size: 20px;
+          line-height: 150%;
+          @include for-tablet-down {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}

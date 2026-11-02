@@ -1,0 +1,11 @@
+import React from 'react';
+
+/** The Field mark, drawn in `currentColor` so it follows the surrounding ink. */
+export const Logo = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="175 129 318 318" aria-hidden="true" focusable="false">
+    <rect x="175" y="130.64" width="70.1231" height="316.361" fill="currentColor" />
+    <rect x="178.262" y="199.484" width="70.4845" height="314.738" transform="rotate(-90 178.262 199.484)" fill="currentColor" />
+    <rect x="259.801" y="317.505" width="62.2886" height="159.815" transform="rotate(-90 259.801 317.505)" fill="currentColor" />
+    <rect x="422.877" y="447" width="67.2062" height="66.8615" transform="rotate(-90 422.877 447)" fill="currentColor" />
+  </svg>
+);

@@ -1,0 +1,171 @@
+.Layout-Sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: var(--sidebar-w, #{$Sidebar-Width});
+  height: 100vh;
+  padding: 20px 14px;
+  background-color: $Color-White;
+  border-right: 1px solid $Color-GrayBorderDark;
+
+  @include for-tablet-down {
+    width: min(288px, 86vw);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 220ms;
+
+    .sidebar-opened & {
+      transform: translateX(0);
+      visibility: visible;
+      transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1);
+    }
+  }
+
+  .Layout-Sidebar-Brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 6px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: $Color-Black;
+  }
+
+  // Only the rail layout collapses (see _Rail.scss).
+  .Layout-Sidebar-Collapse {
+    display: none;
+  }
+
+  .Layout-Sidebar-Nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    color: $Color-Gray;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 140ms ease, color 140ms ease;
+
+    .nav-icon {
+      display: inline-flex;
+      flex: 0 0 20px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+
+        path,
+        [fill]:not([fill='none']) {
+          fill: currentColor;
+        }
+      }
+    }
+
+    &:hover {
+      background-color: $Color-GrayBackground;
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &.active {
+      background-color: $Color-Black;
+      color: $Color-Inverse;
+      font-weight: 600;
+    }
+  }
+
+  .user-menu-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 6px 0;
+    background: none;
+    border: 0;
+    border-top: 1px solid $Color-GrayBorderDark;
+    border-radius: 0;
+    cursor: pointer;
+    text-align: left;
+
+    .MuiAvatar-root {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      background: $Color-Black;
+      color: $Color-Inverse;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .user-menu-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .user-menu-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: $Color-Black;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-menu-sub {
+      font-size: 11px;
+      color: $Color-Gray;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &:hover .user-menu-name {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.Layout-Scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  background: rgba(var(--jf-scrim-rgb), 0.38);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms ease, visibility 0s linear 200ms;
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 200ms ease;
+  }
+
+  @media (min-width: 1025px) {
+    display: none;
+  }
+}

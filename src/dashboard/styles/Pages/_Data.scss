@@ -1,0 +1,770 @@
+// Shared building blocks for the API-backed pages (dashboard, documents,
+// analytics, profile). G — Mono: ink on white, hairline borders, one teal
+// accent for small marks only.
+
+.Page {
+  max-width: 1240px;
+}
+
+.PageHeading {
+  margin-bottom: 24px;
+
+  &-Title {
+    margin: 0 0 5px;
+    color: $Color-Black;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.6px;
+  }
+
+  &-Desc {
+    margin: 0;
+    color: $Color-Gray;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
+
+.SectionHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 28px 0 14px;
+
+  &-Title {
+    margin: 0;
+    color: $Color-Black;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  a {
+    color: $Color-Accent;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.Muted {
+  color: $Color-Gray;
+  @include Text-Body-14;
+}
+
+// Cards that follow each other keep their own space.
+.Panel + .StatRow,
+.Panel + .Panel {
+  margin-top: 20px;
+}
+
+// --- stat tiles -------------------------------------------------------------
+.StatRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.StatTile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  background: $Color-White;
+  border: 1px solid $Color-GrayBorderDark;
+  @include Radius-M;
+
+  &-Label {
+    color: $Color-Gray;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  &-Value {
+    color: $Color-Black;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+}
+
+// --- product grid -----------------------------------------------------------
+.ProductGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.ProductCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  background: $Color-White;
+  border: 1px solid $Color-GrayBorderDark;
+  @include Radius-M;
+
+  &-Head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &-Name {
+    color: $Color-Black;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  &-Desc {
+    margin: 0;
+    min-height: 36px;
+    color: $Color-Gray;
+    @include Text-Body-14;
+  }
+
+  &-Foot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid $Color-GrayBorder;
+  }
+
+  &-Meter {
+    flex-grow: 1;
+    height: 6px;
+    background: $Color-GrayBackground;
+    overflow: hidden;
+    @include Radius-Rounded;
+
+    div {
+      height: 6px;
+      background: $Color-Black;
+      @include Radius-Rounded;
+    }
+  }
+
+  &-Credits {
+    color: $Color-Black;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+// --- toolbar ----------------------------------------------------------------
+.Toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 14px;
+
+  &-Group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &-Search {
+    width: 280px;
+    max-width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid $Color-GrayBorderDark;
+    background: $Color-White;
+    color: $Color-Black;
+    font-family: $Font-Secondary;
+    font-size: 14px;
+    outline: none;
+    @include Radius-S;
+
+    &:hover:not(:focus) {
+      border-color: $Color-GrayTint;
+    }
+
+    &:focus {
+      border-color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+  }
+
+  &-Filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.Chip {
+  padding: 7px 14px;
+  border: 1px solid $Color-GrayBorderDark;
+  background: $Color-White;
+  color: $Color-Gray;
+  font-family: $Font-Secondary;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+  cursor: pointer;
+  @include Radius-Rounded;
+  @include transition-default;
+
+  &:hover {
+    border-color: $Color-Black;
+    color: $Color-Black;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $Color-Accent;
+    outline-offset: 2px;
+  }
+
+  &.is-active {
+    border-color: $Color-Black;
+    background: $Color-Black;
+    color: $Color-Inverse;
+  }
+}
+
+// --- table ------------------------------------------------------------------
+// minmax(0, …): a track may shrink below its content, so one long unbroken word
+// (a hash, a URL) cannot push the other columns out of the table.
+$doc-columns: minmax(0, 2.2fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.2fr);
+
+.Table {
+  background: $Color-White;
+  border: 1px solid $Color-GrayBorder;
+  overflow: hidden;
+  @include Radius-M;
+
+  &-Head,
+  &-Row {
+    display: grid;
+    grid-template-columns: $doc-columns;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 20px;
+  }
+
+  &-Head {
+    background: $Color-GrayBackground;
+    border-bottom: 1px solid $Color-GrayBorder;
+    color: $Color-Gray;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &-Row {
+    border-bottom: 1px solid $Color-GrayBorder;
+    color: $Color-Navy;
+    @include Text-Body-14;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &-Cell-Strong {
+    color: $Color-Black;
+    font-weight: 600;
+  }
+
+  &-Message {
+    padding: 28px 20px;
+    color: $Color-Gray;
+    text-align: center;
+    @include Text-Body-14;
+  }
+
+  &-Empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 44px 20px;
+    text-align: center;
+
+    strong {
+      color: $Color-Black;
+      @include Text-Body-16;
+    }
+
+    span {
+      color: $Color-Gray;
+      @include Text-Body-14;
+    }
+  }
+}
+
+.Badge {
+  display: inline-flex;
+  padding: 3px 10px;
+  background: $Color-GrayBackground;
+  color: $Color-Gray;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  @include Radius-Rounded;
+
+  &-completed {
+    background: $Color-AccentTint;
+    color: $Color-Accent;
+  }
+
+  &-processing,
+  &-pending {
+    background: $Color-WarningTint;
+    color: $Color-Warning-40;
+  }
+
+  &-failed {
+    background: $Color-ErrorTint;
+    color: $Color-Error-10;
+  }
+}
+
+.Pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+
+  button {
+    height: 36px;
+    padding: 0 16px;
+    border: 1px solid $Color-GrayBorderDark;
+    background: $Color-White;
+    color: $Color-Black;
+    font-family: $Font-Secondary;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    @include Radius-Rounded;
+
+    &:disabled {
+      color: $Color-GrayTint;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// --- panels & chart ---------------------------------------------------------
+.Panel {
+  margin-top: 16px;
+  padding: 22px;
+  background: $Color-White;
+  border: 1px solid $Color-GrayBorderDark;
+  @include Radius-M;
+
+  &-Head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  &-Title {
+    margin: 0;
+    color: $Color-Black;
+    @include Text-Headline-6;
+  }
+}
+
+.Chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 200px;
+
+  &-Col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    height: 100%;
+  }
+
+  &-Bar {
+    width: 100%;
+    min-height: 2px;
+    background: $Color-Body;
+    border-radius: 4px 4px 0 0;
+    @include transition-default;
+
+    .Chart-Col:hover & {
+      background: $Color-Black;
+    }
+  }
+
+  &-Label {
+    color: $Color-GrayTint;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    // A 31-point series cannot show every label at this width.
+    writing-mode: vertical-rl;
+  }
+}
+
+.Breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &-Row {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr 80px 52px;
+    gap: 14px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid $Color-GrayBorder;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &-Name {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: $Color-Black;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &-Meter {
+    height: 8px;
+    background: $Color-GrayBackground;
+    overflow: hidden;
+    @include Radius-Rounded;
+
+    div {
+      height: 8px;
+      min-width: 2px;
+      background: $Color-Black;
+      @include Radius-Rounded;
+    }
+  }
+
+  &-Value {
+    color: $Color-Black;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  &-Pct {
+    text-align: right;
+    font-size: 13px;
+  }
+}
+
+// --- account fields ---------------------------------------------------------
+.AccountGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px 28px;
+}
+
+.Field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+
+  &-Label {
+    color: $Color-Gray;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+
+  &-Value {
+    color: $Color-Black;
+    font-size: 14px;
+    font-weight: 500;
+    // Emails and company names can be long; wrap rather than blow out the grid.
+    overflow-wrap: anywhere;
+  }
+}
+
+// --- profile ----------------------------------------------------------------
+.ProfileLayout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 16px;
+  align-items: start;
+
+  @include for-tablet-down {
+    grid-template-columns: 1fr;
+  }
+
+  // The panels already carry their own top margin from .Panel; cancel it so the
+  // two columns start on the same line.
+  > .Panel {
+    margin-top: 0;
+  }
+}
+
+.AvatarBlock {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  &-Image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 84px;
+    flex-shrink: 0;
+    background: $Color-Black;
+    color: $Color-Inverse;
+    font-size: 24px;
+    font-weight: 700;
+    overflow: hidden;
+    @include Radius-Circle;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-Actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.ProfileForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  &-Row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @include for-phone-only {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &-Actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 4px;
+  }
+}
+
+.FormField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &-Label {
+    color: $Color-Black;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  &-Input {
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid $Color-GrayBorderDark;
+    background: $Color-White;
+    color: $Color-Black;
+    font-family: $Font-Secondary;
+    font-size: 14px;
+    outline: none;
+    @include Radius-S;
+    @include transition-default;
+
+    &:focus {
+      border-color: $Color-Black;
+      box-shadow: 0 0 0 3px $Color-Primary--90;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+  }
+
+  &-Help {
+    color: $Color-Gray;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  // Inherits the input's border and focus ring; only the fixed height goes.
+  &-Textarea {
+    height: auto;
+    min-height: 120px;
+    padding: 10px 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    resize: vertical;
+  }
+}
+
+// Parser results and raw API answers, shown as indented JSON.
+.CodeBlock {
+  max-height: 420px;
+  margin: 0;
+  padding: 14px 16px;
+  overflow: auto;
+  background: $Color-GrayBackground;
+  border: 1px solid $Color-GrayBorder;
+  color: $Color-Black;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  @include Radius-S;
+}
+
+.Button {
+  height: 42px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  font-family: $Font-Secondary;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  @include Radius-Rounded;
+  @include transition-default;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &-Primary {
+    background: $Color-Primary;
+    color: $Color-Inverse;
+
+    &:not(:disabled):hover {
+      background: $Color-Primary-20;
+    }
+  }
+
+  &-Secondary {
+    border-color: $Color-GrayBorderDark;
+    background: $Color-White;
+    color: $Color-Black;
+
+    &:not(:disabled):hover {
+      border-color: $Color-Gray;
+    }
+  }
+
+  &-Ghost {
+    background: transparent;
+    color: $Color-Gray;
+
+    &:not(:disabled):hover {
+      color: $Color-Black;
+    }
+  }
+}
+
+// A product picker sitting in a toolbar row beside the filter chips.
+.Toolbar-Select {
+  width: 260px;
+  max-width: 100%;
+}
+
+// The document's activity log: a short event, a status, a message that may be
+// long (it is cut off with a tooltip) and a date.
+.Table--activity {
+  .Table-Head,
+  .Table-Row {
+    grid-template-columns: minmax(0, 1.3fr) 132px minmax(0, 2.4fr) 180px; // the date stays on one line
+  }
+
+  // On a phone each entry becomes a small card; the column headings go.
+  @include for-phone-only {
+    .Table-Head {
+      display: none;
+    }
+
+    .Table-Row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: 6px;
+    }
+
+    .Table-Cell-Fit,
+    .Table-Row > .Muted {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// A cell that holds a truncating line has to be allowed to shrink.
+.Table-Cell-Fit {
+  min-width: 0;
+}
+
+// One line ending in an ellipsis (components/elements/TruncatedText.jsx).
+.Truncate {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:focus-visible {
+    outline: 2px solid $Color-Accent;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+// The tooltip (rendered in a portal, so unscoped): the ink colour inverted, so it
+// reads in both themes.
+.MuiTooltip-tooltip.AppTooltip {
+  max-width: min(380px, calc(100vw - 32px));
+  padding: 8px 12px;
+  background: $Color-Black;
+  border-radius: 10px;
+  color: $Color-Inverse;
+  font-family: $Font-Primary;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+}
+
+.MuiTooltip-arrow.AppTooltip-Arrow {
+  color: $Color-Black;
+}

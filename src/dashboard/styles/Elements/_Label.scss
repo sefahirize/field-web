@@ -1,0 +1,18 @@
+.MuiFormLabel-root {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: $Color-Gray;
+  margin-bottom: 4px;
+  i.required {
+    padding-left: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: $Color-Error;
+    font-style: normal;
+  }
+}
+
+.Label-TextField {
+}

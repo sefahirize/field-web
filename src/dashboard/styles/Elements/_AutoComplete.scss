@@ -1,0 +1,131 @@
+.AutoComplete-Standart {
+  .MuiInputBase-root {
+    .MuiOutlinedInput-notchedOutline {
+      @include transition-default;
+    }
+    &:hover {
+      .MuiOutlinedInput-notchedOutline {
+        box-shadow: 0px 0px 10px shadow(0.1);
+        @include transition-default;
+      }
+    }
+  }
+  .MuiTextField-root {
+    .MuiInputBase-input {
+      cursor: pointer;
+      height: 44px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: 0.03em;
+      color: $Color-Gray;
+      @include for-tablet-down {
+        font-size: 14px;
+        line-height: 150%;
+      }
+    }
+  }
+  .MuiAutocomplete-endAdornment {
+    height: 44px;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+
+    .MuiAutocomplete-popupIndicator {
+      background-image: url('../../assets/icons/arrow-down.svg');
+      width: 24px;
+      height: 24px;
+      background-repeat: no-repeat;
+      background-position: center;
+      padding: 0;
+      background-size: contain;
+
+      svg {
+        display: none;
+      }
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.Autocomplete-OpenedStandart-Container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .Autocomplete-OpenedStandart {
+    &.type-update {
+      .MuiAutocomplete-input {
+        height: 26px;
+      }
+    }
+    .MuiAutocomplete-inputRoot {
+      padding: 6px;
+
+      .MuiChip-deletable {
+        margin-right: 12px;
+        margin-bottom: 3px;
+        margin-top: 3px;
+      }
+    }
+    .MuiAutocomplete-input {
+      height: 26px;
+    }
+  }
+  .Autocomplete-OpenedStandart-Popper {
+    position: relative !important;
+    transform: none !important;
+    inset: auto !important;
+    width: 100% !important;
+    &.type-update {
+      .MuiAutocomplete-paper {
+        .MuiAutocomplete-listbox {
+          .MuiAutocomplete-option {
+            padding-top: 0;
+            padding-bottom: 0;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 16px;
+            color: $Color-Black;
+
+            .MuiButtonBase-root {
+              padding: 4px 8px;
+            }
+          }
+        }
+      }
+    }
+    .MuiAutocomplete-paper {
+      background: transparent;
+      border: none;
+      outline: none;
+      box-shadow: none;
+
+      .MuiAutocomplete-listbox {
+        .MuiAutocomplete-option {
+          border-radius: 6px;
+
+          padding-left: 0;
+          &.option-add-tag {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            color: $Color-Black;
+            gap: 8px;
+            padding-left: 8px;
+            svg {
+              path {
+                fill: $Color-Navy;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

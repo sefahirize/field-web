@@ -1,0 +1,277 @@
+// The header search (components/layouts/GlobalSearch.jsx).
+.GlobalSearch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 560px;
+
+  &-Icon {
+    position: absolute;
+    left: 14px;
+    display: inline-flex;
+    color: $Color-GrayTint;
+    pointer-events: none;
+    transition: color 140ms ease;
+  }
+
+  &.is-open &-Icon {
+    color: $Color-Black;
+  }
+
+  &-Input {
+    width: 100%;
+    height: 42px;
+    padding: 0 76px 0 42px;
+    background: $Color-GrayBackground;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: $Color-Black;
+    font-family: $Font-Primary;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+
+    &::placeholder {
+      color: $Color-Gray;
+    }
+
+    &:hover {
+      border-color: $Color-GrayBorderDark;
+    }
+
+    &:focus {
+      outline: none;
+      background: $Color-White;
+      border-color: $Color-Black;
+      box-shadow: 0 0 0 3px $Color-Primary--90;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    @include for-sm-phone-only {
+      padding-right: 40px;
+    }
+  }
+
+  &-Shortcut {
+    position: absolute;
+    right: 10px;
+    padding: 2px 7px;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 7px;
+    color: $Color-Gray;
+    font-family: $Font-Primary;
+    font-size: 11px;
+    font-weight: 600;
+    pointer-events: none;
+
+    // Nothing to press on a phone.
+    @include for-tablet-down {
+      display: none;
+    }
+  }
+
+  &-Clear {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    color: $Color-Gray;
+    cursor: pointer;
+
+    &:hover {
+      background: $Color-Primary--90;
+      color: $Color-Black;
+    }
+  }
+
+  &-Panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 40;
+    overflow: hidden;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px shadow(0.18);
+    animation: global-search-in 120ms ease-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+
+    @include for-sm-phone-only {
+      position: fixed;
+      top: $Header-Height;
+      left: 8px;
+      right: 8px;
+      margin-top: 4px;
+    }
+  }
+
+  &-List {
+    max-height: min(440px, calc(100vh - 160px));
+    padding: 8px;
+    overflow-y: auto;
+  }
+
+  &-Heading {
+    margin: 0;
+    padding: 10px 10px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $Color-GrayTint;
+  }
+
+  &-Empty {
+    margin: 0;
+    padding: 12px 10px 6px;
+    font-size: 13px;
+    color: $Color-Gray;
+  }
+
+  &-Option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &.is-active {
+      background: $Color-GrayBackground;
+    }
+
+    &.is-fallback {
+      margin-top: 4px;
+      border-top: 1px solid $Color-GrayBorder;
+      border-radius: 0 0 10px 10px;
+      padding-top: 12px;
+    }
+  }
+
+  &-OptionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    background: $Color-Primary--90;
+    border-radius: 9px;
+    color: $Color-Black;
+
+    svg {
+      width: 18px;
+      height: 18px;
+
+      path,
+      [fill]:not([fill='none']) {
+        fill: currentColor;
+      }
+    }
+
+    // Stroke icons (help, search) keep their outline.
+    svg[stroke] path,
+    svg[stroke] circle {
+      fill: none;
+    }
+  }
+
+  &-OptionText {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  &-OptionTitle {
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 600;
+    color: $Color-Black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    mark {
+      background: transparent;
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: $Color-Accent;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+  }
+
+  &-OptionDesc {
+    overflow: hidden;
+    font-size: 12px;
+    color: $Color-Gray;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-OptionEnter {
+    flex-shrink: 0;
+    font-size: 13px;
+    color: $Color-GrayTint;
+    opacity: 0;
+
+    .is-active & {
+      opacity: 1;
+    }
+  }
+
+  &-Foot {
+    display: flex;
+    gap: 16px;
+    padding: 10px 16px;
+    background: $Color-GrayBackground;
+    border-top: 1px solid $Color-GrayBorder;
+    font-size: 11px;
+    font-weight: 500;
+    color: $Color-Gray;
+
+    kbd {
+      margin-right: 3px;
+      padding: 1px 5px;
+      background: $Color-White;
+      border: 1px solid $Color-GrayBorderDark;
+      border-radius: 5px;
+      font-family: $Font-Primary;
+      font-size: 10px;
+    }
+
+    @include for-tablet-down {
+      display: none;
+    }
+  }
+}
+
+@keyframes global-search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

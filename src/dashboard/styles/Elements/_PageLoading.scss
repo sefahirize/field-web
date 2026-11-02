@@ -1,0 +1,18 @@
+.PageLoading {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  background: rgba(var(--jf-page-rgb), 0.35);
+  left: 0;
+  top: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    circle {
+      stroke: $Color-Primary-20;
+    }
+  }
+}

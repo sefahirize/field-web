@@ -1,0 +1,38 @@
+// notistack 3 markup: container > collapse wrapper > snackbar > content.
+// (notistack 2, which the CRA app used, had MUI Collapse and SnackbarItem-* classes.)
+.notistack-SnackbarContainer {
+  .notistack-CollapseWrapper {
+    .notistack-Snackbar {
+      .notistack-MuiContent {
+        background: $Color-Primary;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 2px 2px 25px shadow(0.1);
+        .notistack-snackbar {
+          font-weight: 300;
+          font-size: 18px;
+          line-height: 30px;
+          // Text on the toast's own fill — ink, teal or red — so it reads in both themes.
+          color: $Color-Inverse;
+        }
+        &.notistack-MuiContent-default {
+          background: $Color-Primary;
+        }
+        &.notistack-MuiContent-error {
+          background: $Color-Error;
+        }
+        &.notistack-MuiContent-success {
+          background: $Color-Success;
+        }
+        &.notistack-MuiContent-warning {
+          background: $Color-Primary;
+        }
+        &.notistack-MuiContent-info {
+          background: $Color-Primary;
+        }
+      }
+    }
+  }
+}

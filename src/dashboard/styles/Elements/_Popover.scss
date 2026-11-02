@@ -1,0 +1,38 @@
+.MuiPopover-root {
+  &.Popover-MegaMenu {
+    top: 96px;
+    background-color: rgba(var(--jf-scrim-rgb), 0.4);
+    background-color: transparent;
+    bottom: auto;
+    @include for-tablet-down {
+      position: inherit;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      top: 0;
+    }
+    .MuiBackdrop-root {
+      top: 80px;
+      display: none;
+      @include for-tablet-down {
+        position: inherit;
+      }
+    }
+    .MuiPaper-root {
+      left: 0 !important;
+      top: 0 !important;
+      min-width: 100%;
+      max-width: 100%;
+      background: $Color-White;
+      border-top: 1px solid $Color-GrayBorder;
+      box-shadow: 2px 2px 25px shadow(0.1);
+      max-height: initial;
+      min-height: auto;
+      overflow: hidden;
+      @include for-tablet-down {
+        position: inherit;
+        background: $Color-GrayBackground;
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+// Signed-in shell. The sidebar is a fixed 236px column on desktop; from tablet
+// down it becomes a drawer and the page takes the full width.
+.Layout-Protected {
+  // The sidebar's width, shared by the rail itself, the header and the page so
+  // they move together when it is collapsed to icons.
+  --sidebar-w: #{$Sidebar-Width};
+
+  min-height: 100vh;
+  background-color: $Color-Canvas; // cream behind white cards (the page black in dark mode)
+  color: $Color-Body;
+
+  &.sidebar-collapsed {
+    --sidebar-w: #{$Sidebar-Width-Collapsed};
+  }
+
+  @include for-tablet-down {
+    // The drawer is always the full one; the icon rail is a desktop thing.
+    --sidebar-w: 0px;
+
+    &.sidebar-collapsed {
+      --sidebar-w: 0px;
+    }
+  }
+
+  .Layout-Page {
+    min-height: calc(100vh - #{$Header-Height});
+    margin-left: var(--sidebar-w);
+    padding: 32px 40px 56px;
+    transition: margin-left 200ms cubic-bezier(0.32, 0.72, 0, 1);
+
+    @include for-tablet-down {
+      margin-left: 0;
+      padding: 24px 16px 48px;
+    }
+  }
+
+  &.loading {
+    .Layout-Page {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+}

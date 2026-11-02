@@ -1,0 +1,49 @@
+.MuiFormGroup-root {
+  .MuiFormControlLabel-root {
+    .MuiSwitch-root {
+      padding: 7px 12px;
+      width: 64px;
+      height: 38px;
+
+      .MuiSwitch-switchBase {
+        background: $Color-White;
+        padding: 0;
+        transform: translateX(16px);
+        top: 11px;
+        .MuiSwitch-thumb {
+          width: 16px;
+          height: 16px;
+          box-shadow: none;
+          background-color: $Color-GrayTint;
+        }
+        &.Mui-checked {
+          color: $Color-Fixed-White;
+          transform: translateX(32px);
+          .MuiSwitch-thumb {
+            background: $Color-White;
+          }
+          & + {
+            .MuiSwitch-track {
+              border-radius: 40px;
+              opacity: 1;
+              background: $Color-Primary;
+              border-color: $Color-Primary;
+            }
+          }
+        }
+      }
+      .MuiSwitch-track {
+        background: $Color-GrayBackground;
+        border-radius: 40px;
+        opacity: 1;
+        border: 1px solid $Color-GrayBorder;
+      }
+    }
+    .MuiFormControlLabel-label {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: $Black;
+    }
+  }
+}

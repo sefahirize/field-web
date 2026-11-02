@@ -1,0 +1,196 @@
+// Where Stripe sends people back to: one status card — an icon for the state,
+// what happened, what was in the order, and what to do next.
+.Page-PaymentResult {
+  display: flex;
+  justify-content: center;
+  padding-top: clamp(8px, 7vh, 64px);
+
+  .ResultCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 560px;
+    padding: 36px;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 20px;
+
+    @include for-phone-only {
+      padding: 26px 22px;
+    }
+
+    &-Icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      margin-bottom: 22px;
+      border-radius: 50%;
+      background: $Color-Primary--90;
+      color: $Color-Black;
+    }
+
+    &-Title {
+      margin: 0 0 8px;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 30px;
+      letter-spacing: -0.5px;
+      color: $Color-Black;
+      text-wrap: balance;
+    }
+
+    &-Text {
+      max-width: 50ch;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22px;
+      color: $Color-Gray;
+    }
+
+    &-Actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+
+      @include for-small-phone-only {
+        flex-direction: column;
+        align-self: stretch;
+
+        .MuiButton-root {
+          width: 100%;
+        }
+      }
+    }
+
+    &-Ref {
+      margin: 26px 0 0;
+      padding-top: 16px;
+      width: 100%;
+      border-top: 1px solid $Color-GrayBorder;
+      font-size: 12px;
+      font-weight: 500;
+      color: $Color-GrayTint;
+
+      code {
+        margin-left: 4px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        color: $Color-Gray;
+      }
+    }
+
+    &-Spinner {
+      width: 22px;
+      height: 22px;
+      border: 2.5px solid $Color-GrayBorderDark;
+      border-top-color: $Color-Black;
+      border-radius: 50%;
+      animation: result-spin 0.8s linear infinite;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation-duration: 2.4s;
+      }
+    }
+  }
+
+  // State tones. Written out in full: `&--x &-Icon` would repeat the page class.
+  .ResultCard--ok .ResultCard-Icon {
+    background: $Color-AccentTint;
+    color: $Color-Accent;
+  }
+
+  .ResultCard--danger .ResultCard-Icon {
+    background: $Color-ErrorTint;
+    color: $Color-Error;
+  }
+
+  .ResultCard--danger .ResultCard-Text {
+    color: $Color-Error-10;
+  }
+
+  .ResultCard--neutral .ResultCard-Icon {
+    color: $Color-Gray;
+  }
+
+  .ResultOrder {
+    width: 100%;
+    margin-top: 26px;
+    padding: 4px 18px;
+    background: $Color-GrayBackground;
+    border-radius: 14px;
+
+    &-Head {
+      padding: 14px 0 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: $Color-Gray;
+    }
+
+    &-Lines {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+
+    &-Line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid $Color-GrayBorder;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    &-Name {
+      flex-grow: 1;
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: $Color-Black;
+    }
+
+    &-Count {
+      flex-shrink: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: $Color-Gray;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Total {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 14px 0 16px;
+      border-top: 1px solid $Color-GrayBorderDark;
+      font-size: 13px;
+      font-weight: 600;
+      color: $Color-Gray;
+    }
+
+    &-TotalValue {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: $Color-Black;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}
+
+@keyframes result-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

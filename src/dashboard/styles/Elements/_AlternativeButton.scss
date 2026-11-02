@@ -1,0 +1,160 @@
+.MuiButton-root {
+  &.button-social-login {
+    box-shadow: none !important;
+    height: 44px;
+    background-color: $Color-White;
+    border: 1px solid $Color-Primary--90;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: $Color-Black;
+    .MuiButton-startIcon {
+      position: absolute;
+      left: 12px;
+    }
+  }
+}
+
+.MuiButton-root {
+  &.button-history-back {
+    box-shadow: none !important;
+    border: none;
+    height: 32px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: $Color-Black;
+    padding: 6px 16px;
+    background: $Color-Primary--85;
+    border-radius: 16px;
+    svg {
+      path {
+        fill: $Color-Black;
+      }
+    }
+  }
+}
+
+.button-external-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: $Color-Gray;
+  }
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      path {
+        fill: $Color-Gray;
+      }
+    }
+  }
+}
+
+.button-badge-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  padding-right: 2px;
+  height: 24px;
+  background: $Color-GrayBorder;
+  border-radius: 8px;
+  &.no-text {
+    padding: 2px;
+  }
+  .text {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    color: $Color-Navy;
+  }
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.link-contact-us {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  height: 24px;
+  background: $Color-GrayBorder;
+  border-radius: 8px;
+  .text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: $Color-Navy;
+  }
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
+    }
+  }
+}
+
+.button-auth-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  .text {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: $Color-Black;
+  }
+}
+
+.button-dateRangePicker {
+  background: $Color-White;
+  border: 1px solid $Color-GrayBackground;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: $Color-Navy;
+}
+
+.MuiButton-root {
+  &.button-type-auth {
+    box-shadow: none !important;
+    background: $Color-Primary;
+    .MuiButton-startIcon {
+      position: absolute;
+      left: 12px;
+    }
+    &.Mui-disabled {
+      background: $Color-Gray;
+      color: $Color-Inverse;
+    }
+  }
+  &.button-end-icon-edge {
+    .MuiButton-endIcon {
+      position: absolute;
+      right: 12px;
+    }
+  }
+}

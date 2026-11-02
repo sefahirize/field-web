@@ -1,0 +1,425 @@
+// The bar across the top of signed-in pages. It sits to the right of the fixed
+// sidebar and stays in view while the page scrolls; on tablet and below it
+// spans the screen and also carries the brand and the drawer button.
+.Layout-Header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: $Header-Height;
+  margin-left: $Sidebar-Width;
+  padding: 0 40px;
+  background: rgba(var(--jf-page-rgb), 0.92);
+  border-bottom: 1px solid $Color-GrayBorder;
+  backdrop-filter: saturate(1.4) blur(10px);
+
+  @include for-tablet-down {
+    margin-left: 0;
+    padding: 0 16px;
+  }
+
+  .sidebar-toggle,
+  .Layout-Header-Brand {
+    display: none;
+
+    @include for-tablet-down {
+      display: inline-flex;
+    }
+  }
+
+  .sidebar-toggle {
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: none;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color 140ms ease;
+
+    svg {
+      width: 20px;
+      height: 20px;
+
+      path {
+        fill: $Color-Black;
+      }
+    }
+
+    &:hover {
+      border-color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+  }
+
+  .Layout-Header-Brand {
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: $Color-Black;
+
+    // Room for the search comes first on a phone: the mark stays, the word goes.
+    @include for-sm-phone-only {
+      span {
+        display: none;
+      }
+    }
+  }
+
+  .Layout-Header-Actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .ThemeToggle,
+  .UsageToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    color: $Color-Gray;
+    cursor: pointer;
+    transition: background-color 140ms ease, color 140ms ease;
+
+    &:hover {
+      background: $Color-GrayBackground;
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+  }
+
+  // The usage button is the one control here that carries information, so it is a
+  // button with a label and an outline rather than a bare icon.
+  .UsageToggle {
+    position: relative;
+    gap: 8px;
+    width: auto;
+    padding: 0 14px 0 12px;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 999px;
+    color: $Color-Black;
+    font-size: 14px;
+    font-weight: 600;
+
+    &:hover {
+      background: $Color-GrayBackground;
+      border-color: $Color-Black;
+    }
+
+    &.is-open,
+    &[aria-expanded='true'] {
+      background: $Color-Primary--90;
+      border-color: $Color-Black;
+    }
+
+    // Icon only on a phone, where the search needs the room.
+    @include for-sm-phone-only {
+      width: 38px;
+      padding: 0;
+
+      .UsageToggle-Label {
+        display: none;
+      }
+    }
+
+    &-Dot {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 8px;
+      height: 8px;
+      background: $Color-Warning;
+      border: 2px solid $Color-Page;
+      border-radius: 50%;
+      box-sizing: content-box;
+    }
+
+  }
+
+  // Written out in full: inside `.Layout-Header`, `&.has-out &-Dot` would repeat it.
+  .UsageToggle.has-out .UsageToggle-Dot {
+    background: $Color-Error;
+  }
+
+  .HeaderLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    color: $Color-Gray;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 140ms ease, color 140ms ease;
+
+    &:hover {
+      background: $Color-GrayBackground;
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    @include for-sm-phone-only {
+      width: 38px;
+      padding: 0;
+      justify-content: center;
+
+      span {
+        display: none;
+      }
+    }
+  }
+}
+
+// The theme menu renders in a portal, so its items are styled outside the header.
+.ThemeToggle-Item.MuiMenuItem-root {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 168px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ThemeToggle-ItemIcon {
+  display: inline-flex;
+  color: $Color-Gray;
+}
+
+.ThemeToggle-ItemLabel {
+  flex-grow: 1;
+}
+
+.ThemeToggle-Heading.MuiListSubheader-root {
+  padding: 8px 16px 4px;
+  background: none;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $Color-Gray;
+}
+
+.ThemeToggle-Item--layout.MuiMenuItem-root {
+  gap: 16px;
+}
+
+.ThemeToggle-ItemText {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 1px;
+}
+
+.ThemeToggle-ItemHint {
+  max-width: 220px;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: normal;
+  color: $Color-Gray;
+}
+
+.ThemeToggle-Check {
+  color: $Color-Accent;
+}
+
+// The usage panel (rendered by MUI in a portal, so unscoped).
+.MuiPopover-root .UsageMenu.MuiPaper-root {
+  width: min(360px, calc(100vw - 24px));
+  margin-top: 8px;
+  padding: 0;
+  background: $Color-White;
+  border: 1px solid $Color-GrayBorderDark;
+  border-radius: 16px;
+  box-shadow: 0 24px 60px shadow(0.18);
+}
+
+.UsageMenu {
+  &-Head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid $Color-GrayBorder;
+
+    strong {
+      font-size: 14px;
+      font-weight: 700;
+      color: $Color-Black;
+    }
+
+    span {
+      font-size: 12px;
+      color: $Color-Gray;
+    }
+  }
+
+  &-Updating {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  &-Spin {
+    width: 11px;
+    height: 11px;
+    border: 2px solid $Color-GrayBorderDark;
+    border-top-color: $Color-Black;
+    border-radius: 50%;
+    animation: result-spin 0.8s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation-duration: 2.4s;
+    }
+  }
+
+  &-List {
+    max-height: min(380px, calc(100vh - 220px));
+    margin: 0;
+    padding: 6px 0;
+    overflow-y: auto;
+  }
+
+  &-Row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 18px;
+
+    .Skeleton {
+      height: 16px;
+      border-radius: 6px;
+    }
+  }
+
+  &-Line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &-Product {
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: $Color-Black;
+  }
+
+  &-Left {
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: $Color-Black;
+    font-variant-numeric: tabular-nums;
+
+    &.is-low {
+      color: $Color-Warning-40;
+    }
+
+    &.is-out {
+      color: $Color-Error;
+    }
+  }
+
+  &-Bar {
+    display: block;
+    height: 6px;
+    overflow: hidden;
+    background: $Color-Primary--90;
+    border-radius: 6px;
+
+    span {
+      display: block;
+      height: 100%;
+      min-width: 2px;
+      background: $Color-Black;
+      border-radius: 6px;
+    }
+
+    &--low span {
+      background: $Color-Warning;
+    }
+
+    &--out span {
+      background: $Color-Error;
+    }
+  }
+
+  &-Sub {
+    font-size: 11px;
+    color: $Color-Gray;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &-Empty {
+    margin: 0;
+    padding: 22px 18px;
+    font-size: 13px;
+    line-height: 20px;
+    color: $Color-Gray;
+  }
+
+  &-Foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: $Color-GrayBackground;
+    border-top: 1px solid $Color-GrayBorder;
+    border-radius: 0 0 16px 16px;
+
+    a {
+      color: $Color-Gray;
+      font-size: 13px;
+      font-weight: 600;
+
+      &:hover {
+        color: $Color-Black;
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $Color-Accent;
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+    }
+
+    .UsageMenu-Buy {
+      color: $Color-Accent;
+      font-weight: 700;
+    }
+  }
+}

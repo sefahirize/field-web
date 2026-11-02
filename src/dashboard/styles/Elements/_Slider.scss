@@ -1,0 +1,39 @@
+.MuiSlider-root {
+  color: transparent;
+  .MuiSlider-rail {
+    background: $Color-Primary--85;
+    border-radius: 4px;
+    opacity: 1;
+  }
+  .MuiSlider-track {
+    background: $Color-Primary-20;
+    border-radius: 4px;
+  }
+  .MuiSlider-thumb {
+    width: 12px;
+    height: 12px;
+    background: $Color-Primary;
+    .MuiSlider-valueLabel {
+      background: $Color-Primary-20;
+      border-radius: 16px;
+      .MuiSlider-valueLabelLabel {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $Color-Inverse;
+      }
+    }
+  }
+  .MuiSlider-markLabel {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: $Black;
+    &:nth-child(1) {
+      transform: translateX(0%);
+    }
+    &:nth-last-of-type(1) {
+      transform: translateX(100%);
+    }
+  }
+}

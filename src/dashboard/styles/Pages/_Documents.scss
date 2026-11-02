@@ -1,0 +1,756 @@
+// Documents — a library: status tabs with counts, a search and a product filter,
+// whole-row links, an upload sheet and a page-wide drop target.
+.Page-Documents {
+  .LibraryHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+
+    .PageHeading-Title {
+      margin: 0 0 5px;
+    }
+
+    .PageHeading-Desc {
+      margin: 0;
+    }
+  }
+
+  // --- status tabs ----------------------------------------------------------
+  .StatusTabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid $Color-GrayBorderDark;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .StatusTab {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 8px;
+    margin-bottom: -1px;
+    padding: 12px 14px;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: $Color-Gray;
+    font-family: $Font-Primary;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 140ms ease, border-color 140ms ease;
+
+    &:hover {
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: -2px;
+      border-radius: 8px;
+    }
+
+    &.is-selected {
+      color: $Color-Black;
+      border-bottom-color: $Color-Black;
+    }
+
+    &-Label {
+      text-transform: capitalize;
+    }
+
+    &-Count {
+      min-width: 22px;
+      padding: 1px 7px;
+      background: $Color-Primary--90;
+      border-radius: 999px;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      color: $Color-Gray;
+    }
+
+    &.is-selected &-Count {
+      background: $Color-Black;
+      color: $Color-Inverse;
+    }
+  }
+
+  .StatusDot {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $Color-GrayTint;
+
+    &--completed {
+      background: $Color-Accent;
+    }
+
+    &--failed {
+      background: $Color-Error;
+    }
+
+    &--processing {
+      background: $Color-Warning;
+      animation: dot-pulse 1.3s ease-in-out infinite;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+
+    &--pending {
+      background: transparent;
+      box-shadow: inset 0 0 0 2px $Color-GrayTint;
+    }
+  }
+
+  // --- search, filter, count ------------------------------------------------
+  .LibraryTools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+
+    &-Product {
+      width: 240px;
+      max-width: 100%;
+    }
+
+    &-Count {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+      font-size: 13px;
+      font-weight: 500;
+      color: $Color-Gray;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .LibrarySearch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 260px;
+    max-width: 380px;
+
+    svg {
+      position: absolute;
+      left: 14px;
+      color: $Color-GrayTint;
+      pointer-events: none;
+    }
+
+    &-Input {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px 0 42px;
+      background: $Color-White;
+      border: 1px solid $Color-GrayBorderDark;
+      border-radius: 12px;
+      color: $Color-Black;
+      font-family: $Font-Primary;
+      font-size: 14px;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+
+      &::placeholder {
+        color: $Color-GrayTint;
+      }
+
+      &:hover {
+        border-color: $Color-GrayTint;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $Color-Black;
+        box-shadow: 0 0 0 3px $Color-Primary--90;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $Color-Accent;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .LiveDot {
+    width: 8px;
+    height: 8px;
+    background: $Color-Accent;
+    border-radius: 50%;
+    animation: dot-pulse 1.3s ease-in-out infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  // --- the list -------------------------------------------------------------
+  .DocList {
+    container: docs / inline-size;
+    overflow: hidden;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 16px;
+  }
+
+  .DocList-Head,
+  .DocRow {
+    display: grid;
+    grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.3fr) 132px 120px 20px;
+    gap: 16px;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .DocList-Head {
+    padding-block: 12px;
+    background: $Color-GrayBackground;
+    border-bottom: 1px solid $Color-GrayBorder;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $Color-Gray;
+  }
+
+  .DocRow {
+    padding-block: 14px;
+    border-bottom: 1px solid $Color-GrayBorder;
+    color: $Color-Body;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 140ms ease;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:hover:not(.DocRow--skeleton) {
+      background: $Color-GrayBackground;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: -2px;
+    }
+
+    // A file still being processed: no page to open yet, a soft sweep on its row.
+    &--uploading {
+      background: linear-gradient(90deg, transparent 0%, $Color-GrayBackground 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: row-sweep 1.8s ease-in-out infinite;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+        background: $Color-GrayBackground;
+      }
+    }
+
+    // A document a batch has just finished: tinted, fading out.
+    &.is-new {
+      animation: row-fresh 8s ease-out;
+    }
+
+    &--skeleton .Skeleton {
+      height: 18px;
+      border-radius: 6px;
+    }
+
+    &-File {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    &-Type {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 40px;
+      height: 34px;
+      background: $Color-Primary--90;
+      border-radius: 9px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: $Color-Black;
+    }
+
+    &-Names {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    &-Name {
+      overflow: hidden;
+      font-weight: 600;
+      color: $Color-Black;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-Sub {
+      font-size: 12px;
+      color: $Color-Gray;
+
+      &:empty {
+        display: none;
+      }
+    }
+
+    &-Product {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    &-Added {
+      color: $Color-Gray;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    &-Go {
+      display: flex;
+      justify-content: flex-end;
+      color: $Color-GrayTint;
+      transition: transform 140ms ease, color 140ms ease;
+    }
+
+    &:hover &-Go {
+      color: $Color-Black;
+      transform: translateX(2px);
+    }
+  }
+
+  .StatusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: $Color-Primary--90;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: $Color-Gray;
+
+    &--completed {
+      background: $Color-AccentTint;
+      color: $Color-Accent;
+    }
+
+    &--failed {
+      background: $Color-ErrorTint;
+      color: $Color-Error-10;
+    }
+
+    &--processing {
+      background: $Color-WarningTint;
+      color: $Color-Warning-40;
+    }
+  }
+
+  .DocList-Empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 48px 20px;
+    text-align: center;
+
+    strong {
+      font-size: 16px;
+      color: $Color-Black;
+    }
+
+    span {
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: $Color-Gray;
+    }
+  }
+
+  // Narrow list: a file is a card — the name on top, then product, status and age.
+  @container docs (max-width: 720px) {
+    .DocList-Head {
+      display: none;
+    }
+
+    .DocRow {
+      grid-template-columns: auto auto minmax(0, 1fr);
+      gap: 10px 14px;
+      padding: 16px 18px;
+    }
+
+    .DocRow-File {
+      grid-column: 1 / -1;
+    }
+
+    .DocRow-Added {
+      text-align: right;
+    }
+
+    .DocRow-Go {
+      display: none;
+    }
+  }
+
+  .LibraryPager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+
+    &-Buttons {
+      display: flex;
+      gap: 8px;
+    }
+  }
+
+  // --- nothing uploaded yet -------------------------------------------------
+  .LibraryEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 72px 24px 76px;
+    background: $Color-White;
+    border: 1.5px dashed $Color-GrayBorderDark;
+    border-radius: 24px;
+    text-align: center;
+
+    &-Icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      margin-bottom: 22px;
+      background: $Color-Primary--90;
+      border-radius: 50%;
+      color: $Color-Black;
+    }
+
+    &-Title {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: $Color-Black;
+    }
+
+    &-Text {
+      max-width: 46ch;
+      margin: 0 0 26px;
+      font-size: 14px;
+      line-height: 22px;
+      color: $Color-Gray;
+    }
+
+    &-Actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    &-Link {
+      color: $Color-Accent;
+      font-size: 13px;
+      font-weight: 700;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // --- drop anywhere --------------------------------------------------------
+  .DropOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--jf-scrim-rgb), 0.45);
+    backdrop-filter: blur(3px);
+    animation: global-search-in 140ms ease-out;
+
+    &-Card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 44px 64px;
+      background: $Color-White;
+      border: 2px dashed $Color-Black;
+      border-radius: 24px;
+      color: $Color-Black;
+
+      svg {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 4px;
+      }
+
+      strong {
+        font-size: 18px;
+        letter-spacing: -0.3px;
+      }
+
+      span {
+        font-size: 13px;
+        color: $Color-Gray;
+      }
+    }
+  }
+}
+
+@keyframes row-sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes row-fresh {
+  0%,
+  60% {
+    background: $Color-AccentTint;
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@keyframes dot-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+// --- the upload sheet (rendered in a portal, so unscoped) --------------------
+.UploadSheetForm {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.UploadResult {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 1px solid $Color-GrayBorderDark;
+  border-radius: 14px;
+
+  &-Item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid $Color-GrayBorder;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  &-Check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    background: $Color-AccentTint;
+    border-radius: 50%;
+    color: $Color-Accent;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  &-Name {
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 600;
+    color: $Color-Black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  a.UploadResult-Name:hover {
+    text-decoration: underline;
+  }
+
+  &-Tag {
+    flex-shrink: 0;
+    padding: 2px 8px;
+    background: $Color-Primary--90;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: $Color-Gray;
+  }
+}
+
+// --- the upload toasts (rendered by notistack in a portal, so unscoped) ------
+.ToastSpinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid $Color-GrayBorderDark;
+  border-top-color: $Color-Black;
+  border-radius: 50%;
+  animation: result-spin 0.8s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 2.4s;
+  }
+}
+
+.UploadToast {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: min(420px, calc(100vw - 32px));
+  padding: 16px 16px 16px 18px;
+  background: $Color-White;
+  border: 1px solid $Color-GrayBorderDark;
+  border-radius: 16px;
+  box-shadow: 0 18px 48px shadow(0.2);
+  color: $Color-Body;
+
+  &-Icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    background: $Color-Primary--90;
+    border-radius: 50%;
+    color: $Color-Black;
+    font-size: 15px;
+    font-weight: 700;
+
+    &--ok {
+      background: $Color-AccentTint;
+      color: $Color-Accent;
+    }
+
+    &--mixed {
+      background: $Color-WarningTint;
+      color: $Color-Warning-40;
+    }
+
+    &--fail {
+      background: $Color-ErrorTint;
+      color: $Color-Error;
+    }
+  }
+
+  &-Text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  &-Title {
+    font-size: 14px;
+    font-weight: 700;
+    color: $Color-Black;
+  }
+
+  &-Sub,
+  &-Hint,
+  &-Failed {
+    font-size: 12px;
+    line-height: 18px;
+    color: $Color-Gray;
+    overflow-wrap: anywhere;
+  }
+
+  &-Failed {
+    color: $Color-Error-10;
+  }
+
+  &-Hint {
+    color: $Color-GrayTint;
+  }
+
+  &-Bar {
+    display: block;
+    height: 4px;
+    margin-top: 8px;
+    overflow: hidden;
+    background: $Color-Primary--90;
+    border-radius: 4px;
+
+    span {
+      display: block;
+      height: 100%;
+      background: $Color-Black;
+      border-radius: 4px;
+      transition: width 400ms ease;
+    }
+  }
+
+  &-Link {
+    align-self: flex-start;
+    margin-top: 6px;
+    color: $Color-Accent;
+    font-size: 13px;
+    font-weight: 700;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &-Close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    margin: -4px -4px 0 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    color: $Color-GrayTint;
+    cursor: pointer;
+
+    &:hover {
+      background: $Color-Primary--90;
+      color: $Color-Black;
+    }
+  }
+}

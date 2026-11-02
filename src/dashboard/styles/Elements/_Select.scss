@@ -1,0 +1,183 @@
+.MuiInputBase-root {
+  &.Select-BoxMini {
+    background: $Color-White;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: $Color-Navy;
+    text-decoration: none;
+    position: relative;
+    height: 32px;
+    border: 1px solid $Color-Primary--90;
+    cursor: pointer;
+    .MuiSelect-select {
+      display: flex;
+      align-items: center;
+      padding: 0 32px 0 12px;
+      height: 32px;
+    }
+    .MuiSelect-icon {
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border: none;
+    }
+  }
+}
+
+.Select-BoxMini-Menu {
+  .MuiMenu-paper {
+    background: $Color-White;
+    box-shadow: 0px 0px 8px shadow(0.1);
+    border-radius: 8px;
+    .MuiList-root {
+      .MuiMenuItem-root {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: $Color-Black;
+      }
+    }
+  }
+}
+
+.MuiInputBase-root {
+  &.Select-Standart {
+    border: 1px solid $Color-Primary--90;
+    box-shadow: 0px 1px 2px shadow(0.05);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: $Black;
+    text-decoration: none;
+    position: relative;
+    height: 44px;
+    min-width: 158px;
+    cursor: pointer;
+    .MuiSelect-select {
+      display: flex;
+      align-items: center;
+      padding: 0 64px 0 12px;
+      height: 44px;
+      .option-chip {
+        margin-left: 16px;
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+    .MuiSelect-icon {
+      width: 24px;
+      height: 24px;
+      top: calc(50% - 12px);
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border: none;
+    }
+    &.type-inline {
+      border: none;
+      border-bottom: 1px solid $Color-Primary--90;
+      box-shadow: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: $Black;
+      text-decoration: none;
+      position: relative;
+      height: 24px;
+      min-width: auto;
+      padding: 0;
+      cursor: pointer;
+      .MuiSelect-select {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        height: 24px;
+        padding-right: 8px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        color: $Color-Primary-20;
+      }
+      .MuiSelect-icon {
+        width: 24px;
+        height: 24px;
+        top: calc(50% - 12px);
+        right: -6px;
+        path {
+          fill: $Color-Primary-20;
+        }
+      }
+
+      .MuiOutlinedInput-notchedOutline {
+        border: none;
+      }
+    }
+  }
+}
+
+.Select-Standart-Menu {
+  .option-chip {
+    margin-left: 16px;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  // Product rows in the plan-builder dropdown: the menu renders in a portal on
+  // <body>, so the icon must be sized here, not in the page's own styles.
+  .product-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    img,
+    svg {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+  }
+  &.type-inline {
+    .MuiMenu-paper {
+      width: 100px;
+      .MuiList-root {
+        padding-top: 0;
+        padding-bottom: 0;
+        .MuiMenuItem-root {
+          &.Mui-selected {
+            background-image: none;
+          }
+        }
+      }
+    }
+  }
+  .MuiMenu-paper {
+    background: $Color-White;
+    box-shadow: 0px 0px 8px shadow(0.1);
+    border-radius: 8px;
+    .MuiList-root {
+      .MuiMenuItem-root {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $Color-Black;
+        padding: 10px 14px;
+        &.Mui-selected {
+          background: $Color-GrayBackground;
+          background-image: url('../../assets/icons/check.svg');
+          background-repeat: no-repeat;
+          background-size: 20px 20px;
+          background-position-x: calc(100% - 14px);
+          background-position-y: center;
+        }
+      }
+    }
+  }
+}

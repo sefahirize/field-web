@@ -1,0 +1,90 @@
+.Page-Register {
+  width: 392px;
+  margin: 0 auto;
+  .Register-Header {
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 90px;
+  }
+  .Register-Form-Social {
+    .Heading {
+      margin-bottom: 28px;
+      .title {
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 32px;
+        letter-spacing: -0.6px;
+        color: $Color-Black;
+        margin-bottom: 12px;
+      }
+      .desc {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $Color-Gray;
+      }
+    }
+    .Social-Login {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .divider {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  .Register-Form {
+    // Space between the last field and the button, as the sign-in and reset
+    // screens have; without it the button sat directly against the password field.
+    .form-action-send {
+      margin-top: 28px;
+    }
+
+    .Heading {
+      margin-bottom: 28px;
+      .title {
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 32px;
+        letter-spacing: -0.6px;
+        color: $Color-Black;
+        margin-bottom: 12px;
+      }
+      .desc {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $Color-Gray;
+      }
+    }
+  }
+  .Register-Footer {
+    margin-top: 20px;
+    .text-terms {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      color: $Color-Gray;
+      margin-bottom: 32px;
+      a {
+        color: $Color-Black;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    }
+    .redirect-login {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+      color: $Color-Black;
+      a {
+        color: $Color-Accent;
+        font-weight: 700;
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+.Page-Dashboard {
+  .PageHeading {
+    margin-bottom: 24px;
+
+    &-Title {
+      margin: 0 0 4px;
+      color: $Color-Black;
+      @include Text-Headline-4;
+    }
+
+    &-Desc {
+      margin: 0;
+      color: $Color-Gray;
+      @include Text-Body-14;
+    }
+  }
+
+  .Dashboard-Empty {
+    padding: 32px;
+    background-color: $Color-White;
+    border: 1px solid $Color-GrayBorder;
+    color: $Color-Gray;
+    @include Radius-M;
+    @include Text-Body-14;
+
+    p {
+      margin: 0 0 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    code {
+      padding: 2px 6px;
+      background-color: $Color-GrayBackground;
+      color: $Color-Black;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+      @include Radius-S;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.MuiLinearProgress-root {
+  height: 14px;
+  border-radius: 50px;
+  border: 2px solid $Color-Primary--80;
+  background-color: $Color-Primary--85;
+  &.MuiLinearProgress-colorSecondary {
+    border: none;
+    height: 8px;
+    background: $Color-Primary--90;
+    border-radius: 30px;
+  }
+  .MuiLinearProgress-bar {
+    border-radius: 50px;
+    background: $Color-Primary;
+    &.MuiLinearProgress-barColorSecondary {
+      background-color: $Color-Success;
+    }
+  }
+}

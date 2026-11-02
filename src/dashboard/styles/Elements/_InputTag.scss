@@ -1,0 +1,98 @@
+.InputTag-Container {
+  &.view-type-inline {
+    .MuiAutocomplete-root {
+      &.InputTag {
+        .MuiFormControl-root {
+          .MuiInputBase-root {
+            gap: 6px;
+            .MuiAutocomplete-input {
+              padding: 0;
+              padding-bottom: 4px;
+              height: 24px;
+            }
+            .MuiAutocomplete-endAdornment {
+              top: -6px;
+            }
+            .MuiOutlinedInput-notchedOutline {
+              border: none;
+              border-bottom: 1px solid $Color-Gray;
+              box-shadow: none;
+              border-radius: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.InputTag-Container {
+  &.view-type-standart {
+    .MuiAutocomplete-root {
+      &.InputTag {
+        .MuiFormControl-root {
+          .MuiInputBase-root {
+            gap: 6px;
+            padding-left: 4px;
+            padding-right: 20px;
+            .MuiAutocomplete-input {
+              padding: 6px;
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 16px;
+              height: 30px;
+              color: $Color-Gray;
+              &:placeholder-shown,
+              &::placeholder {
+                color: $Color-Gray;
+                opacity: 1;
+              }
+            }
+            .MuiAutocomplete-endAdornment {
+              top: -6px;
+            }
+            .MuiOutlinedInput-notchedOutline {
+              box-shadow: none;
+              border: 1px solid $Color-Primary;
+              border-radius: 8px;
+            }
+
+            .MuiChip-deleteIcon {
+              path {
+                stroke: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.InputTag-Container {
+  &.view-type-large {
+    .MuiAutocomplete-root {
+      &.InputTag {
+        .MuiFormControl-root {
+          .MuiInputBase-root {
+            gap: 6px;
+            .MuiAutocomplete-input {
+              padding: 0;
+              padding-bottom: 4px;
+              height: 44px;
+            }
+            .MuiAutocomplete-endAdornment {
+              top: -6px;
+            }
+            .MuiOutlinedInput-notchedOutline {
+              border: none;
+              border-bottom: 1px solid $Color-Gray;
+              box-shadow: none;
+              border-radius: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

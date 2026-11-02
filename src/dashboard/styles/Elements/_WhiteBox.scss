@@ -1,0 +1,27 @@
+.White-Box {
+  .box-heading {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .heading-start {
+      .title {
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 28px;
+        color: $Color-Navy;
+      }
+      .desc {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: $Color-Gray;
+      }
+    }
+    .heading-end {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

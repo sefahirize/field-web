@@ -1,0 +1,293 @@
+// The shared modal (components/elements/Modal.jsx) and the confirm dialog.
+.MuiDialog-root.AppModal {
+  .MuiDialog-container .AppModal-Paper {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 32px);
+    max-height: calc(100vh - 48px);
+    margin: 16px;
+    padding: 0;
+
+    &--sm {
+      max-width: 440px;
+    }
+
+    &--md {
+      max-width: 560px;
+    }
+
+    &--lg {
+      max-width: 720px;
+    }
+  }
+
+  // Indeterminate progress along the top edge while the modal is working.
+  .AppModal-Progress {
+    position: relative;
+    flex-shrink: 0;
+    height: 3px;
+    overflow: hidden;
+    background: $Color-Primary--90;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 38%;
+      background: $Color-Black;
+      border-radius: 3px;
+      animation: modal-progress 1.15s ease-in-out infinite;
+
+      @media (prefers-reduced-motion: reduce) {
+        width: 100%;
+        animation: modal-pulse 1.6s ease-in-out infinite;
+      }
+    }
+  }
+
+  .AppModal-Head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 26px 0;
+  }
+
+  .AppModal-Title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.3px;
+    color: $Color-Black;
+  }
+
+  .AppModal-Desc {
+    margin: 4px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+    color: $Color-Gray;
+  }
+
+  .AppModal-Close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    margin: -2px -6px 0 0;
+    padding: 0;
+    background: none;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 50%;
+    color: $Color-Gray;
+    cursor: pointer;
+    transition: border-color 140ms ease, color 140ms ease;
+
+    &:hover:not(:disabled) {
+      border-color: $Color-Black;
+      color: $Color-Black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $Color-Accent;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  .AppModal-Body {
+    flex-grow: 1;
+    padding: 20px 26px 4px;
+    overflow-y: auto;
+  }
+
+  .AppModal-Foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px 26px 24px;
+
+    @include for-small-phone-only {
+      flex-direction: column-reverse;
+
+      .MuiButton-root {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Confirm dialog: a tone icon beside the title, the sentence below.
+.ConfirmTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.ConfirmIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $Color-Primary--90;
+  color: $Color-Black;
+
+  &--alert {
+    background: $Color-ErrorTint;
+    color: $Color-Error;
+  }
+
+  &--success {
+    background: $Color-AccentTint;
+    color: $Color-Accent;
+  }
+}
+
+.ConfirmDesc {
+  font-size: 14px;
+  line-height: 22px;
+  color: $Color-Gray;
+  overflow-wrap: anywhere;
+
+  strong {
+    color: $Color-Black;
+  }
+}
+
+@keyframes modal-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(270%);
+  }
+}
+
+@keyframes modal-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+// A small spinner inside a button.
+.BtnSpinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  border: 2px solid rgba(var(--jf-inverse-rgb), 0.35);
+  border-top-color: $Color-Inverse;
+  border-radius: 50%;
+  animation: result-spin 0.8s linear infinite;
+}
+
+// What the test tool says while a request is in flight.
+.RunStatus {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: $Color-GrayBackground;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 20px;
+  color: $Color-Gray;
+
+  &-Dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: 6px;
+    background: $Color-Accent;
+    border-radius: 50%;
+    animation: run-pulse 1.2s ease-in-out infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes run-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--jf-accent-rgb), 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(var(--jf-accent-rgb), 0);
+  }
+}
+
+// The side sheet (components/elements/Sheet.jsx).
+.MuiDrawer-root.AppSheet {
+  .MuiBackdrop-root {
+    background: rgba(var(--jf-scrim-rgb), 0.4);
+  }
+
+  .AppSheet-Paper.MuiDrawer-paper {
+    display: flex;
+    flex-direction: column;
+    width: min(480px, 100vw);
+    background: $Color-White;
+    border-left: 1px solid $Color-GrayBorderDark;
+    box-shadow: 0 24px 60px shadow(0.22);
+  }
+
+  .AppSheet-Head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 26px 18px;
+    border-bottom: 1px solid $Color-GrayBorder;
+  }
+
+  .AppSheet-Title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.3px;
+    color: $Color-Black;
+  }
+
+  .AppSheet-Desc {
+    margin: 4px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+    color: $Color-Gray;
+  }
+
+  .AppModal-Close {
+    margin: -2px -6px 0 0;
+  }
+
+  .AppSheet-Body {
+    flex: 1 1 auto;
+    padding: 22px 26px;
+    overflow-y: auto;
+  }
+
+  .AppSheet-Foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 26px 22px;
+    border-top: 1px solid $Color-GrayBorder;
+  }
+}

@@ -2,9 +2,12 @@ import { Inter } from "next/font/google";
 import "@landing/styles/globals.css";
 import NotFound, { notFoundMetadata } from "@landing/components/NotFound";
 
+// No preload: Next adds this file's preloads to every route, the dashboard
+// included. The landing layout preloads Inter for its own pages.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  preload: false,
 });
 
 export const metadata = notFoundMetadata;

@@ -1,0 +1,294 @@
+// G — Mono buttons: pill shaped, 1px hairline outline, ink fill for the primary
+// action. Colour never carries meaning here except red for destructive actions;
+// the accent only shows up as the keyboard focus ring.
+.MuiButton-root,
+.MuiIconButton-root {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  font-family: $Font-Primary;
+  box-shadow: none;
+  border-radius: 999px;
+  gap: 7px;
+  color: $Color-Black;
+  border: 1px solid transparent;
+  text-transform: none;
+  white-space: nowrap;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, opacity 160ms ease;
+
+  &.rounded {
+    border-radius: 100%;
+    &.icon {
+      width: 32px !important;
+      height: 32px !important;
+      padding: 0 !important;
+      min-width: 0 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .MuiButton-endIcon,
+  .MuiButton-startIcon {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .MuiTouchRipple-root {
+    display: none;
+  }
+
+  svg path {
+    transition: fill 160ms ease;
+  }
+
+  &.Mui-focusVisible {
+    outline: 2px solid $Color-Accent;
+    outline-offset: 2px;
+  }
+
+  &.Mui-disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+    pointer-events: auto;
+  }
+
+  // Quiet text button — the default `<Button>`.
+  &.MuiButton-text {
+    color: $Color-Gray;
+    &:hover {
+      background: $Color-GrayBackground;
+      color: $Color-Black;
+    }
+  }
+
+  // Primary action: solid ink.
+  &.MuiButton-containedPrimary,
+  &.MuiButton-contained:not([class*='MuiButton-containedRed']):not([class*='MuiButton-containedWhite']):not(.MuiButton-containedSecondary),
+  &.MuiIconButton-colorPrimary {
+    color: $Color-Inverse;
+    background: $Color-Primary;
+    border-color: $Color-Primary;
+    svg path {
+      fill: currentColor;
+    }
+    &:hover {
+      background: $Color-Primary-20;
+      border-color: $Color-Primary-20;
+    }
+    &.Mui-disabled {
+      background: $Color-Primary;
+      color: $Color-Inverse;
+    }
+  }
+
+  // Secondary action: the soft grey chip.
+  &.MuiButton-containedSecondary,
+  &.MuiIconButton-colorSecondary,
+  &.MuiButton-outlinedTransparent,
+  &.MuiIconButton-colorTransparent {
+    color: $Color-Black;
+    background: $Color-Primary--90;
+    border-color: transparent;
+    svg path {
+      fill: currentColor;
+    }
+    &:hover {
+      background: $Color-Primary--85;
+    }
+  }
+
+  // Outlined: white surface, hairline border that goes to ink on hover.
+  &.MuiButton-outlinedWhite,
+  &.MuiButton-outlined,
+  &.MuiIconButton-colorWhite {
+    color: $Color-Black;
+    background: $Color-White;
+    border-color: $Color-GrayBorderDark;
+    svg path {
+      fill: currentColor;
+    }
+    &:hover {
+      background: $Color-White;
+      border-color: $Color-Black;
+    }
+  }
+
+  // Destructive: red text, red fill only when contained.
+  &.MuiButton-outlinedRed,
+  &.MuiIconButton-colorRed-outlined {
+    color: $Color-Error;
+    background: $Color-White;
+    border-color: $Color-GrayBorderDark;
+    svg path {
+      fill: currentColor;
+    }
+    &:hover {
+      background: $Color-ErrorTint;
+      border-color: $Color-Error;
+    }
+  }
+
+  &.MuiButton-containedRed,
+  &.MuiIconButton-colorRed {
+    color: $Color-Inverse;
+    background: $Color-Error;
+    border-color: $Color-Error;
+    svg path {
+      fill: currentColor;
+    }
+    &:hover {
+      background: $Color-Error-10;
+      border-color: $Color-Error-10;
+    }
+  }
+
+  // For dark surfaces (login aside, banners).
+  &.MuiButton-containedWhite {
+    color: $Color-Fixed-White;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.08);
+    svg path {
+      fill: currentColor;
+    }
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+// BUTTON SIZE
+.MuiButtonBase-root {
+  &.MuiButton-sizeXsmall,
+  &.MuiIconButton-sizeXsmall {
+    padding: 6px 12px;
+    height: 24px;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &.MuiButton-sizeSmall,
+  &.MuiIconButton-sizeSmall {
+    padding: 0 14px;
+    height: 34px;
+    font-size: 13px;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &.MuiButton-sizeMedium,
+  &.MuiIconButton-sizeMedium {
+    padding: 0 18px;
+    height: 40px;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  &.MuiButton-sizeLarge,
+  &.MuiIconButton-sizeLarge {
+    padding: 0 22px;
+    height: 46px;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// ICONBUTTON SIZE
+.MuiIconButton-root {
+  &.MuiIconButton-sizeSmall {
+    padding: 10px;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+  }
+  &.MuiIconButton-sizeMedium {
+    padding: 16px;
+    padding: 0;
+    height: 40px;
+    width: 40px;
+  }
+  &.MuiIconButton-sizeLarge {
+    padding: 16px;
+    padding: 0;
+    height: 44px;
+    width: 44px;
+  }
+}
+
+.MuiButton-root {
+  &.icon-right {
+    .MuiButton-endIcon {
+      position: absolute;
+      right: 16px;
+    }
+  }
+}
+
+.MuiButton-root {
+  &.anim-icon {
+    .MuiButton-endIcon {
+      transition: transform 300ms ease-in-out;
+    }
+    &:hover {
+      .MuiButton-endIcon {
+        transform: translateX(6px);
+        transition: transform 300ms ease-in-out;
+      }
+    }
+  }
+}
+
+// Loading state of a Button (MUI 9 folded @mui/lab's LoadingButton into Button).
+.MuiButton-root {
+  &.MuiButton-loading {
+    color: transparent !important;
+    .MuiCircularProgress-root {
+      width: 20px !important;
+      height: 20px !important;
+    }
+    .MuiButton-endIcon,
+    .MuiButton-startIcon {
+      opacity: 0;
+    }
+  }
+  .MuiButton-loadingIndicator {
+    svg {
+      animation: animation-loader 1.4s linear infinite;
+    }
+  }
+}
+
+@keyframes animation-loader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.MuiButtonBase-root {
+  &:active {
+    box-shadow: none;
+  }
+  &.Mui-focusVisible {
+    box-shadow: none;
+  }
+}
+
+.btn-dark-gray {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+  &:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+}

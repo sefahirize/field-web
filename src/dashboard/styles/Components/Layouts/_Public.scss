@@ -1,0 +1,128 @@
+// Signed-out shell: the form on the left, a dark panel on the right (hidden
+// below tablet, where the form takes the whole width).
+.Layout-Public {
+  min-height: 100vh;
+  display: flex;
+  background: $Color-Page;
+
+  .Layout-Start {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 44px 32px;
+    // Vertically centred, but must still scroll on short viewports rather than
+    // clipping the heading off the top.
+    overflow-y: auto;
+    max-height: 100vh;
+
+    @include for-tablet-down {
+      max-height: none;
+      align-items: flex-start;
+      padding: 32px 20px;
+    }
+
+    &-Inner {
+      width: 100%;
+      max-width: 392px;
+    }
+  }
+
+  .Layout-Brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 44px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: $Color-Black;
+  }
+
+  .Layout-End {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 560px;
+    flex-shrink: 0;
+    padding: 44px;
+    background: var(--jf-aside);
+
+    @include for-desktop {
+      width: 44%;
+    }
+
+    @include for-tablet-down {
+      display: none;
+    }
+
+    &-Mark {
+      display: flex;
+      justify-content: flex-end;
+      color: $Color-Fixed-White;
+    }
+
+    &-Copy {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+
+      .title {
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -0.8px;
+        color: $Color-Fixed-White;
+      }
+
+      .desc {
+        font-size: 14px;
+        font-weight: 500;
+        color: #9a9b98;
+      }
+    }
+
+    // Typed text (components/elements/Typewriter.jsx). The ghost copy keeps the
+    // line's space; the live copy is drawn over it.
+    .Typed {
+      position: relative;
+      display: block;
+
+      &-Ghost {
+        visibility: hidden;
+      }
+
+      &-Live {
+        position: absolute;
+        inset: 0;
+      }
+
+      &-Caret {
+        margin-left: 1px;
+        font-weight: 400;
+        animation: caret-blink 1.05s steps(1) infinite;
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+      }
+    }
+
+    &-Foot {
+      font-size: 12px;
+      font-weight: 500;
+      color: #9a9b98;
+    }
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}

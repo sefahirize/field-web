@@ -1,0 +1,271 @@
+@mixin generate_chip($name, $solid_bg, $solid_label_svg, $tint_bg, $tint_icon, $tint_label, $other_icon) {
+  &.Color-#{$name} {
+    &.Type-solid {
+      background: $solid_bg;
+      &.has-dot {
+        &::before {
+          background-color: $solid_label_svg;
+        }
+      }
+      .MuiChip-icon {
+        path {
+          fill: $solid_label_svg;
+        }
+      }
+      .MuiChip-label {
+        color: $solid_label_svg;
+      }
+    }
+
+    &.Type-tint {
+      background: $tint_bg;
+      &.has-dot {
+        &::before {
+          background-color: $tint_icon;
+        }
+      }
+      .MuiChip-icon {
+        path {
+          fill: $tint_icon;
+        }
+      }
+      .MuiChip-label {
+        color: $tint_label;
+      }
+    }
+
+    &.Type-stroke,
+    &.Type-transparent {
+      .MuiChip-icon {
+        path {
+          fill: $other_icon;
+        }
+      }
+      &.has-dot {
+        &::before {
+          background-color: $other_icon;
+        }
+      }
+    }
+  }
+}
+
+.MuiChip-root {
+  &.has-dot {
+    position: relative;
+    &::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 100%;
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  &.icon-type-product {
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .MuiChip-icon {
+    margin-left: 0;
+    margin-right: 8px;
+  }
+  .MuiChip-deleteIcon {
+    margin-left: 8px;
+    margin-right: 0;
+  }
+  .MuiChip-label {
+    color: $Color-Fixed-White;
+    font-family: $Font-Secondary;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  &.MuiChip-sizeXsmall {
+    padding: 8px;
+    height: 24px;
+    @include Radius-Rounded;
+    .MuiChip-label {
+      font-size: 12px;
+    }
+    &.MuiChip-deletable {
+      padding: 6px 6px 6px 8px;
+    }
+    &.has-dot {
+      padding-left: 28px;
+    }
+  }
+  &.MuiChip-sizeSmall {
+    padding: 8px;
+    height: 32px;
+    @include Radius-Rounded;
+    &.MuiChip-deletable {
+      padding: 6px 6px 6px 8px;
+    }
+    &.has-dot {
+      padding-left: 28px;
+    }
+  }
+  &.MuiChip-sizeMedium {
+    padding: 10px;
+    height: 40px;
+    @include Radius-S;
+    &.MuiChip-deletable {
+      padding: 10px 8px 10px 12px;
+    }
+    &.has-dot {
+      padding-left: 30px;
+    }
+  }
+
+  &.Type-stroke,
+  &.Type-transparent {
+    .MuiChip-label {
+      color: $Color-Black;
+    }
+
+    .MuiChip-deleteIcon {
+      border: 1px solid $Color-GrayBorder;
+      border-radius: 100%;
+    }
+  }
+
+  &.Type-stroke {
+    border: 1px solid $Color-GrayBorder;
+    background-color: $Color-White;
+  }
+
+  &.Type-transparent {
+    border: none;
+    background-color: transparent;
+  }
+
+  // COLORS
+
+  // COLOR SECONDARY
+  @include generate_chip(
+    'primary',
+    $Color-Primary,
+    $Color-Fixed-White,
+    $Color-Primary--90,
+    $Color-Primary-20,
+    $Color-Primary-20,
+    $Color-Primary-20
+  );
+
+  // COLOR SECONDARY
+  @include generate_chip(
+    'secondary',
+    $Color-Secondary,
+    $Color-Black,
+    $Color-Secondary--80,
+    $Color-Secondary-5,
+    $Color-Black,
+    $Color-Secondary-5
+  );
+
+  // COLOR SUCCESS
+  @include generate_chip(
+    'success',
+    $Color-Success,
+    $Color-Fixed-White,
+    $Color-SuccessTint,
+    $Color-Success-40,
+    $Color-Success-40,
+    $Color-Success
+  );
+
+  // COLOR WARNING
+  @include generate_chip(
+    'warning',
+    $Color-Warning,
+    $Color-Fixed-White,
+    $Color-WarningTint,
+    $Color-Warning-40,
+    $Color-Warning-40,
+    $Color-Warning
+  );
+
+  // COLOR VIOLET
+  @include generate_chip(
+    'violet',
+    $Color-Violet,
+    $Color-Fixed-White,
+    $Color-VioletTint,
+    $Color-Violet-40,
+    $Color-Violet-40,
+    $Color-Violet
+  );
+
+  // COLOR PURPLE
+  @include generate_chip(
+    'purple',
+    $Color-Purple,
+    $Color-Fixed-White,
+    $Color-PurpleTint,
+    $Color-Purple-40,
+    $Color-Purple-40,
+    $Color-Purple
+  );
+
+  // COLOR YELLOW
+  @include generate_chip(
+    'yellow',
+    $Color-Yellow,
+    $Color-Black,
+    $Color-YellowTint,
+    $Color-Yellow-40,
+    $Color-Yellow-40,
+    $Color-Yellow
+  );
+
+  // COLOR RED
+  @include generate_chip(
+    'red',
+    $Color-Error,
+    $Color-Fixed-White,
+    $Color-ErrorTint,
+    $Color-Error-10,
+    $Color-Error-10,
+    $Color-Error-10
+  );
+
+  // COLOR BLUE
+  @include generate_chip(
+    'blue',
+    $Color-Blue,
+    $Color-Black,
+    $Color-BlueTint,
+    $Color-Blue-40,
+    $Color-Blue-40,
+    $Color-Blue
+  );
+
+  // COLOR OCEAN
+  @include generate_chip(
+    'ocean',
+    $Color-Ocean,
+    $Color-Black,
+    $Color-OceanTint,
+    $Color-Ocean-40,
+    $Color-Ocean-40,
+    $Color-Ocean
+  );
+
+  // COLOR OCEAN-GRADIENT
+  @include generate_chip(
+    'ocean-gradient',
+    $Gradient-Primary-16,
+    $Color-Fixed-White,
+    $Gradient-Primary-16,
+    $Color-Fixed-White,
+    $Color-Fixed-White,
+    $Color-Primary
+  );
+}

@@ -1,0 +1,490 @@
+// Credit history — a wallet: a balance card (the ink inverted), a card per
+// product that holds credits, and the ledger as a timeline by day.
+.Page-CreditHistory {
+  .CreditsSection {
+    margin: 36px 0 14px;
+    font-size: 16px;
+    font-weight: 700;
+    color: $Color-Black;
+  }
+
+  // --- balance ----------------------------------------------------------------
+  .BalanceHero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 0;
+    overflow: hidden;
+    background: var(--jf-hero);
+    border-radius: 20px;
+    color: $Color-Fixed-White;
+
+    @media (max-width: 860px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &-Main {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 24px 28px 26px;
+
+      @include for-phone-only {
+        padding: 20px 20px 22px;
+      }
+    }
+
+    &-Label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    &-Value {
+      font-size: clamp(30px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Of {
+      margin-left: 2px;
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .Skeleton--hero {
+      display: inline-block;
+      width: 150px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      animation: none;
+    }
+
+    &-Sub {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 18px;
+      margin-top: 14px;
+    }
+
+    // The primary button is the ink; on the dark card it is white. Listed with the
+    // full set of button classes so it outranks the shared primary-button rule.
+    .MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.BalanceHero-Buy {
+      background: #ffffff;
+      border-color: #ffffff;
+      color: #0e0e0c;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.88);
+        border-color: transparent;
+      }
+    }
+
+    &-Ghost {
+      padding: 4px 2px;
+      background: none;
+      border: 0;
+      border-radius: 6px;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        color: $Color-Fixed-White;
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $Color-Fixed-White;
+        outline-offset: 2px;
+      }
+    }
+
+    &-Side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0;
+      padding: 8px 28px;
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+
+      @media (max-width: 860px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px 28px;
+        padding: 18px 22px 22px;
+        border-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+      }
+
+      div {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        @media (max-width: 860px) {
+          padding: 6px 0;
+          border-bottom: 0;
+        }
+      }
+
+      dt {
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      dd {
+        margin: 2px 0 0;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        font-variant-numeric: tabular-nums;
+      }
+    }
+  }
+
+  // --- per product -------------------------------------------------------------
+  // One row each, like a usage meter: the product, a long bar of what has been
+  // used, what is left, and a way to top it up.
+  .UsageList {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 16px;
+  }
+
+  .UsageRow {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr) 190px 72px;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 22px;
+    border-bottom: 1px solid $Color-GrayBorder;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &-Product {
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: $Color-Black;
+    }
+
+    &-Bar {
+      display: block;
+      height: 8px;
+      overflow: hidden;
+      background: $Color-Primary--90;
+      border-radius: 8px;
+
+      span {
+        display: block;
+        height: 100%;
+        min-width: 2px;
+        background: $Color-Black;
+        border-radius: 8px;
+        transition: width 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+
+      &--low span {
+        background: $Color-Warning;
+      }
+
+      &--out span {
+        background: $Color-Error;
+      }
+    }
+
+    &-Numbers {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Left {
+      font-size: 14px;
+      font-weight: 700;
+      color: $Color-Black;
+    }
+
+    &-Used {
+      font-size: 12px;
+      color: $Color-Gray;
+      white-space: nowrap;
+    }
+
+    &-Buy {
+      justify-self: end;
+      color: $Color-Accent;
+      font-size: 13px;
+      font-weight: 700;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $Color-Accent;
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+    }
+
+    // Narrow: the product and its numbers on one line, the bar under them.
+    @media (max-width: 760px) {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px 16px;
+      padding: 16px 18px;
+
+      &-Product {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      &-Numbers {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      &-Bar {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+
+      &-Buy {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        justify-self: start;
+      }
+    }
+  }
+
+  .WalletEmpty {
+    margin-top: 14px;
+
+    &-List {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 4px 14px;
+      margin: 12px 0 0;
+      padding: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 8px 4px;
+        font-size: 14px;
+        font-weight: 500;
+        color: $Color-Body;
+        border-bottom: 1px solid $Color-GrayBorder;
+      }
+
+      a {
+        color: $Color-Accent;
+        font-size: 13px;
+        font-weight: 700;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  // --- the ledger ----------------------------------------------------------------
+  .TimelineDay {
+    margin-top: 22px;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &-Label {
+      margin: 0 0 8px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: $Color-Gray;
+    }
+  }
+
+  .Timeline {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: $Color-White;
+    border: 1px solid $Color-GrayBorderDark;
+    border-radius: 16px;
+  }
+
+  .TimelineRow {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-bottom: 1px solid $Color-GrayBorder;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &--skeleton .Skeleton {
+      height: 16px;
+      border-radius: 6px;
+    }
+
+    &--skeleton .Skeleton--bubble {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+    }
+
+    &--skeleton .Skeleton--price {
+      width: 64px;
+    }
+
+    &-Icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: $Color-Primary--90;
+      border-radius: 50%;
+      color: $Color-Black;
+
+      &--add,
+      &--gift {
+        background: $Color-AccentTint;
+        color: $Color-Accent;
+      }
+
+      &--swap {
+        background: $Color-WarningTint;
+        color: $Color-Warning-40;
+      }
+    }
+
+    &-Text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    &-Title {
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 600;
+      color: $Color-Black;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-Sub {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px 12px;
+      font-size: 12px;
+      color: $Color-Gray;
+    }
+
+    &-Type {
+      padding: 1px 8px;
+      background: $Color-Primary--90;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    &-Amount {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &-Delta {
+      font-size: 15px;
+      font-weight: 700;
+      color: $Color-Black;
+
+      &.is-in {
+        color: $Color-Accent;
+      }
+    }
+
+    &-Balance {
+      font-size: 12px;
+      color: $Color-GrayTint;
+    }
+  }
+
+  .TimelineMore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+
+  .TimelineEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 48px 20px;
+    background: $Color-White;
+    border: 1px dashed $Color-GrayBorderDark;
+    border-radius: 16px;
+    text-align: center;
+
+    strong {
+      font-size: 16px;
+      color: $Color-Black;
+    }
+
+    span {
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: $Color-Gray;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .UsageRow-Bar span {
+      transition: none;
+    }
+  }
+}

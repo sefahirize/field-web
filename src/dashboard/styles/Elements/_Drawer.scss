@@ -1,0 +1,10 @@
+.MuiDrawer-root {
+  .MuiBackdrop-root {
+    background: transparent;
+  }
+  .MuiDrawer-paper {
+    background: $Color-White;
+    width: 460px;
+    box-shadow: 0px 20px 25px -5px shadow(0.1), 0px 10px 10px -5px shadow(0.04);
+  }
+}
