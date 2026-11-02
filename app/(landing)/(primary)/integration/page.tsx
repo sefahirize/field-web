@@ -1,13 +1,14 @@
 import { AiSolutions, CallToAction, GetStarted, Security, Testimonials, Integration, Join, TestimonialsShort } from "@landing/components/Layout";
 import { Feature as ISolutionsFeature } from "@landing/interfaces/global/Solutions.interfaces";
 import { CheckFill } from "@landing/components/Icons";
-import { PAGE_SETTINGS, DOCUMENTATION_URL, APP_URL } from "@landing/constants/Global";
+import { PAGE_SETTINGS, DOCUMENTATION_URL } from "@landing/constants/Global";
 import { Button } from "@landing/components/Ui";
 import { SectionHeader } from "@landing/components/Global";
 import { Section } from "@landing/components/Global";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@landing/lib/seo/page-metadata";
+import { ROUTES } from "@shared/contract";
 
 export const generateMetadata = (): Metadata =>
   buildPageMetadata(PAGE_SETTINGS.integration);
@@ -180,7 +181,7 @@ const IntegrationPage = () => {
                     disable-data-aos="fade-down"
                     disable-data-aos-delay={`${solutionsFeatures.length * 200}`}
                 >
-                    <Button hideIcon link href={APP_URL} inline variant="transparent-black">Start Free Trial</Button>
+                    <Button hideIcon link href={ROUTES.register} inline variant="transparent-black">Start Free Trial</Button>
                     <Button link href={PAGE_SETTINGS.contact.href} inline variant="black">Book a Demo call</Button>
                 </div>
             </AiSolutions>
@@ -225,7 +226,7 @@ const IntegrationPage = () => {
                         </div>
                         <div className="mt-10 md:mt-40 md:flex justify-center items-center gap-x-10">
                             <Button link href={PAGE_SETTINGS.contact.href} inline variant="black" className="w-full md:w-max">Book a Demo call</Button>
-                            <Button hideIcon link href={APP_URL} inline variant="transparent-black" className="w-full md:w-max mt-5 md:mt-0">Start Trial</Button>
+                            <Button hideIcon link href={ROUTES.register} inline variant="transparent-black" className="w-full md:w-max mt-5 md:mt-0">Start Trial</Button>
                         </div>
                     </div>
                 </div>
@@ -254,7 +255,7 @@ const IntegrationPage = () => {
                         ))}
                     </div>
                     <div className="mt-10 md:mt-40 md:flex justify-center items-center gap-x-10">
-                        <Button link href={APP_URL} inline variant="black" className="w-full md:w-max">Book a Demo call</Button>
+                        <Button link href={PAGE_SETTINGS.contact.href} inline variant="black" className="w-full md:w-max">Book a Demo call</Button>
                         <Button link href={PAGE_SETTINGS.contact.href} inline variant="transparent-black" className="w-full md:w-max mt-5 md:mt-0">Start Trial</Button>
                     </div>
 
@@ -275,7 +276,7 @@ const IntegrationPage = () => {
             <Section>
                 <Integration />
                 <div className="mt-14 flex justify-center items-center">
-                    <Button link href={APP_URL} inline variant="black">Start Free Trial</Button>
+                    <Button link href={ROUTES.register} inline variant="black">Start Free Trial</Button>
                 </div>
             </Section>
 

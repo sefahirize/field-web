@@ -2,7 +2,7 @@ import { Flash } from "@landing/components/Icons";
 import Image from "next/image";
 import { Button } from "@landing/components/Ui";
 import { Section, SectionHeader } from "@landing/components/Global";
-import { APP_URL } from "@landing/constants/Global";
+import { ROUTES } from "@shared/contract";
 import { ALink } from "@landing/components/Ui";
 
 interface Props {
@@ -43,7 +43,7 @@ const Testimonials: React.FC<Props> = ({ className, type = "standard" }) => {
                             </p>
                         </div>
                         <div>
-                            <Button variant="transparent-black" link href={APP_URL} target="_blank">Start Trial</Button>
+                            <Button variant="transparent-black" link href={ROUTES.register} target="_blank">Start Trial</Button>
                         </div>
                     </div>
                     <div className="relative w-full h-full min-h-96">

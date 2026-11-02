@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { ROUTES } from "./src/shared/contract";
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -52,6 +53,18 @@ const nextConfig: NextConfig = {
   sassOptions: {
     // The dashboard SCSS still uses @import; moving it to @use is its own job.
     silenceDeprecations: ["import"],
+  },
+  // The backend links into the dashboard without its prefix: the verification
+  // email to /?token=..., the password reset email to /reset-password?token=...,
+  // and Stripe returns to /?session_id=.... Forward those into the dashboard
+  // here, at root level, so they keep working whatever the landing becomes.
+  // The query string is passed through. A plain "/" stays the landing.
+  async redirects() {
+    return [
+      { source: "/", has: [{ type: "query", key: "token" }], destination: ROUTES.verifyEmail, permanent: false },
+      { source: "/", has: [{ type: "query", key: "session_id" }], destination: ROUTES.checkoutSuccess, permanent: false },
+      { source: "/reset-password", destination: ROUTES.resetPassword, permanent: false },
+    ];
   },
   async rewrites() {
     return [

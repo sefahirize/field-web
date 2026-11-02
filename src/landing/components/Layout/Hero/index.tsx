@@ -2,7 +2,8 @@ import HeroLayout from "@landing/components/Global/HeroLayout";
 import Button from "@landing/components/Ui/Button";
 import Image from "next/image";
 
-import { APP_URL, PAGE_SETTINGS, companyLogos } from "@landing/constants/Global";
+import { PAGE_SETTINGS, companyLogos } from "@landing/constants/Global";
+import { ROUTES } from "@shared/contract";
 
 
 interface Props {
@@ -25,7 +26,7 @@ const Hero: React.FC<Props> = ({ className = "", showLogos = false, bgImage = "/
 
 
     const contactLink = PAGE_SETTINGS.contact.href;
-    const signInLink = APP_URL;
+    const trialLink = ROUTES.register;
 
 
 
@@ -68,7 +69,7 @@ const Hero: React.FC<Props> = ({ className = "", showLogos = false, bgImage = "/
                                         <Button link href={contactLink} className="mt-6 md:mt-8" inline>
                                             Request demo
                                         </Button>
-                                        <Button link href={signInLink} className="mt-4 sm:mt-8" variant="transparent-white" inline hideIcon>
+                                        <Button link href={trialLink} className="mt-4 sm:mt-8" variant="transparent-white" inline hideIcon>
                                             Start Trial
                                         </Button>
                                     </div>
@@ -137,7 +138,7 @@ const Hero: React.FC<Props> = ({ className = "", showLogos = false, bgImage = "/
     //                             <Button link href={contactLink} className="mt-6 md:mt-8" inline>
     //                                 Request demo
     //                         </Button>
-    //                         <Button link href={signInLink} className="mt-4 sm:mt-8" variant="transparent-white" inline hideIcon>
+    //                         <Button link href={trialLink} className="mt-4 sm:mt-8" variant="transparent-white" inline hideIcon>
     //                             Start Trial
     //                             </Button>
     //                         </div>

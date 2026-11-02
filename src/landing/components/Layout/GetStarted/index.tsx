@@ -1,5 +1,6 @@
 import { Button } from "@landing/components/Ui";
-import { PAGE_SETTINGS, APP_URL } from "@landing/constants/Global";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
+import { ROUTES } from "@shared/contract";
 const GetStarted = () => {
     return (
         <div className="relative py-12 sm:py-24 px-6 sm:px-20 mx-auto bg-[#0E1116]">
@@ -30,7 +31,7 @@ const GetStarted = () => {
                             inline
                             variant="white"
                             link
-                            href={APP_URL}
+                            href={ROUTES.register}
                         >
                             Start Trial
                         </Button>

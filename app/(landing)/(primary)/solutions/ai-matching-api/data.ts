@@ -1,6 +1,7 @@
-import { APP_URL, PAGE_SETTINGS } from "@landing/constants/Global";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
 import { Feature as ISolutionsFeature } from "@landing/interfaces/global/Solutions.interfaces";
 import { FeatureCardProps } from "@landing/interfaces/global/feature.interfaces";
+import { ROUTES } from "@shared/contract";
 
 export const solutionsFeatures: ISolutionsFeature[] = [
     {
@@ -107,7 +108,7 @@ export const featureData: FeatureCardProps[] = [
                 variant: "transparent-black",
                 type: "link",
                 text: "Start Trial",
-                href: APP_URL,
+                href: ROUTES.register,
                 link: true,
             }
         ]

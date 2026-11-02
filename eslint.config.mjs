@@ -77,6 +77,8 @@ export default defineConfig([
       // The dashboard was ported as-is from a CRA app written before this
       // React Compiler rule; revisit it with the TypeScript migration.
       "react-hooks/set-state-in-effect": "off",
+      // Not in CRA's lint config either; the copy uses plain apostrophes.
+      "react/no-unescaped-entities": "off",
     },
   },
   {

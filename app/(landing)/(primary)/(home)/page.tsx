@@ -8,9 +8,9 @@ import { FeatureCardProps } from "@landing/interfaces/global/feature.interfaces"
 import { Button } from "@landing/components/Ui";
 import type { Metadata } from "next";
 
-
-import { APP_URL, PAGE_SETTINGS } from "@landing/constants/Global";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
 import { buildPageMetadata } from "@landing/lib/seo/page-metadata";
+import { ROUTES } from "@shared/contract";
 
 export const generateMetadata = (): Metadata =>
   buildPageMetadata(PAGE_SETTINGS.homepage);
@@ -107,7 +107,7 @@ const featureData: FeatureCardProps[] = [
         type: "link",
         text: "Start free trial",
         link: true,
-        href: APP_URL
+        href: ROUTES.register
       }
     ]
   },
@@ -209,7 +209,7 @@ export default function Home() {
         <Button className="bg-black! hover:bg-white! font-semibold" link href={"https://calendly.com/hirize/hirize-trial-demo"} target="_blank" inline>
           Schedule a 15 min demo
         </Button>
-        <Button className="font-semibold" link href={APP_URL} variant="transparent-white" inline hideIcon>
+        <Button className="font-semibold" link href={ROUTES.register} variant="transparent-white" inline hideIcon>
           Start Trial
         </Button>
       </div>

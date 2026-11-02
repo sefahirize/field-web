@@ -2,10 +2,11 @@ import Image from "next/image";
 import { Button } from "@landing/components/Ui";
 import { LuminaLine } from "@landing/components/Icons";
 import { CallToAction } from "@landing/components/Layout";
-import { APP_URL, PAGE_SETTINGS } from "@landing/constants/Global";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
 import EmailForm from "./email-form";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@landing/lib/seo/page-metadata";
+import { ROUTES } from "@shared/contract";
 
 export const generateMetadata = (): Metadata =>
   buildPageMetadata(PAGE_SETTINGS.ai_agents);
@@ -60,7 +61,7 @@ const AiAgents = () => {
                         <Button
                             inline
                             link
-                            href={APP_URL}
+                            href={ROUTES.register}
                             variant="white"
                             className="rounded-full! mx-auto py-1!">
                             Sign up for early access

@@ -19,13 +19,19 @@ export const BRAND = {
  */
 export const APP_BASE = "/app";
 
-/** Dashboard routes the landing links to. */
+/**
+ * Dashboard entry points from outside the dashboard: the landing's links, and
+ * the links the backend sends (verification email, Stripe return).
+ */
 export const ROUTES = {
   home: "/",
   dashboard: APP_BASE,
   login: `${APP_BASE}/login`,
   register: `${APP_BASE}/register`,
   checkout: `${APP_BASE}/checkout`,
+  verifyEmail: `${APP_BASE}/verify-email`,
+  resetPassword: `${APP_BASE}/reset-password`,
+  checkoutSuccess: `${APP_BASE}/checkout/success`,
 } as const;
 
 function readUrl(name: string, value: string | undefined, fallback: string): string {

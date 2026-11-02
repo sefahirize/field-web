@@ -7,7 +7,7 @@ import { HirizeImage } from "@landing/components/Global/HirizeImage";
 import { getStrapiMedia, formatDate, sortBlogData } from "@landing/utils/global";
 import Link from 'next/link';
 import { Button, Select } from "@landing/components/Ui";
-import { APP_URL } from "@landing/utils/api";
+import { ROUTES } from "@shared/contract";
 import { DATA_SOCIAL_MEDIA } from "@landing/constants/Global";
 import { useIsMobile } from "@landing/hooks/use-mobile";
 import {
@@ -267,7 +267,7 @@ export default function BlogContent({
                         <div className="mt-6 bg-[#D8DEFF] rounded-lg px-6 py-8 text-center">
                             <h5 className="text-natural-navy font-semibold text-2xl">Start your document journey here</h5>
                             <p className="mt-2.5 text-[#6B7280] font-medium text-base">Market leading accuracy, easy set-up</p>
-                            <Button link href={APP_URL} className="mt-8 max-w-[239px] mx-auto">
+                            <Button link href={ROUTES.register} className="mt-8 max-w-[239px] mx-auto">
                                 Start free trial
                             </Button>
                         </div>

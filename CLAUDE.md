@@ -24,5 +24,5 @@ Read `HANDOFF.md` first: it has the full plan, the source projects, the decision
 3. Tailwind and its preflight load only in the landing layout. MUI + SCSS load only in the dashboard layout. Neither stylesheet may leak into the other.
 4. `shared` holds only the contract: route constants, app URL / env, brand name and logo, colour tokens if wanted, and the landing → dashboard entry points (login, sign-up, `/checkout?...` with the pricing parameters). Keep that contract in one file.
 5. URLs: the landing owns the root of the domain; the whole dashboard lives under one prefix, `/app` (`APP_BASE` in the contract, folder `app/(dashboard)/app/`). Never hard-code the prefix elsewhere; build dashboard URLs from `APP_BASE`.
-6. Root-path redirects (`/?token=…` from the verification email, `/?session_id=…` from Stripe) are handled at root level (middleware), not inside a landing page, so they keep working whatever the landing looks like.
+6. Root-path redirects (`/?token=…` from the verification email, `/?session_id=…` from Stripe) are handled at root level (`redirects()` in `next.config.ts`, built from `ROUTES` in the contract), not inside a landing page, so they keep working whatever the landing looks like.
 7. Tests live per layer. The dashboard's tests must run without the landing present.

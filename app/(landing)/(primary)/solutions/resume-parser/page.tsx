@@ -3,12 +3,13 @@ import { Button } from "@landing/components/Ui";
 import { Section, SectionHeader } from "@landing/components/Global";
 import { ReactIcon } from "@landing/components/Icons";
 import Image from "next/image";
-import { PAGE_SETTINGS, APP_URL } from "@landing/constants/Global";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@landing/lib/seo/page-metadata";
 
 import { solutionsFeatures, worldMostAccurateParserFeatures, featureData } from "./data";
 import TestimonialsShort from "@landing/components/Layout/TestimonialsShort";
+import { ROUTES } from "@shared/contract";
 
 export const generateMetadata = (): Metadata =>
   buildPageMetadata(PAGE_SETTINGS.resume_parser);
@@ -93,7 +94,7 @@ const ResumeParserPage: React.FC = () => {
                 features={worldMostAccurateParserFeatures}
             >
                 <div className="mt-14 flex justify-center items-center gap-x-3">
-                    <Button variant="transparent-black" hideIcon inline link href={APP_URL}>Start Free Trial</Button>
+                    <Button variant="transparent-black" hideIcon inline link href={ROUTES.register}>Start Free Trial</Button>
                     <Button variant="black" inline link href={PAGE_SETTINGS.contact.href}>Book a Demo Call</Button>
                 </div>
             </AiSolutions>

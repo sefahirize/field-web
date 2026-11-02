@@ -2,13 +2,14 @@ import { AiSolutions, GetStarted, Testimonials } from "@landing/components/Layou
 import { Hero } from "@landing/components/Layout";
 import { Feature as ISolutionsFeature } from "@landing/interfaces/global/Solutions.interfaces";
 import { Dashboard, AiOutlineIcon } from "@landing/components/Icons";
-import { PAGE_SETTINGS, APP_URL } from "@landing/constants/Global";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
 import { Button } from "@landing/components/Ui";
 import { SectionHeader } from "@landing/components/Global";
 import { Section } from "@landing/components/Global";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@landing/lib/seo/page-metadata";
+import { ROUTES } from "@shared/contract";
 
 export const generateMetadata = (): Metadata =>
   buildPageMetadata(PAGE_SETTINGS.startups);
@@ -96,7 +97,7 @@ const solutionsFeatures: ISolutionsFeature[] = [
 //                 variant: "transparent-black",
 //                 type: "link",
 //                 text: "Start Trial",
-//                 href: APP_URL,
+//                 href: ROUTES.register,
 //                 link: true,
 //             },
 //             {
@@ -144,7 +145,7 @@ const DescItem: React.FC<DescItemProps> = ({ className = "", title, desc, link =
                             className="text-sm! px-4!"
                             hideIcon
                             link
-                            href={APP_URL}>
+                            href={ROUTES.register}>
                             Start Trial
                         </Button>
                     </div>}

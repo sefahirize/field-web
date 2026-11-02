@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@landing/components/Ui";
-import { PAGE_SETTINGS, APP_URL } from "@landing/constants/Global";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
+import { ROUTES } from "@shared/contract";
 
 interface Props {
     type?: 'standart' | 'lumina';
@@ -33,7 +34,7 @@ const CallToAction: React.FC<Props> = ({ type = 'standart' }) => {
                             inline
                             variant={type === 'lumina' ? 'green' : 'black'}
                             link
-                            href={APP_URL}
+                            href={ROUTES.register}
                         >
                             Start Trial
                         </Button>
