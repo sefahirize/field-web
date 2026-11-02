@@ -30,16 +30,5 @@ export const ROUTE_PATHS = {
   VERIFY_EMAIL: app('/verify-email'),
 };
 
-/**
- * Other addresses Stripe may be told to return to.
- *
- * The return URLs live in the backend's Stripe configuration, which nobody on
- * this side has seen. These are the likely spellings — including the old Hirize
- * dashboard's /checkout/payment-result — so a return lands on the result page
- * whichever one the backend picked, instead of on a 404.
- */
-export const CHECKOUT_SUCCESS_ALIASES = ['/checkout/payment-result', '/payment-result', '/payment/success'].map(app);
-export const CHECKOUT_CANCEL_ALIASES = ['/payment/cancel', '/checkout/cancelled'].map(app);
-
 /** `/app/documents/:uuid` for one document. */
 export const documentPath = uuid => app(`/documents/${encodeURIComponent(uuid)}`);

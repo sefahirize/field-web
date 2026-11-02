@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { productsApi } from '@dashboard/features/products/productsApi';
 import { checkoutApi } from './checkoutApi';
-import { savePendingPayment } from './pendingPayment';
+import { readResumeUrl, savePendingPayment } from './pendingPayment';
 import { toApiError } from '@dashboard/libs/apiError';
 
 /**
@@ -120,6 +120,12 @@ export const submitOrder = createAsyncThunk('checkout/submit', async (_, { getSt
 
   try {
     const order = await checkoutApi.submit({ basketId });
+
+    // The page sends the browser to this address, so only a Stripe one is taken,
+    // as for a resumed payment.
+    if (order.checkoutUrl && !readResumeUrl(order)) {
+      return rejectWithValue({ message: 'The payment page could not be opened. Please try again.' });
+    }
 
     if (order.checkoutUrl) {
       savePendingPayment({

@@ -28,15 +28,11 @@ import LogoPairedSourcing from '@public/assets/images/landing/brands/paired-sour
 
 // Mailchimp settings live in the server-only src/landing/lib/mailchimp.ts.
 
-/** Public marketing site (this repo). App product URLs use APP_URL (.hr). */
+/** Public marketing site (this repo). Dashboard links come from ROUTES in @shared/contract. */
 export const WEBSITE_DOMAIN = 'https://www.joinfield.ai';
 export const API_DOMAIN = 'https://blog.hirize.ai';
 /** WordPress REST API base (no trailing slash), e.g. https://blog.hirize.ai/wp-json/wp/v2 */
 export const WORDPRESS_REST_API_BASE = 'https://blog.hirize.ai/wp-json/wp/v2';
-// Product app URL. Defaults to prod (.hr). For local dev against a locally
-// running dashboard, set NEXT_PUBLIC_APP_URL in .env.local (e.g.
-// NEXT_PUBLIC_APP_URL=http://localhost:3001). .env.local is gitignored.
-export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://app.hirize.hr';
 export const APP_TEST_URL = 'http://localhost:3001/';
 export const API_URL_PROD = 'https://connect.hirize.hr';
 export const API_URL_DEV = 'https://dashboard.dev.hirize.hr:8443';

@@ -3,7 +3,8 @@
 import { Select, Button, Switch } from "@landing/components/Ui";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AiStarIcon, InfoIcon, PlusIcon } from "@landing/components/Icons";
-import { DASHBOARD_API_URL as USE_API_URL, PAGE_SETTINGS, APP_URL } from "@landing/constants/Global";
+import { DASHBOARD_API_URL as USE_API_URL, PAGE_SETTINGS } from "@landing/constants/Global";
+import { ROUTES } from "@shared/contract";
 import { debounce } from "@landing/utils/debounce";
 
 interface Product {
@@ -295,13 +296,14 @@ const PlanContent = () => {
             .filter(r => r.product && parseCalls(r.calls) >= MIN_DOCUMENT_COUNT)
             .map(r => `${r.product!.id}:${parseCalls(r.calls)}`)
             .join(",");
-        if (!lines) return APP_URL;
+        // No plan yet: the checkout page sends the user on to Buy credits.
+        if (!lines) return ROUTES.checkout;
         const params = new URLSearchParams({
             plan: lines,
             billing: isChecked ? "sub" : "payg",
         });
         if (purchasePlanId && publicId) params.set("pp", `${purchasePlanId}_${publicId}`);
-        return `${APP_URL}/checkout?${params.toString()}`;
+        return `${ROUTES.checkout}?${params.toString()}`;
     }, [rows, isChecked, purchasePlanId, publicId]);
 
     const isBusy = rows.some(r => r.loading);
