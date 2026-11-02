@@ -34,6 +34,14 @@ export const ROUTES = {
   checkoutSuccess: `${APP_BASE}/checkout/success`,
 } as const;
 
+/**
+ * localStorage key set while someone is signed in to the dashboard, so the
+ * landing can offer "Dashboard" instead of "Sign in". A hint, not a
+ * credential: it holds no token, and the dashboard still checks the session
+ * itself. The dashboard writes it next to its tokens; the landing only reads it.
+ */
+export const SIGNED_IN_HINT_KEY = "jf_signed_in";
+
 function readUrl(name: string, value: string | undefined, fallback: string): string {
   const raw = value || fallback;
   try {

@@ -6,6 +6,8 @@
  * from localStorage to httpOnly cookies touches this file only.
  */
 
+import { SIGNED_IN_HINT_KEY } from '@shared/contract';
+
 const ACCESS_TOKEN = 'jf_access_token';
 const REFRESH_TOKEN = 'jf_refresh_token';
 const EXPIRES_AT = 'jf_expires_at';
@@ -36,12 +38,15 @@ export const setSession = ({ access_token, refresh_token, expires_in } = {}) => 
   safeSet(ACCESS_TOKEN, access_token);
   safeSet(REFRESH_TOKEN, refresh_token);
   safeSet(EXPIRES_AT, expires_in ? Date.now() + Number(expires_in) * 1000 : null);
+  // Lets the landing show "Dashboard"; no token leaves this file.
+  safeSet(SIGNED_IN_HINT_KEY, access_token ? '1' : null);
 };
 
 export const clearSession = () => {
   safeSet(ACCESS_TOKEN, null);
   safeSet(REFRESH_TOKEN, null);
   safeSet(EXPIRES_AT, null);
+  safeSet(SIGNED_IN_HINT_KEY, null);
 };
 
 export const isSessionExpired = () => {

@@ -151,15 +151,30 @@ interface HeaderItemContentProps {
     data: (MenuSection | ImageSection | LineSection)[];
 }
 
+// Signed in to the dashboard (the layout sets <html data-signed-in>): one
+// "Dashboard" button replaces "Sign in" and "Request demo". Both sets are in
+// the HTML and CSS picks one, so there is no flash on load.
+const signedOutOnly = '[[data-signed-in]_&]:hidden!';
+const signedInOnly = 'hidden! [[data-signed-in]_&]:flex!';
+
 const ButtonCTA = ({ isDark = false }: { isDark?: boolean }) => {
     return (
         <>
+            <Button
+                inline
+                link
+                variant={isDark ? 'green' : 'black'}
+                className={`px-4! py-2! xl:py-2.5! xl:px-5! ${signedInOnly}`}
+                href={ROUTES.dashboard}
+            >
+                Dashboard
+            </Button>
             <Button
                 hideIcon
                 inline
                 link
                 variant={isDark ? 'transparent-white' : 'transparent-black'}
-                className='px-4! py-2! xl:py-2.5! xl:px-5! flex! lg:inline-flex!'
+                className={`px-4! py-2! xl:py-2.5! xl:px-5! flex! lg:inline-flex! ${signedOutOnly}`}
                 href={ROUTES.login}
             >
                 Sign in
@@ -168,7 +183,7 @@ const ButtonCTA = ({ isDark = false }: { isDark?: boolean }) => {
                 inline
                 link
                 variant={isDark ? 'green' : 'black'}
-                className="px-4! py-2! xl:py-2.5! xl:px-5! flex! lg:inline-flex!"
+                className={`px-4! py-2! xl:py-2.5! xl:px-5! flex! lg:inline-flex! ${signedOutOnly}`}
                 href={PAGE_SETTINGS.contact.href}
             >
                 Request demo
