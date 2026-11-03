@@ -46,11 +46,26 @@ export const UploadProgressToast = forwardRef(({ toastKey }, ref) => {
 });
 
 /**
+ * Processing runs inside the upload request, so a document can come back
+ * already `failed` (the parser gave up). It exists and can be opened, but it is
+ * not ready. The parser's own error stays on the document page.
+ */
+export const isFailedDocument = doc => doc?.status === 'failed';
+
+/** Files that did not upload, then documents whose processing failed. */
+export const uploadFailures = (documents, errors) => [
+  ...errors,
+  ...documents.filter(isFailedDocument).map(doc => ({ fileName: doc.file_name, message: 'processing failed' })),
+];
+
+/**
  * What an upload ended in: the documents it made — with a link to the one, or to
  * the list when there are several — and the files it could not process.
  */
-export const UploadDoneToast = forwardRef(({ toastKey, documents, errors, to, linkLabel }, ref) => {
-  const ok = documents.length;
+export const UploadDoneToast = forwardRef(({ toastKey, documents, errors: uploadErrors, to, linkLabel }, ref) => {
+  const ready = documents.filter(doc => !isFailedDocument(doc));
+  const errors = uploadFailures(documents, uploadErrors);
+  const ok = ready.length;
   const failed = errors.length;
   const tone = ok === 0 ? 'fail' : failed > 0 ? 'mixed' : 'ok';
 
@@ -63,7 +78,7 @@ export const UploadDoneToast = forwardRef(({ toastKey, documents, errors, to, li
         <strong className="UploadToast-Title">
           {ok > 0 ? (ok === 1 ? '1 document is ready' : `${ok} documents are ready`) : 'Nothing was processed'}
         </strong>
-        {ok > 0 && <span className="UploadToast-Sub">{names(documents.map(doc => doc.file_name || 'Untitled'))}</span>}
+        {ok > 0 && <span className="UploadToast-Sub">{names(ready.map(doc => doc.file_name || 'Untitled'))}</span>}
         {failed > 0 && (
           <span className="UploadToast-Failed">
             {failed === 1 ? '1 file failed' : `${failed} files failed`}:{' '}
@@ -74,7 +89,8 @@ export const UploadDoneToast = forwardRef(({ toastKey, documents, errors, to, li
             {failed > 2 ? ` and ${failed - 2} more` : ''}
           </span>
         )}
-        {ok > 0 && (
+        {/* A failed document opens too: its page says what went wrong. */}
+        {documents.length > 0 && (
           <Link className="UploadToast-Link" href={to} onClick={() => snackActions.close(toastKey)}>
             {linkLabel} <span aria-hidden="true">→</span>
           </Link>

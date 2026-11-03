@@ -2,7 +2,12 @@ import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { ROUTE_PATHS, documentPath } from '@dashboard/data/paths';
 import { snackActions } from '@dashboard/libs/snackbar';
-import { UploadDoneToast, UploadErrorToast, UploadProgressToast } from '@dashboard/components/documents/UploadToasts';
+import {
+  UploadDoneToast,
+  UploadErrorToast,
+  UploadProgressToast,
+  uploadFailures,
+} from '@dashboard/components/documents/UploadToasts';
 
 const PLACEMENT = { vertical: 'bottom', horizontal: 'right' };
 
@@ -58,7 +63,7 @@ export const UploadNotifier = () => {
         ),
         {
           // Something that failed stays until it is read; a clean result can leave on its own.
-          persist: errors.length > 0 || documents.length === 0,
+          persist: uploadFailures(documents, errors).length > 0 || documents.length === 0,
           autoHideDuration: 15000,
           anchorOrigin: PLACEMENT,
         },
