@@ -73,6 +73,8 @@ For the user to pass to the backend; none of them is a front-end bug.
 
 ## Reminders
 
+- Test tools (document "Set status", "Use credits (test)", "Test a key") stay on by default on purpose (user's call, 2026-11-03). They hide only with `NEXT_PUBLIC_TEST_TOOLS=false`; decide before a public launch.
+
 - The product name is **Field**; only the domain stays joinfield.
 - Never print or copy secrets (`.env` of the landing).
 - The user said: do not do all tasks at once; the newest and most secure package versions; optimise code if the new versions require it; the landing will change later, so the dashboard must stay independent of it.
