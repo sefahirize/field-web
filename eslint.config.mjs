@@ -9,21 +9,38 @@ import nextTs from "eslint-config-next/typescript";
 // Each layer is a route group in app/ plus a folder in src/ with the same name.
 // To rename a layer: rename both folders, change `name` here and the alias in
 // tsconfig.json. Route groups never appear in URLs, so no link changes.
-const layer = (name, alias) => ({
+const layer = (name, alias, rootFiles = []) => ({
   alias: `${alias}/*`,
-  paths: [`./src/${name}`, `./app/(${name})`],
-  files: [`src/${name}/**`, `app/(${name})/**`],
+  paths: [`./src/${name}`, `./app/(${name})`, ...rootFiles.map(file => `./${file}`)],
+  files: [`src/${name}/**`, `app/(${name})/**`, ...rootFiles],
 });
 
-const LANDING = layer("landing", "@landing");
+// Next wants these at the root of app/, outside any route group; they are the landing's.
+const LANDING = layer("landing", "@landing", ["app/robots.ts", "app/sitemap.ts", "app/global-not-found.tsx"]);
 const DASHBOARD = layer("dashboard", "@dashboard");
 
-const MUI = { group: ["@mui/*", "@emotion/*"], message: "MUI and emotion load only in the dashboard." };
-const SCSS = { group: ["*.scss", "*.sass"], message: "SCSS loads only in the dashboard." };
-const TAILWIND = {
-  group: ["tailwindcss", "tailwindcss/*", "@tailwindcss/*"],
-  message: "Tailwind loads only in the landing.",
+// Which layer owns each runtime package in package.json. The other layer may
+// not import it, so if the layers become separate projects, each package.json
+// is its own list plus what both use: next, react, react-dom, react-hook-form.
+// A package both layers need goes in neither list.
+const PACKAGES = {
+  landing: [
+    "@hookform/resolvers",
+    "country-flag-icons",
+    "libphonenumber-js",
+    "react-google-recaptcha-v3",
+    "sanitize-html",
+    "zod",
+    "tailwindcss",
+    "@tailwindcss/*",
+  ],
+  dashboard: ["@emotion/*", "@mui/*", "@reduxjs/*", "axios", "notistack", "react-redux", "sass"],
 };
+const ownedBy = name => ({
+  group: PACKAGES[name].flatMap(pkg => [pkg, `${pkg}/*`]),
+  message: `This package belongs to the ${name} (PACKAGES in eslint.config.mjs).`,
+});
+const SCSS = { group: ["*.scss", "*.sass"], message: "SCSS loads only in the dashboard." };
 const preferShared = alias => ({ group: [alias], message: "Use @shared/* instead." });
 
 export default defineConfig([
@@ -62,7 +79,7 @@ export default defineConfig([
   {
     files: LANDING.files,
     rules: {
-      "no-restricted-imports": ["error", { patterns: [preferShared(DASHBOARD.alias), MUI, SCSS] }],
+      "no-restricted-imports": ["error", { patterns: [preferShared(DASHBOARD.alias), ownedBy("dashboard"), SCSS] }],
       // Off in joinfield-landing too; the copy is full of apostrophes.
       "react/no-unescaped-entities": "off",
       // The landing was ported 1:1. Moving its <img> tags to next/image can
@@ -73,7 +90,7 @@ export default defineConfig([
   {
     files: DASHBOARD.files,
     rules: {
-      "no-restricted-imports": ["error", { patterns: [preferShared(LANDING.alias), TAILWIND] }],
+      "no-restricted-imports": ["error", { patterns: [preferShared(LANDING.alias), ownedBy("landing")] }],
       // The dashboard was ported as-is from a CRA app written before this
       // React Compiler rule; revisit it with the TypeScript migration.
       "react-hooks/set-state-in-effect": "off",
@@ -89,9 +106,9 @@ export default defineConfig([
         {
           patterns: [
             { group: [LANDING.alias, DASHBOARD.alias], message: "src/shared imports nothing from the layers." },
-            MUI,
+            ownedBy("landing"),
+            ownedBy("dashboard"),
             SCSS,
-            TAILWIND,
           ],
         },
       ],
