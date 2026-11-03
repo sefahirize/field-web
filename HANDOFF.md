@@ -71,6 +71,17 @@ For the user to pass to the backend; none of them is a front-end bug.
 6. `PUT /api-credentials/:id` answers 200 but ignores `expires_days`; the expiry cannot be changed.
 7. API keys still start with `hrz_` (Hirize prefix).
 
+## Splitting into two projects (if it happens)
+
+Set up on 2026-11-03 so either layer can move out without untangling shared files:
+
+- **Code**: `src/<layer>` plus `app/(<layer>)`. The landing also owns `app/robots.ts`, `app/sitemap.ts` and `app/global-not-found.tsx` (Next wants them at the root of `app/`). `src/shared/contract.ts` is copied into both.
+- **Next config**: `src/<layer>/next-config.ts` holds the layer's part (its CSP origins and Next options). The host rules in the root `next.config.ts` (security headers, the `/api/v1` and `/uploads` proxy, the backend's links into the dashboard) are copied into both; the backend's links stay with whichever project owns the domain root.
+- **Packages**: `PACKAGES` in `eslint.config.mjs` says which layer owns each runtime package; lint fails when the other layer imports one. Each new `package.json` is its list plus what both use (`next`, `react`, `react-dom`, `react-hook-form`).
+- **Tests**: `src/<layer>/vitest.config.mts` is self-contained; the root config only lists them.
+- **Env**: `.env.example` is grouped Shared / Landing / Dashboard.
+- **Different origins**: set `NEXT_PUBLIC_DASHBOARD_URL` (e.g. `https://app.joinfield.ai`) and the landing's links point there. Two things still need work then: the signed-in hint is in localStorage and must become a cookie on `.joinfield.ai`, and the landing's pricing calculator needs its own `/api/v1` proxy (or CORS on the API).
+
 ## Reminders
 
 - **Landing work is paused** (2026-11-03): a new landing structure is coming; the user will share the details. Do not change `src/landing` or `app/(landing)` until then.
