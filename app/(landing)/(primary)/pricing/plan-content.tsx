@@ -6,11 +6,13 @@ import { AiStarIcon, InfoIcon, PlusIcon } from "@landing/components/Icons";
 import { PAGE_SETTINGS } from "@landing/constants/Global";
 import { API_BASE, ROUTES } from "@shared/contract";
 import { debounce } from "@landing/utils/debounce";
+import ProductIcon, { productIconSrc } from "./product-icon";
 
 interface Product {
     id: number;
     name: string;
     key: string;
+    icon: React.ReactNode;
 }
 
 /** A product as GET products answers it. */
@@ -18,6 +20,7 @@ type ApiProduct = {
     id: number;
     product_name: string;
     key: string;
+    icon: string | null;
     is_active: boolean;
     is_show_list: boolean;
 };
@@ -131,7 +134,12 @@ const PlanContent = () => {
                 setProducts(
                     data
                         .filter((p: ApiProduct) => p.is_active && p.is_show_list)
-                        .map((p: ApiProduct) => ({ id: p.id, name: p.product_name, key: p.key }))
+                        .map((p: ApiProduct) => ({
+                            id: p.id,
+                            name: p.product_name,
+                            key: p.key,
+                            icon: <ProductIcon src={productIconSrc(p.icon)} />,
+                        }))
                 );
             } catch (err) {
                 console.error("Failed to load products", err);
