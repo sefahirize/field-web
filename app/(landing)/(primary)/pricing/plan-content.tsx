@@ -3,59 +3,43 @@
 import { Select, Button, Switch } from "@landing/components/Ui";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AiStarIcon, InfoIcon, PlusIcon } from "@landing/components/Icons";
-import { DASHBOARD_API_URL as USE_API_URL, PAGE_SETTINGS } from "@landing/constants/Global";
-import { ROUTES } from "@shared/contract";
+import { PAGE_SETTINGS } from "@landing/constants/Global";
+import { API_BASE, ROUTES } from "@shared/contract";
 import { debounce } from "@landing/utils/debounce";
 
 interface Product {
     id: number;
     name: string;
-    description: string;
     key: string;
-    icon: string;
-    price: string | null;
-    tooltip: { title: string; description: string };
-    is_active: boolean;
 }
 
-type LatestInfo = {
-    annual_price: number;
-    total_discount: number;
-    discount_price: number;
-    discount_ratio: number;
-    price: number;
-    total_credit: string;
-    total_price: string;
+/** A product as GET products answers it. */
+type ApiProduct = {
+    id: number;
+    product_name: string;
+    key: string;
+    is_active: boolean;
+    is_show_list: boolean;
 };
 
 type PlanRow = {
     id: string;
     product: Product | null;
     calls: string;        // digits only, never formatted
-    fetched: boolean;     // true once the backend has persisted this row's product on the plan
-    loading: boolean;
     error: string;
 };
 
+type BasketLine = { product_id: number; usage_count: number };
+
 const DEBOUNCE_DELAY = 400;
-const MIN_DOCUMENT_COUNT = 1000;
 
-// TEMP: backend subscription discount math is broken. While `true`, the
-// pay-as-you-go price still comes from the API, but the subscription price
-// and "SAVE $X" badge are computed on the client as a flat 30% off.
-// Flip back to `false` once the API is fixed to restore server-driven values.
-const DISCOUNT_MANUALLY = true;
-const MANUAL_DISCOUNT_RATIO = 0.30;
-
-const EMPTY_INFO: LatestInfo = {
-    annual_price: 0,
-    total_discount: 0,
-    discount_price: 0,
-    discount_ratio: 0,
-    price: 0,
-    total_credit: "0",
-    total_price: "0",
-};
+// The API sells one-off credit purchases only. Until it sells subscriptions,
+// the Pay-as-you-go / Subscription switch and the "30% off" badge stay hidden,
+// so the page never shows a price that checkout does not charge. When they
+// exist, flip this on; the subscription price is then the pay-as-you-go total
+// minus SUBSCRIPTION_DISCOUNT, computed here.
+const SUBSCRIPTIONS = false;
+const SUBSCRIPTION_DISCOUNT = 0.30;
 
 let __rowIdCounter = 0;
 const nextRowId = () => `row_${++__rowIdCounter}`;
@@ -63,8 +47,6 @@ const newRow = (): PlanRow => ({
     id: nextRowId(),
     product: null,
     calls: "",
-    fetched: false,
-    loading: false,
     error: "",
 });
 
@@ -72,6 +54,14 @@ const parseCalls = (raw: string): number => {
     const n = parseInt(String(raw ?? "").replace(/,/g, ""), 10);
     return Number.isFinite(n) ? n : 0;
 };
+
+/** The rows the API can price: a product and a quantity above zero. */
+const basketLines = (rows: PlanRow[]): BasketLine[] =>
+    rows
+        .filter(r => r.product && parseCalls(r.calls) > 0)
+        .map(r => ({ product_id: r.product!.id, usage_count: parseCalls(r.calls) }));
+
+const linesKey = (lines: BasketLine[]) => lines.map(l => `${l.product_id}:${l.usage_count}`).join(",");
 
 // Strip trailing `.00` so $0.00 → $0, $199.00 → $199, but $199.50 stays $199.50
 const formatPrice = (value: number | string): string => {
@@ -113,22 +103,20 @@ const NumberInput: React.FC<
 const PlanContent = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [rows, setRows] = useState<PlanRow[]>(() => [newRow()]);
-    const [purchasePlanId, setPurchasePlanId] = useState<number | string>("");
-    const [publicId, setPublicId] = useState<number | string>("");
-    const [latestInfo, setLatestInfo] = useState<LatestInfo>(EMPTY_INFO);
+    const [basketId, setBasketId] = useState("");
+    // The lines the current total belongs to, so a basket edited since its last
+    // price is never handed to checkout as if it were up to date.
+    const [pricedKey, setPricedKey] = useState("");
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [isBusy, setIsBusy] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
 
     // Mirror the latest mutable state so the debounced fn can read fresh values
     // without being recreated (which would reset its timer on every keystroke).
-    const stateRef = useRef({ rows, purchasePlanId, publicId });
+    const stateRef = useRef({ rows, basketId });
     useEffect(() => {
-        stateRef.current = { rows, purchasePlanId, publicId };
+        stateRef.current = { rows, basketId };
     });
-
-    // Remembers the persisted product id when a row's product is swapped, so the
-    // eventual /change-product POST still references the original backend line —
-    // even after several back-to-back swaps before the first response lands.
-    const pendingSwapFromRef = useRef<Record<string, number>>({});
 
     // Drops stale responses if a newer request has already been dispatched.
     const requestIdRef = useRef(0);
@@ -137,14 +125,13 @@ const PlanContent = () => {
         let cancelled = false;
         (async () => {
             try {
-                const res = await fetch(`${USE_API_URL}/product/public/all`);
+                const res = await fetch(`${API_BASE}/products`);
                 const { data, success } = await res.json();
                 if (cancelled || !success || !Array.isArray(data)) return;
                 setProducts(
-                    data.map((p: Product) => ({
-                        ...p,
-                        icon: `/assets/icons/new/${p.key}.png`,
-                    }))
+                    data
+                        .filter((p: ApiProduct) => p.is_active && p.is_show_list)
+                        .map((p: ApiProduct) => ({ id: p.id, name: p.product_name, key: p.key }))
                 );
             } catch (err) {
                 console.error("Failed to load products", err);
@@ -157,81 +144,72 @@ const PlanContent = () => {
         setRows(prev => prev.map(r => (r.id === rowId ? { ...r, ...patch } : r)));
     }, []);
 
-    const runCalculate = useCallback(async (rowId: string) => {
-        const { rows: currentRows, purchasePlanId: planId, publicId: pubId } = stateRef.current;
-        const row = currentRows.find(r => r.id === rowId);
-        if (!row || !row.product) return;
-        const calls = parseCalls(row.calls);
-        if (calls < MIN_DOCUMENT_COUNT) return;
-
+    // POST products/price prices the whole basket at once. Without `basket_id`
+    // it creates one (owned by nobody until checkout claims it); with it, it
+    // REPLACES that basket's lines, so every line is sent every time.
+    const runPrice = useCallback(async (rowId?: string) => {
+        const { rows: currentRows, basketId: currentBasketId } = stateRef.current;
+        const lines = basketLines(currentRows);
         const myReqId = ++requestIdRef.current;
-        const swapFromId = pendingSwapFromRef.current[rowId];
-        const isSwap = !!swapFromId && swapFromId !== row.product.id;
 
-        const body: Record<string, unknown> = {
-            product_id: isSwap ? swapFromId : row.product.id,
-            document_count: calls,
-            purchase_plan_id: planId || undefined,
-        };
-        if (isSwap) {
-            body.new_product_id = row.product.id;
-            body.public_id = pubId || undefined;
+        if (lines.length === 0) {
+            setTotalPrice(0);
+            setPricedKey("");
+            setIsBusy(false);
+            return;
         }
-        const endpoint = isSwap ? "change-product" : "public-calculation";
 
-        patchRow(rowId, { loading: true, error: "" });
-        try {
-            const res = await fetch(`${USE_API_URL}/purchase/${endpoint}`, {
+        const price = async (basket: string) => {
+            const res = await fetch(`${API_BASE}/products/price`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
+                body: JSON.stringify({ details: lines, basket_id: basket || undefined }),
             });
-            const json = await res.json();
+            return { res, json: await res.json().catch(() => ({})) };
+        };
+
+        setIsBusy(true);
+        try {
+            let { res, json } = await price(currentBasketId);
+            // A basket the server no longer knows: start a new one.
+            if (res.status === 404 && currentBasketId) ({ res, json } = await price(""));
 
             // Ignore stale responses
             if (myReqId !== requestIdRef.current) return;
 
-            if (json.success && json.data?.info) {
-                setLatestInfo(json.data.info);
-                if (json.data.id) setPurchasePlanId(json.data.id);
-                if (json.data.public_id) setPublicId(json.data.public_id);
-                delete pendingSwapFromRef.current[rowId];
-                patchRow(rowId, { fetched: true, loading: false, error: "" });
+            if (res.ok) {
+                if (json.basket_id) setBasketId(json.basket_id);
+                setTotalPrice(Number(json.total_price) || 0);
+                setPricedKey(linesKey(lines));
+                setRows(prev => prev.map(r => (r.error ? { ...r, error: "" } : r)));
             } else {
-                patchRow(rowId, {
-                    loading: false,
-                    error: json.message || "Unable to calculate pricing.",
-                });
+                // Per-line failures name the product in `product_id`.
+                const message = json.error || json.message || "Unable to calculate pricing.";
+                const failed = currentRows.find(r => r.product && r.product.id === json.product_id);
+                const target = failed?.id ?? rowId ?? currentRows[0]?.id;
+                if (target) patchRow(target, { error: message });
             }
+            setIsBusy(false);
         } catch (err) {
             if (myReqId !== requestIdRef.current) return;
             console.error("Pricing calculation failed", err);
-            patchRow(rowId, { loading: false, error: "Network error — please retry." });
+            if (rowId) patchRow(rowId, { error: "Network error — please retry." });
+            setIsBusy(false);
         }
     }, [patchRow]);
 
     // Created once: the debounce timer is preserved across renders so rapid edits
     // actually coalesce into a single backend call.
-    const debouncedCalculate = useMemo(
-        // debounce only stores the callback; refs are read when the timer fires, not during render.
-        // eslint-disable-next-line react-hooks/refs
-        () => debounce((rowId: string) => { runCalculate(rowId); }, DEBOUNCE_DELAY),
-        [runCalculate]
+    const debouncedPrice = useMemo(
+        () => debounce((rowId?: string) => { runPrice(rowId); }, DEBOUNCE_DELAY),
+        [runPrice]
     );
 
-    useEffect(() => () => debouncedCalculate.cancel(), [debouncedCalculate]);
+    useEffect(() => () => debouncedPrice.cancel(), [debouncedPrice]);
 
     const handleProductChange = (rowId: string, nextProduct: Product) => {
-        setRows(prev => prev.map(r => {
-            if (r.id !== rowId) return r;
-            if (r.fetched && r.product && r.product.id !== nextProduct.id) {
-                if (!pendingSwapFromRef.current[rowId]) {
-                    pendingSwapFromRef.current[rowId] = r.product.id;
-                }
-            }
-            return { ...r, product: nextProduct, fetched: false, error: "" };
-        }));
-        debouncedCalculate(rowId);
+        setRows(prev => prev.map(r => (r.id === rowId ? { ...r, product: nextProduct, error: "" } : r)));
+        debouncedPrice(rowId);
     };
 
     const handleCallsChange = (rowId: string, raw: string) => {
@@ -239,46 +217,12 @@ const PlanContent = () => {
         setRows(prev => prev.map(r =>
             r.id === rowId ? { ...r, calls: digits, error: "" } : r
         ));
-        debouncedCalculate(rowId);
+        debouncedPrice(rowId);
     };
 
-    const deletePersistedRow = useCallback(async (row: PlanRow) => {
-        if (!row.product) return;
-        debouncedCalculate.cancel();
-        const myReqId = ++requestIdRef.current;
-        try {
-            const { purchasePlanId: planId, publicId: pubId } = stateRef.current;
-            const res = await fetch(`${USE_API_URL}/purchase/public-delete-product-calculation`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    delete_product_id: row.product.id,
-                    plan_id: planId,
-                    public_id: pubId,
-                }),
-            });
-            const json = await res.json();
-            if (myReqId !== requestIdRef.current) return;
-            if (!json.success) return;
-            if (json.data?.info) setLatestInfo(json.data.info);
-            if (json.message === "Plan deleted") {
-                setPurchasePlanId("");
-                setPublicId("");
-                setLatestInfo(EMPTY_INFO);
-            }
-        } catch (err) {
-            console.error("Delete failed", err);
-        }
-    }, [debouncedCalculate]);
-
-    const handleRemoveRow = async (rowId: string) => {
-        const row = stateRef.current.rows.find(r => r.id === rowId);
-        if (!row) return;
-        if (row.fetched) {
-            await deletePersistedRow(row);
-        }
-        delete pendingSwapFromRef.current[rowId];
+    const handleRemoveRow = (rowId: string) => {
         setRows(prev => prev.filter(r => r.id !== rowId));
+        debouncedPrice();
     };
 
     const handleAddRow = () => setRows(prev => [...prev, newRow()]);
@@ -288,35 +232,28 @@ const PlanContent = () => {
         [rows]
     );
 
-    // Hands the configured plan off to the dashboard checkout, which replays it
-    // into the authenticated cart (`?plan=<productId>:<count>,...`). `pp` carries
-    // the anonymous plan ids for a future server-side claim endpoint.
-    const checkoutHref = useMemo(() => {
-        const lines = rows
-            .filter(r => r.product && parseCalls(r.calls) >= MIN_DOCUMENT_COUNT)
-            .map(r => `${r.product!.id}:${parseCalls(r.calls)}`)
-            .join(",");
-        // No plan yet: the checkout page sends the user on to Buy credits.
-        if (!lines) return ROUTES.checkout;
-        const params = new URLSearchParams({
-            plan: lines,
-            billing: isChecked ? "sub" : "payg",
-        });
-        if (purchasePlanId && publicId) params.set("pp", `${purchasePlanId}_${publicId}`);
-        return `${ROUTES.checkout}?${params.toString()}`;
-    }, [rows, isChecked, purchasePlanId, publicId]);
+    const lines = useMemo(() => basketLines(rows), [rows]);
+    const isPriced = lines.length > 0 && pricedKey === linesKey(lines);
+    const totalCredits = lines.reduce((sum, l) => sum + l.usage_count, 0);
 
-    const isBusy = rows.some(r => r.loading);
+    // Hands the basket to the dashboard checkout, which claims it for the
+    // signed-in user (signing in first if needed) and opens Buy credits with
+    // it. A basket edited since its last price goes as `?plan=` instead, and
+    // checkout prices it again, so the user never pays for a stale basket.
+    const checkoutHref = useMemo(() => {
+        // No plan yet: the checkout page sends the user on to Buy credits.
+        if (lines.length === 0) return ROUTES.checkout;
+        const params = new URLSearchParams(
+            isPriced && basketId ? { basket_id: basketId } : { plan: linesKey(lines) }
+        );
+        return `${ROUTES.checkout}?${params.toString()}`;
+    }, [lines, isPriced, basketId]);
 
     const subtitleClass = "text-sm sm:text-base lg:text-sm xl:text-base font-medium text-nature-black";
 
-    const payAsYouGoPrice = parseFloat(String(latestInfo.total_price)) || 0;
-    const subscriptionPrice = DISCOUNT_MANUALLY
-        ? payAsYouGoPrice * (1 - MANUAL_DISCOUNT_RATIO)
-        : (typeof latestInfo.price === "number" ? latestInfo.price : parseFloat(String(latestInfo.price)) || 0);
-    const discountAmount = DISCOUNT_MANUALLY
-        ? payAsYouGoPrice * MANUAL_DISCOUNT_RATIO
-        : parseFloat(String(latestInfo.discount_price)) || 0;
+    const payAsYouGoPrice = lines.length > 0 ? totalPrice : 0;
+    const subscriptionPrice = payAsYouGoPrice * (1 - SUBSCRIPTION_DISCOUNT);
+    const discountAmount = payAsYouGoPrice * SUBSCRIPTION_DISCOUNT;
 
     return (
         <div className="max-w-1304 mx-auto px-3 xl:px-0">
@@ -328,8 +265,6 @@ const PlanContent = () => {
                             <span className={subtitleClass}>With total files/API calls needed</span>
                         </div>
                         {rows.map((row, index) => {
-                            const callsNumber = parseCalls(row.calls);
-                            const callsBelowMin = !!row.calls && callsNumber < MIN_DOCUMENT_COUNT;
                             return (
                                 <div key={row.id} className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-x-8">
                                     <div className="col-span-1">
@@ -353,17 +288,12 @@ const PlanContent = () => {
                                                 inputMode="numeric"
                                                 pattern="\d*"
                                                 disabled={!row.product}
-                                                placeholder={`Min ${MIN_DOCUMENT_COUNT.toLocaleString()} files/API calls`}
+                                                placeholder="Files/API calls, e.g. 5,000"
                                                 className={`w-full lg:w-auto app-input mr-7 placeholder:text-sm ${index === 0 ? 'mr-0! !lg:mr-7' : ''
-                                                    } ${callsBelowMin ? 'border-red-500 focus:border-red-500' : ''
+                                                    } ${row.error ? 'border-red-500 focus:border-red-500' : ''
                                                     }`}
                                                 change={(e) => handleCallsChange(row.id, e.target.value)}
                                             />
-                                            {callsBelowMin && (
-                                                <div className="mt-1 text-red-500 text-xs">
-                                                    Minimum {MIN_DOCUMENT_COUNT.toLocaleString()} files/API calls required
-                                                </div>
-                                            )}
                                             {row.error && (
                                                 <div className="mt-1 text-red-500 text-xs">{row.error}</div>
                                             )}
@@ -408,14 +338,18 @@ const PlanContent = () => {
                             <span className={subtitleClass}>Total</span>
                             <div className="flex items-center">
                                 <span className={`${subtitleClass} text-gray-default!`}>Pay-as-you-go</span>
-                                <div className="ml-3">
-                                    <Switch checked={isChecked} onCheckedChange={setIsChecked} className="mt-[3px]" />
-                                </div>
-                                <span className={`${subtitleClass} text-gray-default! ml-3`}>Subscription</span>
-                                <div className="inline-flex items-center rounded-full bg-white ml-2 py-1.5 px-3">
-                                    <AiStarIcon />
-                                    <span className="text-sm font-medium ml-2">30% off</span>
-                                </div>
+                                {SUBSCRIPTIONS && (
+                                    <>
+                                        <div className="ml-3">
+                                            <Switch checked={isChecked} onCheckedChange={setIsChecked} className="mt-[3px]" />
+                                        </div>
+                                        <span className={`${subtitleClass} text-gray-default! ml-3`}>Subscription</span>
+                                        <div className="inline-flex items-center rounded-full bg-white ml-2 py-1.5 px-3">
+                                            <AiStarIcon />
+                                            <span className="text-sm font-medium ml-2">30% off</span>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                         {/* other */}
@@ -427,20 +361,26 @@ const PlanContent = () => {
                                         <div className="ml-2 w-4 h-4 border-[2px] border-t-transparent border-b-transparent border-r-transparent border-l-natural-navy rounded-full animate-spin" />
                                     )}
                                 </span>
-                                <div className="inline-flex items-center rounded-full bg-white ml-2 py-1.5 px-3">
-                                    <AiStarIcon />
-                                    <span className="text-sm font-medium ml-2">30% off</span>
-                                </div>
-                            </div>
-                            <div className="flex justify-end items-center text-right">
-                                <span className={`${subtitleClass} text-gray-default!`}>Pay-as-you-go</span>
-                                <div>
-                                    <div className="ml-3 inline-block">
-                                        <Switch checked={isChecked} onCheckedChange={setIsChecked} className="mt-[3px]" />
+                                {SUBSCRIPTIONS ? (
+                                    <div className="inline-flex items-center rounded-full bg-white ml-2 py-1.5 px-3">
+                                        <AiStarIcon />
+                                        <span className="text-sm font-medium ml-2">30% off</span>
                                     </div>
-                                    <span className={`${subtitleClass} text-gray-default! ml-3`}>Subscription</span>
-                                </div>
+                                ) : (
+                                    <span className={`${subtitleClass} text-gray-default!`}>Pay-as-you-go</span>
+                                )}
                             </div>
+                            {SUBSCRIPTIONS && (
+                                <div className="flex justify-end items-center text-right">
+                                    <span className={`${subtitleClass} text-gray-default!`}>Pay-as-you-go</span>
+                                    <div>
+                                        <div className="ml-3 inline-block">
+                                            <Switch checked={isChecked} onCheckedChange={setIsChecked} className="mt-[3px]" />
+                                        </div>
+                                        <span className={`${subtitleClass} text-gray-default! ml-3`}>Subscription</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         <div className="mt-9">
                             <div className="md:grid lg:block lgx:grid grid-cols-2 gap-x-[50px]">
@@ -454,7 +394,7 @@ const PlanContent = () => {
                                     <span className="text-base font-semibold text-gray-default ml-4">Price</span>
                                 </div>
                                 <div className="mt-5 md:mt-0 lg:mt-5 lgx:mt-0 flex items-center px-4 py-[18px] rounded-lg bg-natural-gray-bg shadow-[0px_0px_0px_1px_rgba(9,25,72,0.13),0px_1px_2px_0px_rgba(18,55,105,0.08)]">
-                                    <span className="text-app-blue text-2xl font-medium">{latestInfo.total_credit}</span>
+                                    <span className="text-app-blue text-2xl font-medium">{totalCredits.toLocaleString("en-US")}</span>
                                     <span className="text-base font-semibold text-gray-default ml-4">Credits</span>
                                 </div>
                             </div>

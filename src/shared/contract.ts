@@ -20,6 +20,13 @@ export const BRAND = {
 export const APP_BASE = "/app";
 
 /**
+ * Same-origin path of the Field API; next.config.ts proxies it to the API
+ * host. The landing's pricing calculator uses its public endpoints
+ * (GET products, POST products/price), the same ones Buy credits uses.
+ */
+export const API_BASE = "/api/v1";
+
+/**
  * Dashboard entry points from outside the dashboard: the landing's links, and
  * the links the backend sends (verification email, Stripe return).
  */
@@ -28,6 +35,7 @@ export const ROUTES = {
   dashboard: APP_BASE,
   login: `${APP_BASE}/login`,
   register: `${APP_BASE}/register`,
+  /** Takes `?basket_id=` (a basket priced on the pricing page) or `?plan=<productId>:<count>,...`. */
   checkout: `${APP_BASE}/checkout`,
   verifyEmail: `${APP_BASE}/verify-email`,
   resetPassword: `${APP_BASE}/reset-password`,
