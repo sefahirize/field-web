@@ -73,6 +73,9 @@ For the user to pass to the backend; none of them is a front-end bug.
 
 ## Reminders
 
+- **Landing work is paused** (2026-11-03): a new landing structure is coming; the user will share the details. Do not change `src/landing` or `app/(landing)` until then.
+- **Split-ready** (2026-11-03): landing and dashboard may become separate projects again. Keep each side self-contained (code, config, dependencies, env, tests), coupled only through `src/shared/contract.ts`.
+
 - Test tools (document "Set status", "Use credits (test)", "Test a key") stay on by default on purpose (user's call, 2026-11-03). They hide only with `NEXT_PUBLIC_TEST_TOOLS=false`; decide before a public launch.
 
 - The product name is **Field**; only the domain stays joinfield.
