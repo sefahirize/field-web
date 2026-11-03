@@ -1,7 +1,7 @@
 import { IconV2Dashboard as IconDashboard } from '@dashboard/components/icons';
 import { IconDocuments } from '@dashboard/components/icons';
 import { IconV2Chart as IconChart } from '@dashboard/components/icons';
-import { IconCreditCard } from '@dashboard/components/icons';
+import { IconV2Cards as IconCards } from '@dashboard/components/icons';
 import { IconReceipt } from '@dashboard/components/icons';
 import { IconV2Api as IconApi } from '@dashboard/components/icons';
 import { IconUser } from '@dashboard/components/icons';
@@ -31,7 +31,7 @@ export const NAVIGATION = [
     id: 'products',
     href: ROUTE_PATHS.PRODUCTS,
     label: 'Buy credits',
-    icon: <IconCreditCard />,
+    icon: <IconCards />,
   },
   {
     id: 'credit-history',

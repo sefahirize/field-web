@@ -12,6 +12,13 @@ export const IconV2Api = props => (
     </svg>
 );
 
+// icons-v2/cards.svg
+export const IconV2Cards = props => (
+    <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H16V4H20V16H4V12H0V0ZM6 12V14H18V6H16V12H6ZM2 2V10H14V2H2ZM4 4H7V6H4V4Z" fill="#818898"/>
+    </svg>
+);
+
 // icons-v2/chart.svg
 export const IconV2Chart = props => (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
