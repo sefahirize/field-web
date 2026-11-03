@@ -12,10 +12,7 @@ import { selectAuthUser } from '@dashboard/features/auth/authSlice';
 import { ROUTE_PATHS } from '@dashboard/data/paths';
 import { ProductIcon } from '@dashboard/components/elements/ProductIcon';
 import { fullDate, timeAgo } from '@dashboard/libs/time';
-
-/** The API prices in plain numbers and names no currency, so neither does this. */
-const money = value =>
-  Number(value ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+import { money } from '@dashboard/libs/money';
 
 /** Rolling windows ending now, as the API computes them — not calendar weeks or months. */
 const SUMMARY_PERIODS = [

@@ -8,10 +8,7 @@ import { ANALYTICS_PERIODS } from '@dashboard/features/analytics/analyticsApi';
 import { fetchProducts, selectListedProducts } from '@dashboard/features/products/productsSlice';
 import { ProductSelect } from '@dashboard/components/elements/ProductSelect';
 import { ProductIcon } from '@dashboard/components/elements/ProductIcon';
-
-/** The API prices in plain numbers and names no currency, so neither does this. */
-const money = value =>
-  Number(value ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+import { money } from '@dashboard/libs/money';
 
 /** Every time_series point carries all three, so the chart can plot any of them. */
 const METRICS = [

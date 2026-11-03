@@ -11,13 +11,7 @@ import { fetchCreditBalance, selectCredits } from '@dashboard/features/credits/c
 import { ROUTE_PATHS } from '@dashboard/data/paths';
 import { SearchSelect } from '@dashboard/components/elements/SearchSelect';
 import { ProductIcon } from '@dashboard/components/elements/ProductIcon';
-
-/**
- * /products/price answers plain numbers and names no currency, so neither does
- * this. (POST /checkout does — "TRY" — but only once the basket is paid for.)
- */
-const money = value =>
-  Number(value ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+import { money } from '@dashboard/libs/money';
 
 const QUICK_AMOUNTS = [1000, 5000, 10000];
 const MAX_DIGITS = 10;

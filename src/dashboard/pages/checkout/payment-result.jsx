@@ -11,6 +11,7 @@ import { fetchCreditBalance } from '@dashboard/features/credits/creditsSlice';
 import { fetchProducts, selectProducts } from '@dashboard/features/products/productsSlice';
 import { ProductIcon } from '@dashboard/components/elements/ProductIcon';
 import { ROUTE_PATHS } from '@dashboard/data/paths';
+import { money } from '@dashboard/libs/money';
 
 // Stripe can return before the backend has recorded the payment. Keep asking
 // for about half a minute before calling it "still processing".
@@ -19,15 +20,18 @@ const POLL_ATTEMPTS = 10;
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-/** Amount with its currency when the API named one (checkout says "TRY"). */
+/**
+ * Amount in the currency the API says was charged (checkout still says "TRY";
+ * prices are meant to be USD), else in USD like the rest of the dashboard.
+ */
 const formatAmount = (amount, currency) => {
   if (amount === null || amount === undefined) return null;
   try {
-    if (currency) return Number(amount).toLocaleString(undefined, { style: 'currency', currency });
+    if (currency) return Number(amount).toLocaleString('en-US', { style: 'currency', currency });
   } catch {
-    /* unknown currency code — fall through to the plain number */
+    /* unknown currency code — fall through to USD */
   }
-  return Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return money(amount);
 };
 
 /**
