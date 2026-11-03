@@ -59,6 +59,18 @@ One repo, **`field-web`**, one Next.js app containing the **landing** (landing) 
 8. Pages still to restyle in the dashboard: document detail, Analytics. Rail layout still needs a real-page walk-through on the cream background and in dark theme.
 9. Which design is the main one: Classic (current default, the one the user prefers) vs Rail (optional).
 
+## Backend issues found in the end-to-end tour (2026-11-03, real API, Stripe sandbox)
+
+For the user to pass to the backend; none of them is a front-end bug.
+
+1. **Currency**: prices are **USD** (decided 2026-11-03), but `POST checkout` opens Stripe sessions in **TRY** (a 12.50 basket was refused as "12.50 TL ≈ $0.25", 102.50 was charged as TRY 102.50), while `/credits/history` says "at $0.50 unit price". The success/cancel pages show the currency the API names, so they follow once the backend charges USD.
+2. **Extraction fails**: the backend's OpenAI key is invalid (OpenAI 401), so every CV Parser file ends `failed`.
+3. **Security**: the provider's error (provider name, OpenAI message, last 4 characters of the masked key) is stored in `raw_json` and shown to the customer on the document page.
+4. A failed extraction still spends the credit.
+5. **Security**: `PUT /documents/:uuid/status` is accepted from a user session, so a customer can rewrite their own document's status and result.
+6. `PUT /api-credentials/:id` answers 200 but ignores `expires_days`; the expiry cannot be changed.
+7. API keys still start with `hrz_` (Hirize prefix).
+
 ## Reminders
 
 - The product name is **Field**; only the domain stays joinfield.
