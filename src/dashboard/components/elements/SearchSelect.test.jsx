@@ -84,7 +84,7 @@ describe('SearchSelect', () => {
 describe('ProductIcon', () => {
   it('matches the API path to a bundled icon by file name, and uses an https URL as it is', () => {
     const { container, rerender } = render(<ProductIcon product={{ icon: '/icons/cv-parser.png' }} />);
-    expect(container.querySelector('img')).toHaveAttribute('src', '/src/dashboard/assets/product-icons/cv-parser.png');
+    expect(container.querySelector('img')).toHaveAttribute('src', '/assets/product-icons/cv-parser.png');
 
     rerender(<ProductIcon product={{ icon: 'https://cdn.example.com/x.png' }} />);
     expect(container.querySelector('img')).toHaveAttribute('src', 'https://cdn.example.com/x.png');
