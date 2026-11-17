@@ -23,6 +23,15 @@ import { CodeBlock } from '@dashboard/components/elements/CodeBlock';
 import { BackLink } from '@dashboard/components/elements/BackLink';
 
 /**
+ * A failed result carries the parser's raw error (provider names, upstream
+ * messages, masked keys). Until that text is safe to show, a failed result is
+ * replaced by a generic message; set this to true to show the JSON again.
+ */
+const SHOW_RESULT_ERRORS = false;
+const RESULT_ERROR_MESSAGE =
+  'We could not process this document. Please try again, or contact support if the problem continues.';
+
+/**
  * /documents/:uuid — one document: GET /documents/:uuid for the record and its
  * logs, GET …/download for the original file, DELETE to remove it, and (as a
  * test tool) PUT …/status, the parser's write-back.
@@ -124,7 +133,9 @@ export const DocumentDetail = () => {
         <div className="Panel-Head">
           <h2 className="Panel-Title">Result</h2>
         </div>
-        {doc.raw_json ? (
+        {isFailedResult(doc) && !SHOW_RESULT_ERRORS ? (
+          <p className="Muted">{RESULT_ERROR_MESSAGE}</p>
+        ) : doc.raw_json ? (
           <CodeBlock text={prettyJson(doc.raw_json)} label="Copy result" />
         ) : (
           <p className="Muted">{inFlight ? 'Still processing.' : 'No result was recorded for this document.'}</p>
@@ -279,6 +290,18 @@ const prettyJson = value => {
     return JSON.stringify(JSON.parse(value), null, 2);
   } catch {
     return value;
+  }
+};
+
+/** The parser marks a failure either by the document's status or by an `error` key in its result. */
+const isFailedResult = doc => {
+  if (doc.status === 'failed') return true;
+  if (!doc.raw_json) return false;
+  try {
+    const result = typeof doc.raw_json === 'string' ? JSON.parse(doc.raw_json) : doc.raw_json;
+    return Boolean(result && typeof result === 'object' && !Array.isArray(result) && result.error);
+  } catch {
+    return false;
   }
 };
 
