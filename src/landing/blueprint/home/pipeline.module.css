@@ -1,0 +1,666 @@
+/*
+  "How Field works": a CV taken apart in four layers. On a desktop window the
+  section is four viewports tall and its stage sticks to the top, so scrolling
+  walks through the steps; elsewhere it plays by itself, with a pause button.
+  The media query must match PIN_QUERY in Pipeline.tsx.
+*/
+
+.section {
+  background: var(--panel);
+  color: var(--ptx);
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 960px) and (max-height: 1499px) {
+  .section {
+    height: 400vh;
+  }
+
+  .stage {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+  }
+}
+
+.frame {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  border-left: 1px solid var(--pline);
+  border-right: 1px solid var(--pline);
+}
+
+.head {
+  padding: clamp(40px, 5vw, 64px) var(--gut) 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 64px;
+  align-items: flex-end;
+}
+
+.headCopy {
+  flex: 1 1 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  margin: 0;
+  font: 400 clamp(32px, 4vw, 48px) / 1.08 var(--fh);
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.headSide {
+  flex: 1 1 320px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.headSide p {
+  margin: 0;
+  color: var(--pmu);
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font: 500 13px/1 var(--fm);
+  color: #ffffff;
+}
+
+.counter small {
+  font-size: inherit;
+  color: #6b778c;
+}
+
+/* The step number rolls when it changes. */
+.counterNum {
+  display: inline-block;
+  animation: numIn 0.35s var(--ease-out) both;
+}
+
+@keyframes numIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.play {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--pline);
+  border-bottom: 1px solid var(--pline);
+}
+
+/* Steps */
+
+.steps {
+  flex: 1 1 280px;
+  padding: 12px 0;
+  border-right: 1px solid var(--pline);
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 44px;
+  padding: 16px clamp(16px, 4vw, 32px);
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--pmu);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.step[aria-selected="true"],
+.step:hover {
+  color: #ffffff;
+}
+
+.stepRow {
+  display: flex;
+  gap: 14px;
+}
+
+.stepNum {
+  flex: 0 0 auto;
+  font: 500 12px/1.6 var(--fm);
+  letter-spacing: 0.06em;
+  color: #6b778c;
+  transition: color 0.3s;
+}
+
+.step[aria-selected="true"] .stepNum {
+  color: var(--ac);
+}
+
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stepTitle {
+  font: 500 16px/1.3 var(--fb);
+}
+
+.stepDesc {
+  font: 400 14px/1.45 var(--fb);
+}
+
+.bar {
+  display: block;
+  height: 2px;
+  margin-left: 30px;
+  background: var(--pline);
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  background: var(--ac);
+  transition: width 0.15s linear;
+}
+
+.barRun {
+  animation: fill 4.2s linear forwards;
+}
+
+@keyframes fill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* The layered stack */
+
+.canvas {
+  flex: 1 1 380px;
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--pline);
+  background: radial-gradient(circle at 50% 60%, #243048 0, var(--panel) 70%);
+  perspective: 1600px;
+}
+
+/* A slow glow behind the stack that breathes with the step. */
+.canvas::before {
+  content: "";
+  position: absolute;
+  inset: 20% 15%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--ac) 22%, transparent), transparent);
+  opacity: 0.5;
+  animation: breathe 4.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.04);
+  }
+}
+
+.stack {
+  position: relative;
+  width: 200px;
+  height: 256px;
+  transform-style: preserve-3d;
+  transform: translateY(84px) rotateX(58deg) rotateZ(-38deg);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateZ(0);
+  transition:
+    transform 0.9s var(--ease-out),
+    opacity 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+.layer.on {
+  opacity: 1;
+}
+
+.l0 {
+  opacity: 1;
+  background: #f7f9fd;
+  box-shadow: 0 0 0 1px var(--line2);
+}
+
+.l1 {
+  background: color-mix(in srgb, var(--ac) 10%, transparent);
+  box-shadow: 0 0 0 1px var(--ac);
+}
+
+.l2 {
+  background: color-mix(in srgb, var(--ac) 15%, transparent);
+  box-shadow: 0 0 0 1px var(--ac);
+}
+
+.l3 {
+  background: rgba(15, 22, 35, 0.94);
+  box-shadow: 0 0 0 1px var(--ac);
+}
+
+.l1.on {
+  transform: translateZ(90px);
+}
+
+.l2.on {
+  transform: translateZ(180px);
+}
+
+.l3.on {
+  transform: translateZ(270px);
+}
+
+.layer.current {
+  box-shadow:
+    0 0 0 2px var(--ac),
+    0 40px 60px rgba(4, 8, 16, 0.45);
+}
+
+.l0.drop {
+  animation: drop 1.1s var(--ease-out) both;
+}
+
+@keyframes drop {
+  from {
+    transform: translateZ(320px);
+    opacity: 0;
+  }
+  to {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+
+.layerTag {
+  position: absolute;
+  right: 8px;
+  top: -18px;
+  font: 500 9px/1 var(--fm);
+  letter-spacing: 0.06em;
+  color: var(--pmu);
+}
+
+/* Layer 1: a sketch of the CV page. */
+.page {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page span {
+  display: block;
+  height: 3px;
+  background: var(--line2);
+}
+
+.avatar {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.avatar > span:first-child {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--line2);
+}
+
+.upload {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  height: 4px;
+  background: var(--ptx);
+}
+
+.upload i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--ac);
+}
+
+.canvas[data-step="0"] .upload i {
+  animation: fill 1.6s 0.5s ease-out forwards;
+}
+
+.canvas:not([data-step="0"]) .upload i {
+  width: 100%;
+}
+
+/* Layer 2: the scan line that reads the page. */
+.beam {
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 0;
+  height: 3px;
+  background: var(--ac);
+  box-shadow: 0 0 18px 4px color-mix(in srgb, var(--ac) 55%, transparent);
+  opacity: 0;
+}
+
+.canvas[data-step="1"] .beam {
+  opacity: 1;
+  animation: beam 1.8s ease-in-out infinite;
+}
+
+@keyframes beam {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: calc(100% - 3px);
+  }
+  100% {
+    top: 0;
+  }
+}
+
+.block {
+  position: absolute;
+  outline: 1px solid var(--ac);
+}
+
+/* Layer 3: the named fields, each popping in. */
+.chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  background: var(--ac);
+  color: #ffffff;
+  font: 500 9px/1 var(--fm);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.chip b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  color: var(--ac);
+  font-weight: 600;
+}
+
+.l2.current .chip {
+  animation: chipIn 0.45s var(--ease-out) both;
+  animation-delay: calc(0.35s + var(--i, 0) * 0.12s);
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Layer 4: the JSON. */
+.json {
+  position: absolute;
+  inset: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font: 500 9px/1 var(--fm);
+  color: var(--ptx);
+}
+
+.json span[data-indent] {
+  padding-left: 10px;
+}
+
+.key {
+  color: #8fb0ff;
+}
+
+.layerName {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 11px/1 var(--fm);
+  letter-spacing: 0.06em;
+  color: var(--pmu);
+}
+
+.layerName::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--ac);
+}
+
+/* The request and result panel */
+
+.panel {
+  flex: 1 1 340px;
+  min-height: 480px;
+  padding: 28px clamp(16px, 4vw, 32px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fileName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.fileName img {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+}
+
+.fileName b {
+  display: block;
+  font: 500 14px/1.2 var(--fb);
+  color: #ffffff;
+}
+
+.fileName small {
+  display: block;
+  margin-top: 3px;
+  font: 400 12px/1.2 var(--fb);
+  color: var(--pmu);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--st);
+  color: var(--st);
+  font: 500 11px/1 var(--fm);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  transition:
+    color 0.4s,
+    border-color 0.4s;
+}
+
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--st);
+  transition: background-color 0.4s;
+}
+
+/* The dot pulses while the file is being processed. */
+.status[data-busy]::before {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--st) 60%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px transparent;
+  }
+}
+
+.out {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: outIn 0.5s ease both;
+}
+
+@keyframes outIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.outLabel {
+  font: 500 11px/1 var(--fm);
+  letter-spacing: 0.08em;
+  color: var(--pmu);
+}
+
+/* The code types itself in, line by line. */
+.code {
+  margin: 0;
+  padding: 18px;
+  min-height: 224px;
+  background: #141b26;
+  border: 1px solid var(--pline);
+  font: 500 12.5px/1.65 var(--fm);
+  color: var(--ptx);
+  white-space: pre-wrap;
+  animation: type 1.1s steps(14, end) both;
+}
+
+.codeShort {
+  min-height: 132px;
+}
+
+@keyframes type {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--pline);
+  background: #141b26;
+  animation: outIn 0.5s var(--ease-out) both;
+  animation-delay: calc(0.9s + var(--i, 0) * 0.15s);
+}
+
+.tile svg {
+  flex: 0 0 auto;
+}
+
+.tile b {
+  display: block;
+  font: 500 13px/1.2 var(--fb);
+  color: #ffffff;
+}
+
+.tile small {
+  display: block;
+  margin-top: 3px;
+  font: 400 12px/1.2 var(--fb);
+  color: var(--pmu);
+}
